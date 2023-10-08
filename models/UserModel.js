@@ -18,7 +18,15 @@ const UserSchema = new mongoose.Schema({
     image:{
         type: 'string',
         required: true
-    }
+    },
+    role:{
+        type: 'string',
+        required: true
+    },
+    status:{
+        type: 'string',
+        required: true
+    },
 });
 
 // Export the model

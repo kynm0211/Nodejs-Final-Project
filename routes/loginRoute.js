@@ -37,7 +37,9 @@ module.exports = (app) =>{
 
         // Check password format length 6-> 32
         if(password.length < 6 || password.length > 32){
+
             res.json(package(3, "Password length must be from 6 to 32", null));
+
             return;
         }
 
@@ -59,8 +61,13 @@ module.exports = (app) =>{
             
             if (user.password === userDB.password) {
                 // Store user information in the session
-                req.session.user = userDB;
-                res.json(package(0, "Login successfully", userDB));
+                const userWithoutPassword = { ...userDB };
+                delete userWithoutPassword._doc.password;
+
+                req.session.user = userWithoutPassword;
+                req.session.authorize = true;
+
+                res.json(package(0, "Login successfully", userWithoutPassword));
                 return;
             } else {
                 res.json(package(10, "Invalid email or password", null));

@@ -44,8 +44,7 @@ require('./models/UserModel');
 require('./routes/loginRoute')(app);
 require('./routes/registerRoute')(app);
 require('./routes/logoutRoute')(app);
-require('./routes/sessionRoute')(app);
-
+require('./routes/uploadRoute')(app);
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
 });

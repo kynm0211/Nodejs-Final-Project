@@ -64,11 +64,14 @@ module.exports = (app) =>{
             
             newUser.save().then(() => {
               // Establish the session after user creation
-              req.session.user = newUser; // Store the newly created user in the session
+              const userWithoutPassword = { ...user };
+              delete userWithoutPassword.password;
+
+              req.session.user = userWithoutPassword; // Store the newly created user in the session
+              req.session.authorize = true;
           
-              console.log("Session: " + req.session.user);
-          
-              res.json(package(0, "Register successfully", newUser));
+    
+              res.json(package(0, "Register successfully", userWithoutPassword));
             }).catch((err) => {
 
               res.json(package(5, "Register failed", err));
