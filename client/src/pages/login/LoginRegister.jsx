@@ -15,7 +15,7 @@ export const LoginRegister = () => {
             <div className={`container ${isSignUpActive ? 'right-panel-active' : ''}`} id="container">
                 <div className="form-container sign-up-container">
 
-                    <form action="/api/login" method="post">
+                    <form action="/api/register" method="post">
                         <h1>Create Account</h1>
                         <div className="social-container">
                             <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
@@ -30,7 +30,7 @@ export const LoginRegister = () => {
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form action="/api/register" method="post">
+                    <form action="/api/login" method="post">
                         <h1>Sign in</h1>
                         <div className="social-container">
                             <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
