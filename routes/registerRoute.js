@@ -38,25 +38,29 @@ module.exports = (app) =>{
             password: passwordR,
             image: KEY.imageProfileDefault,
         }
-        User.findOne({email: user.email}).then((userFound)=>{
-            if(userFound){
-                res.json(package(4, "Email already exists", null));
-                return;
+        User.findOne({ email: user.email }).then((userFound) => {
+            if (userFound) {
+              res.json(package(4, "Email already exists", null));
+              return;
             }
+            
+            // User does not exist, create a new user
             const newUser = new User(user);
-            newUser.save().then(()=>{
-                res.json(package(0, "Register successfully", user));
-
-                // Establish the session
-                req.session.user = user;
-                
-            }).catch((err)=>{
-                res.json(package(5, "Register failed", err));
-                return;
+            
+            newUser.save().then(() => {
+              // Establish the session after user creation
+              req.session.user = newUser; // Store the newly created user in the session
+          
+              console.log("Session: " + req.session.user);
+          
+              res.json(package(0, "Register successfully", newUser));
+            }).catch((err) => {
+              res.json(package(5, "Register failed", err));
             });
-        }).catch((err)=>{
+          }).catch((err) => {
             res.json(package(5, "Register failed", err));
-            return;
-        });
+          });
+          
     });
+
 }

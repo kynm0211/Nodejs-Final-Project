@@ -5,13 +5,20 @@ const mongoose = require('mongoose');
 const app = express();
 const session = require('express-session');
 app.use(express.json());
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
-// Configure the session middleware
-app.use(session({
-    secret: KEY.SECRET_SESSION,
-}));
+// Configure the Cookie session middleware
+app.use(
+    session({
+        secret: KEY.SECRET_SESSION_KEY,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60,
+            sameSite: 'strict',
+        },
+    })
+);
 
 // Connect to the mongoose server
 mongoose.connect(KEY.mongoURI, {
@@ -36,6 +43,7 @@ require('./models/UserModel');
 // Routes
 require('./routes/loginRoute')(app);
 require('./routes/registerRoute')(app);
+require('./routes/logoutRoute')(app);
 require('./routes/sessionRoute')(app);
 
 app.listen(PORT, ()=>{
