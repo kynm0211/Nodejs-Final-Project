@@ -10,6 +10,7 @@ dotenv.config();
 
 // Routes
 require('./routes/loginRoute')(app);
+require('./routes/registerRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);

@@ -14,7 +14,8 @@ export const LoginRegister = () => {
         <div>
             <div className={`container ${isSignUpActive ? 'right-panel-active' : ''}`} id="container">
                 <div className="form-container sign-up-container">
-                    <form action="#">
+
+                    <form action="/api/login" method="post">
                         <h1>Create Account</h1>
                         <div className="social-container">
                             <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
@@ -29,7 +30,7 @@ export const LoginRegister = () => {
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form action="#">
+                    <form action="/api/register" method="post">
                         <h1>Sign in</h1>
                         <div className="social-container">
                             <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
@@ -39,7 +40,7 @@ export const LoginRegister = () => {
                         <span>or use your account</span>
                         <input type="email" placeholder="Email" />
                         <input type="password" placeholder="Password" />
-                        <a href="/forget">Forgot your password?</a>
+                        <a href="/api/forget">Forgot your password?</a>
                         <button>Sign In</button>
                     </form>
                 </div>
