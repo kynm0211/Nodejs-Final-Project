@@ -22,9 +22,9 @@ export const LoginRegister = () => {
                             <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
                         </div>
                         <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input name="nameR" type="text" placeholder="Name" />
+                        <input name="emailR" type="email" placeholder="Email" />
+                        <input name="passwordR" type="password" placeholder="Password" />
                         <button>Sign Up</button>
                     </form>
                 </div>
@@ -37,8 +37,8 @@ export const LoginRegister = () => {
                             <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
                         </div>
                         <span>or use your account</span>
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input name="name" type="email" placeholder="Email" />
+                        <input name="password" type="password" placeholder="Password" />
                         <a href="/forget">Forgot your password?</a>
                         <button>Sign In</button>
                     </form>
