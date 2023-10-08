@@ -38,7 +38,7 @@ export const LoginRegister = () => {
                             <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
                         </div>
                         <span>or use your account</span>
-                        <input name="name" type="email" placeholder="Email" />
+                        <input name="email" type="email" placeholder="Email" />
                         <input name="password" type="password" placeholder="Password" />
                         <a href="/forget">Forgot your password?</a>
                         <button>Sign In</button>
