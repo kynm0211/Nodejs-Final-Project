@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const package = require('../middlewares/package');
 const bodyParser = require('body-parser');
 const User = mongoose.model('User');
+const hashPassword = require('../service/hash256');
+
 
 module.exports = (app) =>{
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,16 +33,29 @@ module.exports = (app) =>{
             return;
         }
 
+
+        // Hash the password using SHA-256 and the salt
+        const hashedPassword = hashPassword(passwordR, KEY.SECRET_SALT);
+
+
         // Information Ok => Register
         const user = {
             name: nameR,
             email: emailR,
-            password: passwordR,
+            password: hashedPassword,
             image: KEY.imageProfileDefault,
         }
+        
+        persitUser(req, res, user);  
+    });
+
+    // Save to DB and session
+    function persitUser(req, res, user){
         User.findOne({ email: user.email }).then((userFound) => {
             if (userFound) {
+
               res.json(package(4, "Email already exists", null));
+              
               return;
             }
             
@@ -55,12 +70,15 @@ module.exports = (app) =>{
           
               res.json(package(0, "Register successfully", newUser));
             }).catch((err) => {
+
               res.json(package(5, "Register failed", err));
+
             });
           }).catch((err) => {
+
             res.json(package(5, "Register failed", err));
+
           });
-          
-    });
+    }
 
 }
