@@ -49,8 +49,7 @@ module.exports = (app) =>{
 
                 // Establish the session
                 req.session.user = user;
-                console.log(req.session.user);
-                return;
+                
             }).catch((err)=>{
                 res.json(package(5, "Register failed", err));
                 return;
