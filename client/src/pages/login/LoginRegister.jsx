@@ -11,7 +11,7 @@ export const LoginRegister = () => {
     };
 
     return (
-        <div>
+        <div id="bodyLogin">
             <div className={`container ${isSignUpActive ? 'right-panel-active' : ''}`} id="container">
                 <div className="form-container sign-up-container">
 

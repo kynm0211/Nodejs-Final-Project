@@ -55,7 +55,7 @@ function Upload() {
         type="file"
         onChange={handleFileChange}
       />
-      <button onClick={handleUpload} disabled={uploading}>
+      <button id='buttonUpload' onClick={handleUpload} disabled={uploading}>
         {uploading ? 'Uploading...' : 'Upload'}
       </button>
       {uploadError && <div className="error-message">{uploadError}</div>}

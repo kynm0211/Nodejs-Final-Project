@@ -8,7 +8,7 @@
   }
   
   
-  button {
+  #buttonUpload {
     background-color: #007bff;
     color: #fff;
     padding: 10px 20px;
@@ -17,7 +17,7 @@
     cursor: pointer;
   }
   
-  button:hover {
+  #buttonUpload:hover {
     background-color: #0056b3;
   }
   

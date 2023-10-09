@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 }
 
-body {
+#bodyLogin {
 	background: #f6f5f7;
 	display: flex;
 	justify-content: center;

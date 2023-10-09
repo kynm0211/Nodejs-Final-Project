@@ -2,8 +2,8 @@ const package = require('../middlewares/package');
 
 module.exports = (app) =>{
     app.get('/api/logout', (req, res) => {
-       req.session.destroy();
-       res.redirect('/');
+        req.session.destroy();
+        res.redirect('/');
     });
     app.get('/api/session', (req, res) => {
         console.log(req.session.user);
