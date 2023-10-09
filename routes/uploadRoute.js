@@ -3,6 +3,8 @@ const { authenticate } = require('google-auth-library');
 const fs = require('fs');
 const multer = require('multer');
 
+const requiredLogin = require('../middlewares/requiredLogin');
+
 // Define the storage for uploaded files
 const storage = multer.diskStorage({
     filename: (req, file, cb) => {
@@ -13,7 +15,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 module.exports = (app) => {
-  app.post('/api/upload', upload.single('file'), async (req, res) => {
+  app.post('/api/upload', requiredLogin, upload.single('file'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded.' });
       }
