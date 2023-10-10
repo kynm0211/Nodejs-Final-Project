@@ -44,6 +44,8 @@ module.exports = (app) =>{
             email: emailR,
             password: hashedPassword,
             image: KEY.imageProfileDefault,
+            role: 'Administrator',
+            status: 'Active'
         }
         
         persitUser(req, res, user);  

@@ -1,6 +1,6 @@
 // Production.js
 module.exports = {
     mongoURI: process.env.MONGO_URI,
-    imageProfileDefault: 'https://drive.google.com/file/d/1ZhkeOCzhdz58oj4ZWHikpYOlfKXyMbwR/view',
+    imageProfileDefault: 'https://firebasestorage.googleapis.com/v0/b/nodejs-final-8bdf4.appspot.com/o/avatar-default-symbolic-icon-2048x1949-pq9uiebg.png?alt=media&token=3b571e00-a007-497c-93d3-af8060dde22d&_gl=1*10aed1t*_ga*NzkyMjQ3NDYxLjE2OTY5MjkyODU.*_ga_CW55HF8NVT*MTY5NjkyOTI4NS4xLjEuMTY5NjkyOTYyNC41MS4wLjA.',
     SECRET_SESSION_KEY: process.env.SECRET_SESSION_KEY,
 };

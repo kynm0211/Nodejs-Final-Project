@@ -1,6 +1,5 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginRegister from './pages/login/LoginRegister';
 import ForgetPassword from "./pages/login/ForgetPassword";
 import Upload from "./pages/upload/Upload";

@@ -67,7 +67,9 @@ module.exports = (app) =>{
                 req.session.user = userWithoutPassword;
                 req.session.authorize = true;
 
-                res.json(package(0, "Login successfully", userWithoutPassword));
+                prepairUser = {...userWithoutPassword};
+
+                res.json(package(0, "Login successfully", userWithoutPassword._doc));
                 return;
             } else {
                 res.json(package(10, "Invalid email or password", null));
