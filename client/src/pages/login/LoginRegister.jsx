@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './LoginRegister.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import axios from 'axios';
 
 export const LoginRegister = (props) => {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
@@ -10,6 +11,30 @@ export const LoginRegister = (props) => {
         setIsSignUpActive(!isSignUpActive);
     };
 
+    function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+    
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+
+        axios.post('/api/login', formData)
+        .then(response => {
+            const res = response.data;
+            if(res.code === 0){
+                const token = res.data.token;
+                localStorage.setItem('token', token);
+                window.location.href = '/';
+            }else{
+                console.log(res);
+            }
+        })
+        .catch(error => {
+            console.error('Đăng nhập thất bại', error);
+        });
+    }
     return (
         <div id="bodyLogin">
             <div className={`container ${isSignUpActive ? 'right-panel-active' : ''}`} id="container">
@@ -30,7 +55,7 @@ export const LoginRegister = (props) => {
                     </form>
                 </div>
                 <div className="form-container sign-in-container">
-                    <form action="/api/login" method="post">
+                    <form>
                         <h1>Sign in</h1>
                         <div className="social-container">
                             <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
@@ -38,10 +63,10 @@ export const LoginRegister = (props) => {
                             <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
                         </div>
                         <span>or use your account</span>
-                        <input name="email" type="email" placeholder="Email" />
-                        <input name="password" type="password" placeholder="Password" />
+                        <input id="email" name="email" type="email" placeholder="Email" />
+                        <input id="password" name="password" type="password" placeholder="Password" />
                         <a href="/forget">Forgot your password?</a>
-                        <button>Sign In</button>
+                        <button onClick={handleLogin}>Sign In</button>
                     </form>
                 </div>
                 <div className="overlay-container">

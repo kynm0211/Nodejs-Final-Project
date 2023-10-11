@@ -2,12 +2,17 @@ const bodyParser = require('body-parser');
 const KEY = require('../config/key');
 const package = require('../middlewares/package');
 const hashPassword = require('../service/hash256');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
+const multer = require('multer');
+const upload = multer();
 
 module.exports = (app) =>{
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(upload.none());
+
     app.get('/api/login', (req, res)=>{
         // Show does not suppot GET method
         res.json(package(404, "Does not provide a GET method"));
@@ -68,8 +73,10 @@ module.exports = (app) =>{
                 req.session.authorize = true;
 
                 prepairUser = {...userWithoutPassword};
-
-                res.json(package(0, "Login successfully", userWithoutPassword._doc));
+                prepairUser._doc.token = jwt.sign(prepairUser._doc, KEY.SECRET_SESSION_KEY , { expiresIn: '24h' });
+                res.json(
+                    package(0, "Login success", prepairUser._doc)
+                );
                 return;
             } else {
                 res.json(package(10, "Invalid email or password", null));

@@ -1,19 +1,21 @@
 const package = require('../middlewares/package');
-const requiredLogin = require('../middlewares/requiredLogin');
-
+const jwt = require('jsonwebtoken');
+const KEY = require('../config/key');
 module.exports = (app) =>{
-    app.get('/api/logout', (req, res) => {
-        req.session.destroy();
-        res.redirect('/');
-    });
+    app.get('/api/current_user', (req, res) => {
+        const token = req.header('Authorization');
 
-    app.get('/api/session', (req, res) => {
-        console.log(req.session.user);
-        if (req.session.user) {
-            user = {...req.session.user};
-            res.json(package(0,"You're logged, ", user._doc));
-        } else {
-            res.json(package(15,"You need to loggin", null));
+        if (!token) {
+            return res.sendStatus(401);
         }
+
+        jwt.verify(token, KEY.SECRET_SESSION_KEY, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+
+            // User is authenticated, you can access user data from the 'user' object
+            res.json(user);
+        });
     });
 }
