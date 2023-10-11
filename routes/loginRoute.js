@@ -22,7 +22,7 @@ module.exports = (app) =>{
         
 
         const {email, password} = req.body;
-        console.log("Account" + email + " " + password);
+        console.log("Account " + email + " " + password);
         // Check fields
         
         if(!email || email.length < 1){
@@ -68,9 +68,6 @@ module.exports = (app) =>{
                 // Store user information in the session
                 const userWithoutPassword = { ...userDB };
                 delete userWithoutPassword._doc.password;
-
-                req.session.user = userWithoutPassword;
-                req.session.authorize = true;
 
                 prepairUser = {...userWithoutPassword};
                 prepairUser._doc.token = jwt.sign(prepairUser._doc, KEY.SECRET_SESSION_KEY , { expiresIn: '24h' });

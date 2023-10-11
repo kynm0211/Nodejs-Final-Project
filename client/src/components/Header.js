@@ -44,7 +44,7 @@ function Header(props) {
                   <a href="/profile">Đổi mật khẩu</a>
                 </li>
                 <li className="nav-item menu__profile-item">
-                  <a href="/api/logout">Đăng xuất</a>
+                  <a href="/logout">Đăng xuất</a>
                 </li>
               </ul>
             )}

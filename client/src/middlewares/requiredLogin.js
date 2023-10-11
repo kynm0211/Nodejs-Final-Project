@@ -1,12 +1,11 @@
 import axios from 'axios';
 export function isAuthURL() {
-const exceptPaths = ['/login', '/forget', '/register'];
-const currentPath = window.location.pathname;
+  	const exceptPaths = ['/login', '/forget', '/register'];
+  	const currentPath = window.location.pathname;
 
     for (const path of exceptPaths) {
         if (path === currentPath) return true;
     }
-
     return false;
 }
 
