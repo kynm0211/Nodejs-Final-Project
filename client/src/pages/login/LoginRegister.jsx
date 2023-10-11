@@ -3,7 +3,7 @@ import './LoginRegister.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
-export const LoginRegister = () => {
+export const LoginRegister = (props) => {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
 
     const togglePanel = () => {

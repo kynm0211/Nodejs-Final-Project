@@ -6,7 +6,8 @@ module.exports = (app) =>{
         req.session.destroy();
         res.redirect('/');
     });
-    app.get('/api/session', requiredLogin, (req, res) => {
+
+    app.get('/api/session', (req, res) => {
         console.log(req.session.user);
         if (req.session.user) {
             user = {...req.session.user};
