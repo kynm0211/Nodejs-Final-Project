@@ -3,12 +3,12 @@ import React,  { useEffect, useState, Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { publicRouters, privateRouters} from './routes';
 import axios from 'axios';
-import {isAuthURL} from './middlewares/requiredLogin';
 import { DefaultLayout } from "./components/Layout";
 
 function App() {
   // Initial Authentication State
   const [user, setUser] = useState(null);
+  const [navigator, setNavigator] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,15 +21,18 @@ function App() {
         .then(response => {
           setUser(response.data);
           setLoading(false);
+		  setNavigator(false);
         })
         .catch(error => {
           console.error ('Error fetching user data', error);
           setLoading(false);
+		  setNavigator(true);
         });
     } else {
       setLoading(false);
+	  setNavigator(true);
     }
-  }, []);
+  }, [navigator]);
 
   if (loading) {
     return <div>Loading...</div>;
