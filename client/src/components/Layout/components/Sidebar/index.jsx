@@ -17,16 +17,17 @@ function Sidebar() {
       <div className="sidebar close" onClick={toggleSidebar}>
         {/* <!-- ========== Logo ============  --> */}
         <a href="#" className="logo-box">
-			<img
-				src="https://cdn-icons-png.flaticon.com/512/919/919825.png"
-				width="64"
-				height="64"
-				className="d-inline-block align-top"
-				alt=""
-			/>
+            <img
+                src={process.env.PUBLIC_URL + '/MenuWhite.png'}
+                width="64"
+                height="64"
+                className="d-inline-block align-top ml-1"
+                alt=""
+            />
 
-			<div className="logo-name">NodeJS</div>
-		</a>
+            <div className="logo-name">MENU</div>
+        </a>
+
 
         {/* <!-- ========== List ============  --> */}
         <ul className="sidebar-list">

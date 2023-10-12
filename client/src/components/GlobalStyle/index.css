@@ -36,11 +36,11 @@
 }
 
 /* --------- Logo ------------ */
-.logo-box{
+.logo-box {
     height: 60px;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: center; /* Vertically center the content */
     color: var(--color_Light1);
     transition: all .5s ease;
 }
@@ -58,9 +58,12 @@
 .sidebar.close .logo-box i{
     transform: rotate(360deg);
 }
-.logo-name{
+.logo-name {
     font-size: 22px;
     font-weight: 600;
+    margin-left: 10px;
+    display: flex; /* Use flexbox */
+    align-items: center; /* Vertically center the text */
 }
 
 /* ---------- Sidebar List ---------- */

@@ -5,6 +5,7 @@ import { publicRouters, privateRouters} from './routes';
 import axios from 'axios';
 import { DefaultLayout } from "./components/Layout";
 
+
 function App() {
   // Initial Authentication State
   const [user, setUser] = useState(null);
