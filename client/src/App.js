@@ -1,38 +1,39 @@
+
 import React,  { useEffect, useState, Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { publicRouters, privateRouters} from './routes';
 import axios from 'axios';
 import {isAuthURL} from './middlewares/requiredLogin';
-
 import { DefaultLayout } from "./components/Layout";
+
 function App() {
+  // Initial Authentication State
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-	// Initial Authentication State
-	const [user, setUser] = useState(null);
-	const [navigator, setNavigator] = useState(false);
+  useEffect(() => {
+    // Check if a token exists in local storage
+    const token = localStorage.getItem('token');
 
+    if (token) {
+      // Fetch user data
+      axios.get('/api/current_user', { headers: { 'Authorization': token } })
+        .then(response => {
+          setUser(response.data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error ('Error fetching user data', error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
-	function fetchUserData(token) {
-		axios.get('/api/current_user', {headers: {'Authorization': `${token}`}})
-			.then(response => {setUser({...response.data});})
-			.catch(error => {console.error('Error fetching user data', error);
-		});
-	}
-  	useEffect(() => {
-		// Check if a token exists in local storage
-		const token = localStorage.getItem('token');
-		
-		if (token) {
-			fetchUserData(token);
-		} else {
-			// If no token is found, set the navigator to true
-			setNavigator(true);
-		}
-
-		// Check if the current URL is not authenticated and there is no token
-		setNavigator(isAuthURL() === false && !token? true : false);
-	}, []);
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 	return (
 		<Router>
 			<div className="App">

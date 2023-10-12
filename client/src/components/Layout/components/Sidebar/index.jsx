@@ -29,144 +29,144 @@ function Sidebar() {
 		</a>
 
         {/* <!-- ========== List ============  --> */}
-        <ul class="sidebar-list">
+        <ul className="sidebar-list">
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-grid-alt'></i>
-                        <span class="name">Dashboard</span>
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-grid-alt'></i>
+                        <span className="name">Dashboard</span>
                     </a>
                     {/* <!-- <i class='bx bxs-chevron-down'></i> --> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Dashboard</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Dashboard</a>
                     {/* <!-- submenu links here  --> */}
                 </div>
             </li>
 
             {/* <!-- -------- Dropdown List Item ------- --> */}
-            <li class="dropdown">
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-collection'></i>
-                        <span class="name">Category</span>
+            <li className="dropdown">
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-collection'></i>
+                        <span className="name">Category</span>
                     </a>
-                    <i class='bx bxs-chevron-down'></i>
+                    <i className='bx bxs-chevron-down'></i>
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Category</a>
-                    <a href="#" class="link">HTML & CSS</a>
-                    <a href="#" class="link">JavaScript</a>
-                    <a href="#" class="link">PHP & MySQL</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Category</a>
+                    <a href="#" className="link">HTML & CSS</a>
+                    <a href="#" className="link">JavaScript</a>
+                    <a href="#" className="link">PHP & MySQL</a>
                 </div>
             </li>
 
             {/* <!-- -------- Dropdown List Item ------- --> */}
-            <li class="dropdown">
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-book-alt'></i>
-                        <span class="name">Posts</span>
+            <li className="dropdown">
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-book-alt'></i>
+                        <span className="name">Posts</span>
                     </a>
-                    {/* <i class='bx bxs-chevron-down'></i> */}
+                    {/* <i className='bx bxs-chevron-down'></i> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Posts</a>
-                    <a href="#" class="link">Web Design</a>
-                    <a href="#" class="link">Login Form</a>
-                    <a href="#" class="link">Card Design</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Posts</a>
+                    <a href="#" className="link">Web Design</a>
+                    <a href="#" className="link">Login Form</a>
+                    <a href="#" className="link">Card Design</a>
                 </div>
             </li>
 
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-line-chart'></i>
-                        <span class="name">Analytics</span>
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-line-chart'></i>
+                        <span className="name">Analytics</span>
                     </a>
-                    {/* <!-- <i class='bx bxs-chevron-down'></i> --> */}
+                    {/* <!-- <i className='bx bxs-chevron-down'></i> --> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Analytics</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Analytics</a>
                     {/* <!-- submenu links here  --> */}
                 </div>
             </li>
 
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-pie-chart-alt-2'></i>
-                        <span class="name">Chart</span>
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-pie-chart-alt-2'></i>
+                        <span className="name">Chart</span>
                     </a>
-                    {/* <!-- <i class='bx bxs-chevron-down'></i> --> */}
+                    {/* <!-- <i className='bx bxs-chevron-down'></i> --> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Chart</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Chart</a>
                     {/* <!-- submenu links here  --> */}
                 </div>
             </li>
 
             {/* <!-- -------- Dropdown List Item ------- --> */}
-            <li class="dropdown">
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-extension'></i>
-                        <span class="name">Plugins</span>
+            <li className="dropdown">
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-extension'></i>
+                        <span className="name">Plugins</span>
                     </a>
-                    <i class='bx bxs-chevron-down'></i>
+                    <i className='bx bxs-chevron-down'></i>
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Plugins</a>
-                    <a href="#" class="link">UI Face</a>
-                    <a href="#" class="link">Pigments</a>
-                    <a href="#" class="link">Box Icons</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Plugins</a>
+                    <a href="#" className="link">UI Face</a>
+                    <a href="#" className="link">Pigments</a>
+                    <a href="#" className="link">Box Icons</a>
                 </div>
             </li>
 
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-compass'></i>
-                        <span class="name">Explore</span>
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-compass'></i>
+                        <span className="name">Explore</span>
                     </a>
-                    {/* <!-- <i class='bx bxs-chevron-down'></i> --> */}
+                    {/* <!-- <i className='bx bxs-chevron-down'></i> --> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Explore</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Explore</a>
                     {/* <!-- submenu links here  --> */}
                 </div>
             </li>
 
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-history'></i>
-                        <span class="name">History</span>
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-history'></i>
+                        <span className="name">History</span>
                     </a>
-                    {/* <!-- <i class='bx bxs-chevron-down'></i> --> */}
+                    {/* <!-- <i className='bx bxs-chevron-down'></i> --> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">History</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">History</a>
                     {/* <!-- submenu links here  --> */}
                 </div>
             </li>
 
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
-                <div class="title">
-                    <a href="#" class="link">
-                        <i class='bx bx-cog'></i>
-                        <span class="name">Settings</span>
+                <div className="title">
+                    <a href="#" className="link">
+                        <i className='bx bx-cog'></i>
+                        <span className="name">Settings</span>
                     </a>
-                    {/* <!-- <i class='bx bxs-chevron-down'></i> --> */}
+                    {/* <!-- <i className='bx bxs-chevron-down'></i> --> */}
                 </div>
-                <div class="submenu">
-                    <a href="#" class="link submenu-title">Settings</a>
+                <div className="submenu">
+                    <a href="#" className="link submenu-title">Settings</a>
                     {/* <!-- submenu links here  --> */}
                 </div>
             </li>
@@ -177,6 +177,7 @@ function Sidebar() {
     {/* <section class="home bg-light">
         <div class="toggle-sidebar" onClick={logoClick}>
             <i class='bx bx-menu'></i>
+
         </div>
     </section> */}
     </div>
