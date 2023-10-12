@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import LoginRegister from './pages/login/LoginRegister';
 import ForgetPassword from "./pages/login/ForgetPassword";
 import Upload from "./pages/upload/Upload";
-import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 import Logout from "./pages/logout";
 import axios from 'axios';
 import {isAuthURL} from './middlewares/requiredLogin';
@@ -35,17 +35,16 @@ function App() {
 		// Check if the current URL is not authenticated and there is no token
 		setNavigator(isAuthURL() === false && !token? true : false);
 	}, []);
-
-
 	return (
 		<div className="App">
 		<Router>
 			<Routes>
-			<Route path="/*" element={<Header user={user}/>} />
-			<Route path="/login" element={<LoginRegister/>} />
-			<Route path="/forget" element={<ForgetPassword />} />
-			<Route path="/upload" element={<Upload />} />
-			<Route path="/logout" element={<Logout />} />
+				
+				<Route path="/*" element={<Sidebar user={user}/>} />
+				<Route path="/login" element={<LoginRegister/>} />
+				<Route path="/forget" element={<ForgetPassword />} />
+				<Route path="/upload" element={<Upload />} />
+				<Route path="/logout" element={<Logout />} />
 			</Routes>
 			{navigator ? <Navigate to="/login" /> : null}
 		</Router>

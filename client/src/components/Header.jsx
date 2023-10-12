@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-
+import '../assets/css/sidebar.css';
 function Header(props) {
     const user = {...props.user};
     const userUI = {
@@ -15,18 +14,8 @@ function Header(props) {
     };
 
 	return (
-		<nav className="navbar navbar-light bg-light justify-content-between">
-		<a className="navbar-brand d-flex align-items-center">
-			<img
-			src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg"
-			width="64"
-			height="64"
-			className="d-inline-block align-top"
-			alt=""
-			/>
-			<h3 className="ml-1">NodeJS-POS</h3>
-		</a>
-		<div className="custom-nav" id="navbarNav">
+		<nav className="navbar navbar-light bg-light nav-custome">
+		<div className="custom-nav-side ml-auto" id="navbarNav">
 			<ul className="navbar-nav navbar-nav-inline">
 			<li className="nav-item active">
 				<span className="badge badge-danger">{userUI.role || 'Role'}</span>
