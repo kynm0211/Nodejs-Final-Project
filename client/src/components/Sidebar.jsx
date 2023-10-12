@@ -28,7 +28,7 @@ function Sidebar({user}) {
         {/* <!-- ========== Logo ============  --> */}
         <a href="#" className="logo-box">
 			<img
-				src="https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg"
+				src="https://cdn-icons-png.flaticon.com/512/919/919825.png"
 				width="64"
 				height="64"
 				className="d-inline-block align-top"
@@ -187,7 +187,6 @@ function Sidebar({user}) {
     <section class="home bg-light">
         <div class="toggle-sidebar" onClick={logoClick}>
             <i class='bx bx-menu'></i>
-            <div class="text">Toggle</div>
         </div>
 		<Header user={user}/>
     </section>

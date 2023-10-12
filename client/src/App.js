@@ -39,7 +39,6 @@ function App() {
 		<div className="App">
 		<Router>
 			<Routes>
-				
 				<Route path="/*" element={<Sidebar user={user}/>} />
 				<Route path="/login" element={<LoginRegister/>} />
 				<Route path="/forget" element={<ForgetPassword />} />
