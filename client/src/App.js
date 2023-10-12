@@ -1,13 +1,10 @@
-import React from "react";
+import React,  { useEffect, useState, Fragment } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { useEffect, useState } from "react";
-import LoginRegister from './pages/login/LoginRegister';
-import ForgetPassword from "./pages/login/ForgetPassword";
-import Upload from "./pages/upload/Upload";
-import Sidebar from "./components/Sidebar";
-import Logout from "./pages/logout";
+import { publicRouters, privateRouters} from './routes';
 import axios from 'axios';
 import {isAuthURL} from './middlewares/requiredLogin';
+
+import { DefaultLayout } from "./components/Layout";
 function App() {
 
 	// Initial Authentication State
@@ -35,19 +32,38 @@ function App() {
 		// Check if the current URL is not authenticated and there is no token
 		setNavigator(isAuthURL() === false && !token? true : false);
 	}, []);
+
 	return (
-		<div className="App">
 		<Router>
-			<Routes>
-				<Route path="/*" element={<Sidebar user={user}/>} />
-				<Route path="/login" element={<LoginRegister/>} />
-				<Route path="/forget" element={<ForgetPassword />} />
-				<Route path="/upload" element={<Upload />} />
-				<Route path="/logout" element={<Logout />} />
-			</Routes>
-			{navigator ? <Navigate to="/login" /> : null}
+			<div className="App">
+				<Routes>
+					{publicRouters.map((route, index) => {
+
+						let Layout = DefaultLayout;
+
+						if(route.layout){
+							Layout = route.layout
+						}else if(route.layout === null){
+							Layout = Fragment;
+						}
+
+						const Page = route.element;
+						return (
+							<Route 
+							key={index} 
+							path={route.path} 
+							element={
+								<Layout user={user}>
+									<Page />
+								</Layout>
+							}
+							/>
+						)
+					})}
+				</Routes>
+				{navigator && <Navigate to="/login" />}
+			</div>
 		</Router>
-		</div>
 	);
 }
 

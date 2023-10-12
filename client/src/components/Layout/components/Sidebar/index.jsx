@@ -1,18 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import '../assets/css/sidebar.css';
-import Header from './Header';
-function Sidebar({user}) {
-
-	const [activeItem, setActiveItem] = useState(null);
-	const listItems = document.querySelectorAll(".sidebar-list li");
-
-	listItems.forEach((item) => {
-		item.addEventListener("click", () => {
-			setActiveItem(item);
-		});
-	});
+import '../../../GlobalStyle/index.css';
+function Sidebar() {
 	const toggleSidebar = () => {
 		const sidebar = document.querySelector(".sidebar");
 		sidebar.classList.toggle("close");
@@ -184,12 +174,11 @@ function Sidebar({user}) {
     </div>
 
     {/* <!-- ============= Home Section =============== --> */}
-    <section class="home bg-light">
+    {/* <section class="home bg-light">
         <div class="toggle-sidebar" onClick={logoClick}>
             <i class='bx bx-menu'></i>
         </div>
-		<Header user={user}/>
-    </section>
+    </section> */}
     </div>
   );
 }

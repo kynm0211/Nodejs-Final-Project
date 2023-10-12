@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
-export const LoginRegister = (props) => {
+export const Login = (props) => {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
 
     const togglePanel = () => {
@@ -88,4 +88,4 @@ export const LoginRegister = (props) => {
     )
 }
 
-export default LoginRegister;
+export default Login;
