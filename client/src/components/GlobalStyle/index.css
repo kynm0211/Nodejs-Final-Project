@@ -8,7 +8,7 @@
     padding: 0;
     box-sizing: border-box;
     list-style: none;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 /* Variables  */
@@ -28,8 +28,11 @@
     height: 100%;
     width: 260px;
     background-color: var(--color_Dark1);
-    transition: all .5s ease;
+    transition: all .3s ease;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 .sidebar.close{
     width: 78px;
@@ -37,15 +40,16 @@
 
 /* --------- Logo ------------ */
 .logo-box {
-    height: 60px;
+    height: 40px;
     width: 100%;
     display: flex;
     align-items: center; /* Vertically center the content */
-    color: var(--color_Light1);
-    transition: all .5s ease;
+    color: var(--color_Dark1);
+    transition: all .3s ease;
+    cursor: pointer;
 }
 .logo-box:hover{
-    color: var(--color_Blue);
+    color: orangered;
 }
 .logo-box i{
     font-size: 30px;
@@ -65,10 +69,14 @@
     display: flex; /* Use flexbox */
     align-items: center; /* Vertically center the text */
 }
+.logo-name:hover{
+    color: orangered;
+}
 
 /* ---------- Sidebar List ---------- */
 .sidebar-list{
     height: 100%;
+    width: 100%;
     padding: 30px 0 150px 0;
     overflow: auto;
 }
@@ -79,7 +87,7 @@
     transition: all .5s ease;
 }
 .sidebar-list li:hover{
-    background-color: var(--color_Dark2);
+    background-color: var(--color_Light1);
 }
 .sidebar-list li .title{
     display: flex;
@@ -89,10 +97,10 @@
     cursor: pointer;
 }
 .sidebar-list li.active .title{
-    background-color: var(--color_Blue);
+    background-color: orangered;
 }
 .sidebar-list li.active .bxs-chevron-down{
-    transition: all .5s ease;
+    transition: all .3s ease;
     transform: rotate(180deg);
 }
 .sidebar-list li .title .link{
@@ -104,13 +112,13 @@
     min-width: 78px;
     text-align: center;
     line-height: 50px;
-    color: var(--color_Light1);
+    color: black;
     font-size: 20px;
 }
 .sidebar-list li .title .name{
     font-size: 18px;
     font-weight: 400;
-    color: var(--color_Light1);
+    color: var(--color_Dark2);
 }
 
 /* ---------------- Submenu ------------- */
@@ -127,10 +135,10 @@
     display: flex;
     flex-direction: column;
     padding: 6px 6px 14px 80px;
-    background-color: var(--color_Dark2);
+    background-color: var(--color_Light2);
 }
 .submenu .link{
-    color: var(--color_Light2);
+    color: var(--color_Dark1);
     font-size: 15px;
     padding: 5px 0;
     transition: all .5s ease;
@@ -192,10 +200,6 @@
     transition: all .5s ease;
     display: flex;
 }
-.sidebar.close ~ .home{
-    left: 78px;
-    width: calc(100% - 78px);
-}
 .home .toggle-sidebar{
     height: 60px;
     display: flex;
@@ -213,11 +217,16 @@
     color: var(--color_Dark1);
     font-weight: 600;
 }
-.nav-custome{
+.nav-custom{
     width: 100%;
+    box-shadow: 0px 1px 10px -2px rgba(0,0,0,0.58);
 }
 
-
+.sidebar-container ~ .content{
+    position: fixed;
+    left: 78px;
+    width: calc(100% - 78px);
+}
 /* ============ Responsive / Breakpoints ========== */
 @media (max-width: 1080px){
     

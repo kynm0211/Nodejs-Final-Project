@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../../GlobalStyle/index.css';
-function Header({user}) {
+function Header({user, layout}) {
 	let tempUser = {
 		name: '',
 		role: '',
@@ -16,7 +16,8 @@ function Header({user}) {
     };
 
 	return (
-		<nav className="navbar navbar-light bg-light nav-custome">
+		<nav className="navbar navbar-light bg-light nav-custom">
+
 		<div className="custom-nav-side ml-auto" id="navbarNav">
 			<ul className="navbar-nav navbar-nav-inline">
 			<li className="nav-item active">
