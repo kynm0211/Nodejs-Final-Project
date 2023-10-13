@@ -4,12 +4,13 @@ const package = require('../middlewares/package');
 const hashPassword = require('../service/hash256');
 const mongoose = require('mongoose');
 const User = mongoose.model('User'); 
-
+// const sendEmail = require('./service/gmailSender');
 
 module.exports = (app) => {
     app.use(bodyParser.urlencoded({ extended: false }));
 
     app.post('/api/admin/create-account-sale', async (req, res) => {
+        const password = "1234567";
         const { nameR, emailR,  roleR  } = req.body;
         console.log(nameR, emailR, roleR)
         // Kiểm tra dữ liệu gửi từ phía máy khách
@@ -33,12 +34,12 @@ module.exports = (app) => {
             password: hashedPassword,
             image: KEY.imageProfileDefault,
             role: roleR,
-            status: "Active",
+            status: "UnActive",
         });
 
         try {
             await newUser.save();
-            return res.json(package(0, "Registration success", null));
+            return res.json(package(0, "Registration success", newUser));
         } catch (error) {
             return res.json(package(11, "Internal error", error));
         }

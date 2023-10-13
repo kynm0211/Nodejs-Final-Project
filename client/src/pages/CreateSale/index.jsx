@@ -7,7 +7,7 @@ export const CreateSale = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");    
-    const password = "1234567"; // Đặt mật khẩu mặc định là "1234567"
+    
 
     function handleRegister(event) {
         event.preventDefault();
@@ -22,7 +22,6 @@ export const CreateSale = (props) => {
             name: name,
             email: email,
             role: role,
-            password: password
         };
 
         // Gửi yêu cầu POST đến máy chủ
