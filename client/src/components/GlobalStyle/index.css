@@ -255,6 +255,11 @@
 .menu__profile-item > i{
     margin-right: 8px;
 }
+.content{
+    padding: 20px;
+    background-color: var(--color_Light1);
+    transition: all .5s ease;
+}
 /* ============ Responsive / Breakpoints ========== */
 @media (max-width: 1080px){
     
