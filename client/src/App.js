@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { publicRouters, privateRouters} from './routes';
 import axios from 'axios';
 import { DefaultLayout } from "./components/Layout";
+import LoadingScreen from "./components/LoadingScreen";
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
   }, [navigator]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 	return (
 		<Router>
