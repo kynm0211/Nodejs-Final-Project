@@ -5,12 +5,12 @@ function DefaultLayout({children, user}) {
     return (
         <Fragment>
             <Sidebar />
-            <container id="container"  style={{ width: 'calc(100% - 78px)', position: 'relative', left: '78px', display: 'block' }}>
+            <div id="container"  style={{ width: 'calc(100% - 78px)', position: 'relative', left: '78px', display: 'block' }}>
                 <Header user={user}/>
                 <div className='content'>
                     {children}
                 </div>
-            </container>
+            </div>
         </Fragment>
     );
 }

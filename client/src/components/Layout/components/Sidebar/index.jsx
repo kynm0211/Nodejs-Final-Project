@@ -13,7 +13,7 @@ function Sidebar() {
       <div className="sidebar close bg-light" onClick={toggleSidebar}>
         {/* <!-- ========== Logo ============  --> */}
         <div className="logo-box" >
-            <i class="fa-solid fa-bars"></i>
+            <i className="fa-solid fa-bars"></i>
             <Link className="logo-name" to="/">NODEJS FINAL</Link>
         </div>
 
@@ -35,14 +35,6 @@ function Sidebar() {
 
         </ul>
     </div>
-
-    {/* <!-- ============= Home Section =============== --> */}
-    {/* <section class="home bg-light">
-        <div class="toggle-sidebar" onClick={logoClick}>
-            <i class='bx bx-menu'></i>
-
-        </div>
-    </section> */}
     </div>
   );
 }

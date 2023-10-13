@@ -6,7 +6,8 @@ import Logout from '../pages/Logout';
 import Setting from '../pages/Setting';
 import Dashboard from '../pages/Dashboard';
 import CreateSale  from '../pages/CreateSale';
-
+import Profile from '../pages/Profile';
+import ChangePassword from '../pages/ChangePassWord';
 // Layouts
 import {HeaderOnly} from '../components/Layout';
 
@@ -19,7 +20,9 @@ export const publicRouters = [
     { path: '/logout', element: Logout, layout: null},
     { path: '/setting', element: Setting},
     { path: '/dashboard', element: Dashboard},
-    { path: '/admin/create-sale', element: CreateSale}
+    { path: '/admin/create-sale', element: CreateSale},
+    { path: '/profile', element: Profile},
+    { path: '/change-password', element: ChangePassword},
 ];
 
 export const privateRouters = [];
