@@ -2,11 +2,11 @@ import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginRegister from './pages/login/LoginRegister';
 import ForgetPassword from "./pages/login/ForgetPassword";
-import Upload from "./pages/upload/Upload";
-import Sidebar from "./components/Sidebar";
 import Logout from "./pages/logout";
+import Sidebar from "./components/Sidebar";
 import axios from 'axios';
-import { isAuthURL } from './middlewares/requiredLogin';
+import Upload from './pages/upload';
+import Admin from './pages/admin/';
 
 function App() {
   // Initial Authentication State
@@ -39,6 +39,7 @@ function App() {
 
   return (
     <div className="App">
+
       <Router>
         <Routes>
 			<Route path="/*" element={
@@ -50,19 +51,37 @@ function App() {
               </Fragment>
             }
           />
-		  <Route path="/admin/*" element={<Sidebar user={user} />} />
-		  <Route path="/saleperson/*" element={<Sidebar user={user} />} />
-		  <Route path="/customer/*" element={<Sidebar user={user} />} />
+		  	<Route path="/admin/*" element={
+				<Fragment>
+					{user && user.role !== 'Administrator' ? <Navigate to='/' /> : null}
+					<Admin user={user}/>
+				</Fragment>
+		  		}
+			/>
+		  <Route path="/sale-person/*" element={
+		  		<Fragment>
+				  {user && user.role !== 'Saleperson' ? <Navigate to='/' /> : null}
+				  	<Admin user={user}/>
 
+				</Fragment>
+				}
+		  />
+		  <Route path="/customer/*" element={
+		  		<Fragment>
+				  {user && user.role !== 'Customer' ? <Navigate to='/' /> : null}
+				  	<Admin user={user}/>
 
+				</Fragment>
+				}
+		  />
           <Route path="/login" element={
 			  <Fragment>
 				{user !== null ? <Navigate to='/' /> : <Navigate to="/login" />}
 				<LoginRegister /> 
 			  </Fragment>}
 		  />
+		  
           <Route path="/forget" element={<ForgetPassword />} />
-          <Route path="/admin/upload" element={<Upload />} />
           <Route path="/logout" element={<Logout />} />
 		  
         </Routes>

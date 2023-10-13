@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import '../assets/css/sidebar.css';
 import Header from './Header';
-import Content from './Content';
-function Sidebar({user}) {
+function Sidebar(props) {
+
+    const { user, onItemClick, selectedMenuItem } = props;
 
 	const [activeItem, setActiveItem] = useState(null);
 	const listItems = document.querySelectorAll(".sidebar-list li");
@@ -44,7 +45,7 @@ function Sidebar({user}) {
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <li>
                 <div className="title">
-                    <a href="#" className="link">
+                    <a onClick={() => onItemClick('upload')} className="link">
                         <i className='bx bx-grid-alt'></i>
                         <span className="name">Dashboard</span>
                     </a>
