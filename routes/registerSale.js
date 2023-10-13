@@ -3,20 +3,17 @@ const KEY = require('../config/key');
 const package = require('../middlewares/package');
 const hashPassword = require('../service/hash256');
 const mongoose = require('mongoose');
-const User = require('../models/User'); // Import the User model
+const User = mongoose.model('User'); 
 
-const multer = require('multer');
-const upload = multer();
 
 module.exports = (app) => {
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(upload.none());
 
-    app.post('/api/register', async (req, res) => {
-        const { name, email, password, image, role, status } = req.body;
+    app.post('/api/admin/create-account-sale', async (req, res) => {
+        const { nameR, emailR, passwordR, image, role, status } = req.body;
 
         // Kiểm tra dữ liệu gửi từ phía máy khách
-        if (!name || !email || !password || !image || !role || !status) {
+        if (!nameR || !emailR || !roleR ) {
             return res.json(package(1, "Missing required fields", null));
         }
 
@@ -34,9 +31,9 @@ module.exports = (app) => {
             name: name,
             email: email,
             password: hashedPassword,
-            image: image,
+            image: KEY.imageProfileDefault,
             role: role,
-            status: status,
+            status: "Active",
         });
 
         try {

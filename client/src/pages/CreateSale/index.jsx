@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
 export const CreateSale = (props) => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [role, setRole] = useState("");    
+    const password = "1234567"; // Đặt mật khẩu mặc định là "1234567"
+
     function handleRegister(event) {
         event.preventDefault();
-        const name = document.getElementById("nameR").value;
-        const email = document.getElementById("emailR").value;
-        const password = document.getElementById("passwordR").value;
-        const role = document.getElementById("roleR").value;
-    
-        // Tạo một đối tượng chứa dữ liệu đăng ký
+
+        // Kiểm tra và xử lý lỗi ở đây nếu cần
+        if (email.length < 1) {
+            console.error("Please provide your email!");
+            return;
+        }
+
         const userData = {
             name: name,
             email: email,
             role: role,
+            password: password
         };
-        
+
         // Gửi yêu cầu POST đến máy chủ
-        axios.post('/api/register', userData)
+        axios.post('/api/admin/create-account-sale', userData)
             .then(response => {
                 const res = response.data;
                 if (res.code === 0) {
@@ -29,7 +36,7 @@ export const CreateSale = (props) => {
                     window.location.href = '/';
                 } else {
                     // Xử lý lỗi nếu đăng ký không thành công
-                    console.log(res.message);
+                    console.error(res.message);
                 }
             })
             .catch(error => {
@@ -39,7 +46,7 @@ export const CreateSale = (props) => {
 
     return (
         <div id="bodyLogin">
-            <div className="container right-panel-active" id="container">
+            <div className={`container right-panel-active`} id="container">
                 <div className="form-container sign-up-container">
                     <form onSubmit={handleRegister}>
                         <h1>Create Account</h1>
@@ -49,9 +56,27 @@ export const CreateSale = (props) => {
                             <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
                         </div>
                         <span>or use your email for registration</span>
-                        <input name="nameR" id="nameR" type="text" placeholder="Name" />
-                        <input name="emailR" id="emailR" type="email" placeholder="Email" />
-                        <input name="roleR" id="roleR" type="text" placeholder="Role" />
+                        <input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            name="nameR"
+                            type="text"
+                            placeholder="Name"
+                        />
+                        <input
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            name="emailR"
+                            type="email"
+                            placeholder="Email"
+                        />
+                        <input
+                            value={role}
+                            onChange={(e) => setRole(e.target.value)}
+                            name="roleR"
+                            type="text"
+                            placeholder="Role"
+                        />
                         <button>Sign Up</button>
                     </form>
                 </div>
@@ -65,7 +90,8 @@ export const CreateSale = (props) => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
+
 
 export default CreateSale;
