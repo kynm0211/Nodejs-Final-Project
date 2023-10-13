@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import '../assets/css/sidebar.css';
-function Header(props) {
-    const user = {...props.user};
-    const userUI = {
-      name: user && user.name || '',
-      role: user && user.role || '',
-      image: user && user.image || '',
-    }
+import '../../../GlobalStyle/index.css';
+function Header({user}) {
+	let tempUser = {
+		name: '',
+		role: '',
+		image: '',
+	}
+	if(user) {
+		tempUser = user;
+	}
     const [options, setOptions] = useState(false);
 
     const toggleMenu = () => {
@@ -18,12 +20,12 @@ function Header(props) {
 		<div className="custom-nav-side ml-auto" id="navbarNav">
 			<ul className="navbar-nav navbar-nav-inline">
 			<li className="nav-item active">
-				<span className="badge badge-danger">{userUI.role || 'Role'}</span>
+				<span className="badge badge-danger">{tempUser.role}</span>
 			</li>
 
 			<li className="nav-item" onClick={toggleMenu}>
-				{userUI.name || 'User'}
-				<img className="p-1 mx-2" src={userUI.image} height="40" width="40" alt="User Avatar" />
+				{tempUser.name}
+				<img className="p-1 mx-2" src={tempUser.image} height="40" width="40" alt="User Avatar" />
 				{options && (
 				<ul className="navbar-nav position-absolute menu__profile">
 					<li className="nav-item menu__profile-item">

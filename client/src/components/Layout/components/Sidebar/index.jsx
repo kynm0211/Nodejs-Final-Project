@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import '../assets/css/sidebar.css';
-import Header from './Header';
-function Sidebar(props) {
-
-    const { user, onItemClick, selectedMenuItem } = props;
-
-	const [activeItem, setActiveItem] = useState(null);
-	const listItems = document.querySelectorAll(".sidebar-list li");
-
-	listItems.forEach((item) => {
-		item.addEventListener("click", () => {
-			setActiveItem(item);
-		});
-	});
+import '../../../GlobalStyle/index.css';
+function Sidebar() {
 	const toggleSidebar = () => {
 		const sidebar = document.querySelector(".sidebar");
 		sidebar.classList.toggle("close");
@@ -29,16 +17,17 @@ function Sidebar(props) {
       <div className="sidebar close" onClick={toggleSidebar}>
         {/* <!-- ========== Logo ============  --> */}
         <a href="#" className="logo-box">
-			<img
-				src="https://cdn-icons-png.flaticon.com/512/919/919825.png"
-				width="64"
-				height="64"
-				className="d-inline-block align-top"
-				alt=""
-			/>
+            <img
+                src={process.env.PUBLIC_URL + '/MenuWhite.png'}
+                width="64"
+                height="64"
+                className="d-inline-block align-top ml-1"
+                alt=""
+            />
 
-			<div className="logo-name">NodeJS</div>
-		</a>
+            <div className="logo-name">MENU</div>
+        </a>
+
 
         {/* <!-- ========== List ============  --> */}
         <ul className="sidebar-list">
@@ -186,12 +175,12 @@ function Sidebar(props) {
     </div>
 
     {/* <!-- ============= Home Section =============== --> */}
-    <section className="home bg-light">
-        <div className="toggle-sidebar" onClick={logoClick}>
-            <i className='bx bx-menu'></i>
+    {/* <section class="home bg-light">
+        <div class="toggle-sidebar" onClick={logoClick}>
+            <i class='bx bx-menu'></i>
+
         </div>
-		<Header user={user}/>
-    </section>
+    </section> */}
     </div>
   );
 }
