@@ -10,21 +10,26 @@ export const CreateSale = (props) => {
         const email = document.getElementById("emailR").value;
         const password = document.getElementById("passwordR").value;
         const role = document.getElementById("roleR").value;
-
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('role', role);
-
-        axios.post('/api/register', formData)
+    
+        // Tạo một đối tượng chứa dữ liệu đăng ký
+        const userData = {
+            name: name,
+            email: email,
+            role: role,
+        };
+        
+        // Gửi yêu cầu POST đến máy chủ
+        axios.post('/api/register', userData)
             .then(response => {
                 const res = response.data;
                 if (res.code === 0) {
+                    // Đăng ký thành công
                     const token = res.data.token;
                     localStorage.setItem('token', token);
                     window.location.href = '/';
                 } else {
-                    console.log(res);
+                    // Xử lý lỗi nếu đăng ký không thành công
+                    console.log(res.message);
                 }
             })
             .catch(error => {
