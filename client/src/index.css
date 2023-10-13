@@ -1,3 +1,24 @@
+/* Webkit (Safari and Chrome) scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: orangered; /* color of the thumb */
+  border-radius: 4px; /* roundness of the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the track */
+}
+
+/* Firefox scrollbar */
+/* Note: You may need to use the Gecko engine prefix for Firefox, depending on the version. */
+/* For example, it could be ::-webkit-scrollbar-thumb for some versions. */
+* {
+  scrollbar-color: orangered #f1f1f1;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
