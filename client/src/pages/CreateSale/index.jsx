@@ -2,43 +2,40 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
-
+import './CreateSale.css';
 export const CreateSale = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("");    
-    
 
     function handleRegister(event) {
         event.preventDefault();
 
-        // Kiểm tra và xử lý lỗi ở đây nếu cần
-        if (email.length < 1) {
-            console.error("Please provide your email!");
+        if (!name || !email || !role) {
+            console.error("Please provide all required information.");
             return;
         }
 
-        const userData = new FormData();
-        userData.append('name', name);
-        userData.append('email', email);
-        userData.append('role', role);  
+        const userData = {
+            name: name,
+            email: email,
+            role: role
+        };
 
-        // Gửi yêu cầu POST đến máy chủ
         axios.post('/api/admin/create-account-sale', userData)
             .then(response => {
                 const res = response.data;
+                console.log(res.data)
                 if (res.code === 0) {
-                    // Đăng ký thành công
                     const token = res.data.token;
                     localStorage.setItem('token', token);
                     window.location.href = '/';
                 } else {
-                    // Xử lý lỗi nếu đăng ký không thành công
                     console.error(res.message);
                 }
             })
             .catch(error => {
-                console.error('Đăng ký thất bại', error);
+                console.error('Registration failed', error);
             });
     }
 
@@ -57,24 +54,62 @@ export const CreateSale = (props) => {
                         <input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            name="nameR"
+                            name="name"
                             type="text"
                             placeholder="Name"
+                            id="name"
                         />
                         <input
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            name="emailR"
+                            name="email"
                             type="email"
                             placeholder="Email"
+                            id="email"
                         />
-                        <input
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            name="roleR"
-                            type="text"
-                            placeholder="Role"
-                        />
+                        <div class="radio-buttons">
+                            <div class="form-check form-check-inline">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    id="administrator"
+                                    name="role"
+                                    value="administrator"
+                                    checked={role === "administrator"}
+                                    onChange={(e) => setRole(e.target.value)}
+                                />
+                                <label class="form-check-label" for="administrator">Admin</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    id="sale"
+                                    name="role"
+                                    value="sale"
+                                    checked={role === "sale"}
+                                    onChange={(e) => setRole(e.target.value)}
+                                />
+                                <label class="form-check-label" for="sale">Sale</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    id="customer"
+                                    name="role"
+                                    value="customer"
+                                    checked={role === "customer"}
+                                    onChange={(e) => setRole(e.target.value)}
+                                />
+                                <label class="form-check-label" for="customer">Customer</label>
+                            </div>
+                        </div>
+
+
+
                         <button>Sign Up</button>
                     </form>
                 </div>
