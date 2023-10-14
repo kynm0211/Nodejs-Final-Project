@@ -1,4 +1,3 @@
-import Home from '../pages/Home';
 import ForgetPassword from '../pages/ForgetPassword';
 import Upload from '../pages/Upload';
 import Login from '../pages/Login';
@@ -8,12 +7,13 @@ import Dashboard from '../pages/Dashboard';
 import CreateSale  from '../pages/CreateSale';
 import Profile from '../pages/Profile';
 import ChangePassword from '../pages/ChangePassWord';
+import UserList from '../pages/UserList';
 // Layouts
 import {HeaderOnly} from '../components/Layout';
 
 
 export const publicRouters = [
-    { path: '/', element: Home},
+    { path: '/', element: Dashboard},
     { path: '/forget', element: ForgetPassword, layout: null},
     { path: '/upload', element: Upload, layout: HeaderOnly},
     { path: '/login', element: Login, layout: null},
@@ -23,6 +23,7 @@ export const publicRouters = [
     { path: '/admin/create-sale', element: CreateSale},
     { path: '/profile', element: Profile},
     { path: '/change-password', element: ChangePassword},
+    { path: '/admin/user-list', element: UserList},
 ];
 
 export const privateRouters = [];
