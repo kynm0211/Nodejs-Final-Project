@@ -24,7 +24,7 @@ function Sidebar() {
             <ItemSidebar title="Create Account" url="/admin/create-sale" icon="fa-solid fa-plus"/>
             <ItemSidebar title="User List" url="/admin/user-list" icon="fa-solid fa-rectangle-list"/>
             {/* <!-- -------- Dropdown List Item ------- --> */}
-            <ItemSidebar title="Component 1" url="/components" icon="fa-solid fa-plus">
+            <ItemSidebar title="Component 1" url="/components" icon="fa-solid fa-envelope">
                 <ItemDropDown title="Phụ" url="/components1" iconName="plus"/>
                 <ItemDropDown title="Phụ" url="/components1" />
                 <ItemDropDown title="Phụ" url="/components1" />
