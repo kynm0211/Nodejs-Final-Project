@@ -92,3 +92,14 @@ p {
   font-size: 1.5rem;
   color: #333; /* Dark gray text color */
 }
+button{
+  text-transform: unset !important; 
+}
+input{
+  margin: 0 !important;
+}
+.input-cus-name{
+  background-color: transparent !important;
+  width: 100% !important;
+  font-size: 2rem;
+}

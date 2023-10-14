@@ -6,12 +6,10 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-const multer = require('multer');
-const upload = multer();
 
 module.exports = (app) =>{
+    app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(upload.none());
 
     app.get('/api/login', (req, res)=>{
         // Show does not suppot GET method
@@ -20,8 +18,8 @@ module.exports = (app) =>{
 
     app.post('/api/login', async (req, res)=>{
         
-
-        const {email, password} = req.body;
+        const email = req.body.email;
+        const password = req.body.password;
         console.log("Account " + email + " " + password);
         // Check fields
         

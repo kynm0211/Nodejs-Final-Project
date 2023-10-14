@@ -16,23 +16,28 @@ export const Login = (props) => {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
     
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('password', password);
-
-        axios.post('/api/login', formData)
-        .then(response => {
-            const res = response.data;
-            if(res.code === 0){
-                const token = res.data.token;
-                localStorage.setItem('token', token);
-                window.location.href = '/';
-            }else{
-                console.log(res);
+        const data = {
+            email: email,
+            password: password,
+        };
+          
+        axios.post('/api/login', data, {
+            headers: {
+              'Content-Type': 'application/json',
             }
         })
-        .catch(error => {
-            console.error('Đăng nhập thất bại', error);
+            .then(response => {
+                const res = response.data;
+                if (res.code === 0) {
+                    const token = res.data.token;
+                    localStorage.setItem('token', token);
+                    window.location.href = '/';
+                } else {
+                    console.log(res);
+                }
+        })
+          .catch(error => {
+            console.error('Login failed', error);
         });
     }
     return (
@@ -63,7 +68,7 @@ export const Login = (props) => {
                             <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
                         </div>
                         <span>or use your account</span>
-                        <input id="email" name="email" type="email" placeholder="Email" />
+                        <input  className="mb-2" id="email" name="email" type="email" placeholder="Email" />
                         <input id="password" name="password" type="password" placeholder="Password" />
                         <a href="/forget">Forgot your password?</a>
                         <button onClick={handleLogin}>Sign In</button>
