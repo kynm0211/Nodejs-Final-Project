@@ -1,4 +1,3 @@
-import Home from '../pages/Home';
 import ForgetPassword from '../pages/ForgetPassword';
 import Upload from '../pages/Upload';
 import Login from '../pages/Login';
@@ -13,7 +12,7 @@ import {HeaderOnly} from '../components/Layout';
 
 
 export const publicRouters = [
-    { path: '/', element: Home},
+    { path: '/', element: Dashboard},
     { path: '/forget', element: ForgetPassword, layout: null},
     { path: '/upload', element: Upload, layout: HeaderOnly},
     { path: '/login', element: Login, layout: null},
