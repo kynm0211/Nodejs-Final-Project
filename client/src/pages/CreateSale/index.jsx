@@ -29,7 +29,6 @@ export const CreateSale = (props) => {
                 if (res.code === 0) {
                     const token = res.data.token;
                     localStorage.setItem('token', token);
-                    window.location.href = '/';
                 } else {
                     console.error(res.message);
                 }
