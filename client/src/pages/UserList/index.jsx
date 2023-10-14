@@ -3,7 +3,7 @@ function UserList() {
         <div>
             <div className="card rounded">
                 <div className="card-header bg-success text-white text-center">
-                    <h3>User List</h3>
+                    <h3>Manage user lists</h3>
                 </div>
                 <div className="card-body">
                     <div className="row">
