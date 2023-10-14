@@ -11,15 +11,15 @@ module.exports = (app) => {
 
     app.post('/api/admin/create-account-sale', async (req, res) => {
         const password = "1234567";
-        const { nameR, emailR,  roleR  } = req.body;
-        console.log(nameR, emailR, roleR)
+        const { name, email,  role  } = req.body;
+        console.log(name, email, role)
         // Kiểm tra dữ liệu gửi từ phía máy khách
-        if (!nameR || !emailR || !roleR ) {
+        if (!name || !email || !role ) {
             return res.json(package(1, "Missing required fields", null));
         }
 
         // Kiểm tra email đã tồn tại trong cơ sở dữ liệu
-        const existingUser = await User.findOne({ emailR });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.json(package(9, "Email already exists", null));
         }
@@ -29,12 +29,12 @@ module.exports = (app) => {
 
         // Tạo một đối tượng User mới và lưu vào cơ sở dữ liệu
         const newUser = new User({
-            name: nameR,
-            email: emailR,
+            name: name,
+            email: email,
             password: hashedPassword,
             image: KEY.imageProfileDefault,
-            role: roleR,
-            status: "UnActive",
+            role: role,
+            status: "InActive",
         });
 
         try {

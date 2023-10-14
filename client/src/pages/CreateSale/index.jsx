@@ -18,11 +18,10 @@ export const CreateSale = (props) => {
             return;
         }
 
-        const userData = {
-            name: name,
-            email: email,
-            role: role,
-        };
+        const userData = new FormData();
+        userData.append('name', name);
+        userData.append('email', email);
+        userData.append('role', role);  
 
         // Gửi yêu cầu POST đến máy chủ
         axios.post('/api/admin/create-account-sale', userData)
