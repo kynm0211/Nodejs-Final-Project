@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../../GlobalStyle/index.css';
-import PofileMenu from './ProfileMenu';
+import ProfileMenu from './ProfileMenu';
 function Header({user, layout}) {
 	let tempUser = {
 		name: '',
@@ -28,7 +28,7 @@ function Header({user, layout}) {
 			<li className="nav-item" onClick={toggleMenu}>
 				{tempUser.name}
 				<img className="p-1 mx-2 rounded-circle border border-success" src={tempUser.image} height="40" width="40" alt="User Avatar" />
-				{options && <PofileMenu />}
+				{options && <ProfileMenu />}
 			</li>
 			</ul>
 		</div>
