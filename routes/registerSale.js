@@ -4,8 +4,6 @@ const package = require('../middlewares/package');
 const hashPassword = require('../service/hash256');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const axios = require('axios');
-const { v4: uuidv4 } = require('uuid');
 module.exports = (app) => {
     app.use(bodyParser.urlencoded({ extended: false }));
 
