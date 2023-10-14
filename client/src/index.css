@@ -103,3 +103,7 @@ input{
   width: 100% !important;
   font-size: 2rem;
 }
+.center-table {
+  display: flex;
+  justify-content: center;
+}
