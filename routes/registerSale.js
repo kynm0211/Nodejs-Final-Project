@@ -42,13 +42,13 @@ module.exports = (app) => {
             await newUser.save();
             
             // Tạo một mã thông báo đăng nhập (có thể sử dụng mã ngẫu nhiên)
-            const loginToken = uuidv4();
+            // const loginToken = ;
 
             // Tạo liên kết đăng nhập
-            const loginLink = `http://localhost:3000/login?token=${loginToken}`;
+            // const loginLink = `http://localhost:3000/login?token=${loginToken}`;
 
             // Gửi email thông báo với liên kết đăng nhập
-            await axios.post('/api/admin/send-login-link', { toEmail: email, loginLink });
+            // await axios.post('/api/admin/send-login-link', { toEmail: email, loginLink });
             
             return res.json(package(0, "Registration success", newUser));
         } catch (error) {
