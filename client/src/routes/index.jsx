@@ -7,6 +7,7 @@ import Dashboard from '../pages/Dashboard';
 import CreateSale  from '../pages/CreateSale';
 import Profile from '../pages/Profile';
 import ChangePassword from '../pages/ChangePassWord';
+import UserList from '../pages/UserList';
 // Layouts
 import {HeaderOnly} from '../components/Layout';
 
@@ -22,6 +23,7 @@ export const publicRouters = [
     { path: '/admin/create-sale', element: CreateSale},
     { path: '/profile', element: Profile},
     { path: '/change-password', element: ChangePassword},
+    { path: '/admin/user-list', element: UserList},
 ];
 
 export const privateRouters = [];
