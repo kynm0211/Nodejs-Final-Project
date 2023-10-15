@@ -6,17 +6,17 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../service/gmailSender');
-
+const dateTime = require('../service/getCurrentTime');
 module.exports = (app) => {
     app.use(bodyParser.json()); // Sử dụng body-parser
 
     app.post('/api/admin/create-account-sale', async (req, res) => {
-        const password = "1234567";
         const name = req.body.name;
         const email = req.body.email;
-        const role = req.body.role;
+        const username = extractUsername(email);
+        const password = username;
 
-        if (!name || !email || !role) {
+        if (!name || !email || !password) {
             return res.json(package(1, "Missing required fields", null));
         }
 
@@ -28,18 +28,21 @@ module.exports = (app) => {
         const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
 
         const newUser = new User({
+            username: username,
             name: name,
             email: email,
             password: hashedPassword,
             image: KEY.imageProfileDefault,
-            role: role,
+            role: 'Sale person',
             status: "InActive",
         });
 
         try {
             await newUser.save();
 
-            const token = jwt.sign({ userId: newUser._id }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
+            // Create token for login
+            newUser.time = dateTime;
+            const token = jwt.sign({ newUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
 
             const loginLink = `http://localhost:3000/direct?token=${token}`;
             console.log(loginLink);
@@ -53,4 +56,19 @@ module.exports = (app) => {
             return res.json(package(11, "Internal error", error));
         }
     });
+    function extractUsername(email) {
+		if (typeof email !== 'string') {
+			return null; // Handle cases where the input is not a string
+		}
+	
+		const pattern = /^([^@]+)@/;
+		const match = email.match(pattern);
+	
+		if (match) {
+			const capturedText = match[1];
+			return capturedText.toLowerCase().trim();
+		} else {
+			return null; // Handle cases where the email doesn't match the expected pattern
+		}
+	}
 };

@@ -18,23 +18,16 @@ module.exports = (app) =>{
 
     app.post('/api/login', async (req, res)=>{
         
-        const email = req.body.email;
+        const username = req.body.username;
         const password = req.body.password;
-        console.log("Account " + email + " " + password);
+        console.log("Account " + username + " " + password);
         // Check fields
         
-        if(!email || email.length < 1){
-            res.json(package(7, "Please provide your email!", null));
+        if(!username || username.length < 1){
+            res.json(package(7, "Please provide your username!", null));
             return;
         }else if(!password || password.length < 1){
             res.json(package(8, "Please provide your password!", null));
-            return;
-        }
-
-        // Check email format
-        const regex = /\S+@\S+\.\S+/;
-        if(!regex.test(email)){
-            res.json(package(2, "Invalid email format", null));
             return;
         }
 
@@ -49,15 +42,15 @@ module.exports = (app) =>{
         // Check email and password in DB
         const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
         const user = {
-            email: email,
+            username: username,
             password: hashedPassword,
         }
 
         try {
-            const userDB = await User.findOne({ email });
+            const userDB = await User.findOne({ username });
         
             if (!userDB) {
-              res.json(package(10, "Invalid email or password", null));
+              res.json(package(10, "Invalid username or password", null));
               return;
             }
         
@@ -74,7 +67,7 @@ module.exports = (app) =>{
                 );
                 return;
             } else {
-                res.json(package(10, "Invalid email or password", null));
+                res.json(package(10, "Invalid username or password", null));
                 return;
             }
         } catch (error) {

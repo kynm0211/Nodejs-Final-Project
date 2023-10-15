@@ -11,6 +11,7 @@ function Profile() {
 
   	const [rsUser, setRsUser] = useState({});
   	const [user, setUser] = useState({
+		username: "",
 		name: "",
 		role: "",
 		email: "",
@@ -108,11 +109,12 @@ function Profile() {
       .then((response) => {
         const data = response.data;
         setUser({
-          name: data.name,
-          role: data.role,
-          email: data.email,
-          status: data.status,
-          image: data.image,
+			username: data.username,
+        	name: data.name,
+        	role: data.role,
+        	email: data.email,
+        	status: data.status,
+        	image: data.image,
         });
         setRsUser(user);
       })
@@ -183,6 +185,10 @@ function Profile() {
 						></i>
 						)}
 					</div>
+					<h5>
+						<span className="p-2 mr-2 badge badge-secondary">Username</span>
+						<span className="p-2 badge badge-info">{user.username}</span>
+					</h5>
 					<h5>
 						<span className="p-2 mr-2 badge badge-secondary">Email</span>
 						<span className="p-2 badge badge-info">{user.email}</span>

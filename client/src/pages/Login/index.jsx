@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import './LoginRegister.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 export const Login = (props) => {
-    const [isSignUpActive, setIsSignUpActive] = useState(false);
-
-    const togglePanel = () => {
-        setIsSignUpActive(!isSignUpActive);
-    };
+    const [login, setLogin] = useState(false);
+    const [error, setError] = useState(null);
 
     function handleLogin(event) {
+        setLogin(true);
+        setError(null);
+
         event.preventDefault();
-        const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
     
         const data = {
-            email: email,
+            username: username,
             password: password,
         };
           
@@ -33,60 +32,46 @@ export const Login = (props) => {
                     localStorage.setItem('token', token);
                     window.location.href = '/';
                 } else {
-                    console.log(res);
+                    setError(res.message);
                 }
+                setLogin(false);
         })
           .catch(error => {
-            console.error('Login failed', error);
+            setError(error);
+            setLogin(false);
         });
     }
     return (
-        <div id="bodyLogin">
-            <div className={`container ${isSignUpActive ? 'right-panel-active' : ''}`} id="container">
-                <div className="form-container sign-up-container">
+        <div className="wrapper fadeInDown d-flex align-items-center">
+            <div id="formContent">
+                {/* Tabs Titles */}
+                <h2 className="active login_title">Sign In</h2>
+                {/* Icon */}
+                <div className="fadeIn first">
+                <img 
+                    src="https://firebasestorage.googleapis.com/v0/b/nodejs-final-8bdf4.appspot.com/o/919825.png?alt=media&token=29bd9385-a5f1-4e95-ab7b-86747f4d62f9"
+                    id="icon"
+                    alt="User Icon"
+                    className="my-3"
+                    />
+                </div>
 
-                    <form action="/api/register" method="post">
-                        <h1>Create Account</h1>
-                        <div className="social-container">
-                            <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
-                            <a href="#" className="social"><FontAwesomeIcon icon={faGoogle} /></a>
-                            <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
-                        </div>
-                        <span>or use your email for registration</span>
-                        <input name="nameR" type="text" placeholder="Name" />
-                        <input name="emailR" type="email" placeholder="Email" />
-                        <input name="passwordR" type="password" placeholder="Password" />
-                        <button>Sign Up</button>
-                    </form>
-                </div>
-                <div className="form-container sign-in-container">
-                    <form>
-                        <h1>Sign in</h1>
-                        <div className="social-container">
-                            <a href="#" className="social"><FontAwesomeIcon icon={faFacebook} /></a>
-                            <a href="#" className="social"><FontAwesomeIcon icon={faGoogle} /></a>
-                            <a href="#" className="social"><FontAwesomeIcon icon={faTwitter} /></a>
-                        </div>
-                        <span>or use your account</span>
-                        <input  className="mb-2" id="email" name="email" type="email" placeholder="Email" />
-                        <input id="password" name="password" type="password" placeholder="Password" />
-                        <a href="/forget">Forgot your password?</a>
-                        <button onClick={handleLogin}>Sign In</button>
-                    </form>
-                </div>
-                <div className="overlay-container">
-                    <div className="overlay">
-                        <div className="overlay-panel overlay-left">
-                            <h1>Final Project<br />NodeJS</h1>
-                            <p>Already have account? <br />Click the button bellow:</p>
-                            <button className="ghost" onClick={togglePanel}>Sign In</button>
-                        </div>
-                        <div className="overlay-panel overlay-right">
-                            <h1>Final Project<br />NodeJS</h1>
-                            <p>Don't have account? <br />Click the button bellow:</p>
-                            <button className="ghost" onClick={togglePanel}>Sign Up</button>
-                        </div>
-                    </div>
+                {/* Login Form */}
+                <form>
+                    <input type="text" id="username" className="fadeIn second" name="username" placeholder="username" />
+                    <input type="password" id="password" className="fadeIn third" name="password" placeholder="password" />
+                    <input type="submit" id="login-btn" onClick={handleLogin} className="fadeIn fourth" value="Log In" disabled={login}/>
+                    {error && <div className="alert alert-success">
+                        <strong>Error!</strong> {error}
+                    </div>}
+                </form>
+                {login && <img src="https://firebasestorage.googleapis.com/v0/b/nodejs-final-8bdf4.appspot.com/o/Dual%20Ring-1s-200px.gif?alt=media&token=1b30beed-915f-4d8d-b44e-e00514500cb4&_gl=1*4r51lr*_ga*NzkyMjQ3NDYxLjE2OTY5MjkyODU.*_ga_CW55HF8NVT*MTY5NzM4MzM4NS43LjEuMTY5NzM4NDE3OC40OS4wLjA."
+                    width={50}
+                />}                
+
+                {/* Remind Password */}
+                <div id="formFooter" className="mt-4">
+                    <Link className="underlineHover" to="/forget">Forgot Password?</Link>
                 </div>
             </div>
         </div>

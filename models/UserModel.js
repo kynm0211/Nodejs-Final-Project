@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 // Define the User
 const UserSchema = new mongoose.Schema({
+    username:{
+        type: 'string',
+        required: true,
+        unique: true
+    },
     name: {
         type: 'string',
         required: true

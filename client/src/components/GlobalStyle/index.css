@@ -250,7 +250,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-size: 1.5rem;
 }
 .menu__profile-item > i{
     margin-right: 8px;
