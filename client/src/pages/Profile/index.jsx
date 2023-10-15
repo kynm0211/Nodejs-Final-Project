@@ -7,6 +7,7 @@ function Profile() {
   	const [isUpdated, setIsUpdated] = useState(false);
   	const [fileImage, setFileImage] = useState(null);
 	const [avatarUpdated, setAvatarUpdated] = useState(false);
+	const [updateState, setUpdateState] = useState(null);
 
   	const [rsUser, setRsUser] = useState({});
   	const [user, setUser] = useState({
@@ -74,6 +75,7 @@ function Profile() {
   };
   
   const updateUserProfile = async () => {
+	setUpdateState(true);
 	if(fileImage){
 		const avatarUrl = await handleUpdateAvatar();
 		if (avatarUrl === null) {
@@ -92,6 +94,7 @@ function Profile() {
 		.then((response) => {
 			setIsUpdated(false);
 			setIsModalOpen(true);
+			setUpdateState(false);
 		})
 		.catch((error) => {
 			console.error('Error updating user profile:', error);
@@ -205,16 +208,19 @@ function Profile() {
 					</div>
 					<div className="col-auto">
 						<button
-						onClick={updateUserProfile}
-						type="button"
-						className="btn btn-warning mr-2 my-1"
+							onClick={updateUserProfile}
+							type="button"
+							className="btn btn-warning mr-2 my-1"
+							disabled={updateState}
 						>
-						<i className="fa-solid fa-check mr-1"></i>Update
+							{updateState ? <i class="fa-solid fa-spinner mr-1"></i> : <i className="fa-solid fa-check mr-1"></i>}
+							<span>Update</span>
 						</button>
 						<button
-						onClick={() => setIsUpdated(false)}
-						type="button"
-						className="btn btn-primary my-1"
+							onClick={() => setIsUpdated(false)}
+							type="button"
+							className="btn btn-primary my-1"
+							disabled={updateState}
 						>
 						<i className="fa-solid fa-ban mr-1"></i>Cancel
 						</button>
@@ -231,16 +237,10 @@ function Profile() {
 				title="Notification"
 				button_title="Logout"
 				>
-					Your account has been updated successfully!
+					Your account has been updated successfully!<br/>
 					<strong>Please logout right now and re-login to the system for updating of newest information!!!</strong>
 			</ModalDialog>
 		}
-		<ModalDialog
-				onValueChange={handleModalOpen}
-				title="Uploading"
-				button_title="Logout"
-				>
-		</ModalDialog>
 	</Fragment>
 
     
