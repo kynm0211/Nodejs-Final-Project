@@ -16,6 +16,12 @@ module.exports = (app) => {
         const username = extractUsername(email);
         const password = username;
 
+        // check email format
+        const regex = /\S+@\S+\.\S+/;
+        if (!regex.test(email)) {
+            return res.json(package(2, "Invalid email format", null));
+        }
+           
         if (!name || !email || !password) {
             return res.json(package(1, "Missing required fields", null));
         }

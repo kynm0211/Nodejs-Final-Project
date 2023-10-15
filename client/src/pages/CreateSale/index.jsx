@@ -115,7 +115,7 @@ export const CreateSale = (props) => {
                         />
                     </div>}
                     {/* Show error message */}
-                    {error && <div class="alert alert-danger">
+                    {error && <div className="alert alert-danger">
                         <strong>Error!</strong> {error}
                     </div>}
                 </div>

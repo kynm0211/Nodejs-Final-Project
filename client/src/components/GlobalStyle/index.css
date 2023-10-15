@@ -20,6 +20,9 @@
     --color_Light2: #c4c4c4;
 }
 
+body{
+    background-color: var(--color_Light1);
+}
 /* =============== Sidebar =============== */
 .sidebar{
     position: fixed;
