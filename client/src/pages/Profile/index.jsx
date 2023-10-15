@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useRef, Fragment } from "react";
+import ModalDialog from "../../components/Layout/components/ModalDialog";
+
 function Profile() {
   	const token = window.localStorage.getItem("token");
   	const [isUpdated, setIsUpdated] = useState(false);
@@ -8,17 +10,18 @@ function Profile() {
 
   	const [rsUser, setRsUser] = useState({});
   	const [user, setUser] = useState({
-    name: "",
-    role: "",
-    email: "",
-    status: "",
-    image: "",
-  });
-  	const [isModalOpen, setIsModalOpen] = useState(false);
-  
-	const openModal = () => setIsModalOpen(true);
-  
-	const closeModal = () => setIsModalOpen(false);
+		name: "",
+		role: "",
+		email: "",
+		status: "",
+		image: "",
+  	});
+  	
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleModalOpen = (value) => setIsModalOpen(value);
+
+
   	// Handle for hover on text of fullname
   	const [isHovered, setIsHovered] = useState(false);
   	const handleMouseEnter = () => setIsHovered(true);
@@ -79,7 +82,7 @@ function Profile() {
 		}
 		setUser((prevState) => ({ ...prevState, image: avatarUrl }));
 		setAvatarUpdated(true);
-	}{
+	}else{
 		update();
 	}
   };
@@ -88,7 +91,7 @@ function Profile() {
 	axios.put('/api/users/update', user, { headers: { 'Authorization': token } })
 		.then((response) => {
 			setIsUpdated(false);
-			openModal();
+			setIsModalOpen(true);
 		})
 		.catch((error) => {
 			console.error('Error updating user profile:', error);
@@ -222,28 +225,22 @@ function Profile() {
 			</div>
 		</div>
 		{/* <!-- The Modal --> */}
-		{isModalOpen && (
-        <div className="modal d-flex align-items-center" style={{ display: 'block'}}>
-          <div className="modal-dialog shadow-lg p-3 mb-5 bg-white rounded">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h4 className="modal-title">Notification</h4>
-                <button type="button" className="close" onClick={closeModal}>
-                  &times;
-                </button>
-              </div>
-              <div className="modal-body">
-                Your profile has been updated successfully! <strong>Please logout and re-login to update your information!!!</strong>
-              </div>
-              <div className="modal-footer">
-				<a type="button" className="btn btn-danger" href='/logout'>
-                  Logout
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+		{isModalOpen &&
+			<ModalDialog
+				onValueChange={handleModalOpen}
+				title="Notification"
+				button_title="Logout"
+				>
+					Your account has been updated successfully!
+					<strong>Please logout right now and re-login to the system for updating of newest information!!!</strong>
+			</ModalDialog>
+		}
+		<ModalDialog
+				onValueChange={handleModalOpen}
+				title="Uploading"
+				button_title="Logout"
+				>
+		</ModalDialog>
 	</Fragment>
 
     
