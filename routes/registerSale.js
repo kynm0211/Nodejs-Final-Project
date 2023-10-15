@@ -39,7 +39,7 @@ module.exports = (app) => {
         try {
             await newUser.save();
 
-            const token = jwt.sign({ userId: newUser._id }, KEY.SECRET_SESSION_KEY, { expiresIn: '24h' });
+            const token = jwt.sign({ userId: newUser._id }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
 
             const loginLink = `http://localhost:3000/direct?token=${token}`;
             console.log(loginLink);
