@@ -104,3 +104,13 @@ button{
   display: flex;
   justify-content: center;
 }
+.toast-custome{
+  position: fixed !important;
+  bottom: 0;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  right: 0;
+  margin: 20px;
+
+}

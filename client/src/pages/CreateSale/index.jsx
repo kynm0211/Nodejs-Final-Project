@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 import './CreateSale.css';
 export const CreateSale = (props) => {

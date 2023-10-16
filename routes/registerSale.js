@@ -51,9 +51,6 @@ module.exports = (app) => {
             const token = jwt.sign({ newUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
 
             const loginLink = `http://localhost:3000/direct?token=${token}`;
-            console.log(loginLink);
-            console.log(email);
-
             sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
 
             return res.json(package(0, "Registration success", newUser));
@@ -62,6 +59,35 @@ module.exports = (app) => {
             return res.json(package(11, "Internal error", error));
         }
     });
+
+    app.post('/api/admin/resend-email', async (req, res) => {
+        const {email} = req.body;
+
+        // check email format
+        const regex = /\S+@\S+\.\S+/;
+        if (!regex.test(email)) {
+            return res.json(package(2, "Invalid email format", null));
+        }
+           
+        if (!email) {
+            return res.json(package(1, "Missing required fields", null));
+        }
+
+        const findUser = await User.findOne({ email });
+        if (findUser) {
+            findUser.time = dateTime;
+            const token = jwt.sign({ findUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
+
+            const loginLink = `http://localhost:3000/direct?token=${token}`;
+            sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
+
+            return res.json(package(0, "Resend email success", null));
+        }else{
+            return res.json(package(20, "Email was not existed", null));
+        }
+    });
+
+
     function extractUsername(email) {
 		if (typeof email !== 'string') {
 			return null; // Handle cases where the input is not a string
@@ -74,7 +100,8 @@ module.exports = (app) => {
 			const capturedText = match[1];
 			return capturedText.toLowerCase().trim();
 		} else {
-			return null; // Handle cases where the email doesn't match the expected pattern
+			return null;
 		}
+        
 	}
 };

@@ -43,7 +43,7 @@ body{
 
 /* --------- Logo ------------ */
 .logo-box {
-    height: 40px;
+    height: 60px;
     width: 100%;
     display: flex;
     align-items: center; /* Vertically center the content */
