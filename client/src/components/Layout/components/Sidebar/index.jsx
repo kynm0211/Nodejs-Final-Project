@@ -1,12 +1,31 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import ItemSidebar from './item';
-import ItemDropDown from './itemdropdown';
+//import ItemDropDown from './itemdropdown';
 import '../../../GlobalStyle/index.css';
-function Sidebar() {
+import AdminSideBar from './Admin';
+import SalerSideBar from './Saler';
+import CustomerSideBar from './Customer';
+function Sidebar({role}) {
+  
+  const [admin, setAdmin] = useState(null);
+  const [saler, setSaler] = useState(null);
+  const [customer, setCustomer] = useState(null);
 	const toggleSidebar = () => {
 		const sidebar = document.querySelector(".sidebar");
 		sidebar.classList.toggle("close");
 	};
+
+  useEffect(() => {
+    if(role === 'Administrator') {
+      setAdmin(<AdminSideBar/>);
+    }else if(role === 'Sale person'){
+      setSaler(<SalerSideBar />);
+    }else if(role === 'Customer'){
+      setCustomer(<CustomerSideBar />);
+    }
+  }, []);
+
   return (
     <div className="sidebar-container bg-light">
       <div className="sidebar close bg-light">
@@ -20,20 +39,11 @@ function Sidebar() {
         {/* <!-- ========== List ============  --> */}
         <ul className="sidebar-list">
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
-            <ItemSidebar title="Dashboard" url="/dashboard" icon="fa-solid fa-house"/>
-            <ItemSidebar title="Create Account" url="/admin/create-sale" icon="fa-solid fa-plus"/>
-            <ItemSidebar title="User List" url="/admin/user-list" icon="fa-solid fa-rectangle-list"/>
-            <ItemSidebar title="Resend Email" url="/admin/resend-email" icon="fa-solid fa-paper-plane"/>
-            {/* <!-- -------- Dropdown List Item ------- --> */}
-            <ItemSidebar title="Component 1" url="/components" icon="fa-solid fa-envelope">
-                <ItemDropDown title="Phụ" url="/components1" iconName="plus"/>
-                <ItemDropDown title="Phụ" url="/components1" />
-                <ItemDropDown title="Phụ" url="/components1" />
-                <ItemDropDown title="Phụ" url="/components1" />
-            </ItemSidebar>
-
+            {admin}
+            {saler}
+            {customer}
+            {/* Public items */}
             <ItemSidebar title="Setting" url="/setting" icon="fa-solid fa-gear"/>
-
         </ul>
     </div>
     </div>
