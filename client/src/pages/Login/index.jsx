@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './LoginRegister.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import LoadingImg from "../../components/Layout/components/LoadingImg";
 
 export const Login = (props) => {
     const [login, setLogin] = useState(false);
@@ -65,9 +66,7 @@ export const Login = (props) => {
                         <strong>Error!</strong> {error}
                     </div>}
                 </form>
-                {login && <img src="https://firebasestorage.googleapis.com/v0/b/nodejs-final-8bdf4.appspot.com/o/Dual%20Ring-1s-200px.gif?alt=media&token=1b30beed-915f-4d8d-b44e-e00514500cb4&_gl=1*4r51lr*_ga*NzkyMjQ3NDYxLjE2OTY5MjkyODU.*_ga_CW55HF8NVT*MTY5NzM4MzM4NS43LjEuMTY5NzM4NDE3OC40OS4wLjA."
-                    width={50}
-                />}                
+                {login && <LoadingImg />}                
 
                 {/* Remind Password */}
                 <div id="formFooter" className="mt-4">

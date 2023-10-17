@@ -1,16 +1,19 @@
 import UserItem from './user';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import LoadingImg from '../../components/Layout/components/LoadingImg';
 function UserList() {
     const [users, setUsers] = useState(null);
     const [role, setRole] = useState("");
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         fetchUsers();
 
     }, [role, search]);
 
     const fetchUsers = async () => {
+        setLoading(false);
         axios.get('/api/users', {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -21,9 +24,11 @@ function UserList() {
             if (res.code === 0) {
                 setUsers(res.data);
             }
+            setLoading(true);
         })
         .catch(error => {
             console.log(error);
+            setLoading(false);
         });
     }
 
@@ -80,7 +85,10 @@ function UserList() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {users && users
+                                {loading === false && <tr className='text-center'>
+                                    <td colSpan={6}><LoadingImg /></td>
+                                </tr>}
+                                {loading && users && users
                                     .filter(user => user.role.includes(role)
                                         && (user.name.toLowerCase().includes(search.toLowerCase())
                                         || user.email.toLowerCase().includes(search.toLowerCase())))

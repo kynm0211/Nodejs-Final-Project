@@ -1,6 +1,7 @@
 import { useState, Fragment } from "react";
 import axios from "axios";
-import Toast from "../../components/Layout/components/Toast/"
+import Toast from "../../components/Layout/components/Toast/";
+import LoadingImg from "../../components/Layout/components/LoadingImg";
 function ResendEmail() {
     const [email, setEmail] = useState(null);
     const [alert, setAlert] = useState(null);
@@ -80,9 +81,7 @@ function ResendEmail() {
 
             </div>
             {status && <div className="card-footer text-center">
-                <img alt="loading" src="https://firebasestorage.googleapis.com/v0/b/nodejs-final-8bdf4.appspot.com/o/Dual%20Ring-1s-200px.gif?alt=media&token=1b30beed-915f-4d8d-b44e-e00514500cb4&_gl=1*4r51lr*_ga*NzkyMjQ3NDYxLjE2OTY5MjkyODU.*_ga_CW55HF8NVT*MTY5NzM4MzM4NS43LjEuMTY5NzM4NDE3OC40OS4wLjA."
-                    width={50}
-                />
+                <LoadingImg />
             </div>}
 
         </div>

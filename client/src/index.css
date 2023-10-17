@@ -114,3 +114,36 @@ button{
   margin: 20px;
 
 }
+@keyframes ldio-7y0xet08uv4 {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.ldio-7y0xet08uv4 div {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 10px solid #e15b64;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.ldio-7y0xet08uv4 div {
+  animation: ldio-7y0xet08uv4 1s linear infinite;
+  top: 50px;
+  left: 50px
+}
+.loadingio-spinner-rolling-l8t2hmp0gmd {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  overflow: hidden;
+  background: transparent;
+}
+.ldio-7y0xet08uv4 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(0.5);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-7y0xet08uv4 div { box-sizing: content-box; }
