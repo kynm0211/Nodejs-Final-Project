@@ -3,8 +3,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 function UserList() {
     const [users, setUsers] = useState(null);
-
+    const [role, setRole] = useState("");
+    const [search, setSearch] = useState("");
     useEffect(() => {
+        fetchUsers();
+
+    }, [role, search]);
+
+    const fetchUsers = async () => {
         axios.get('/api/users', {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -19,7 +25,9 @@ function UserList() {
         .catch(error => {
             console.log(error);
         });
-    }, []);    
+    }
+
+    const refreshUsers = async () => fetchUsers();
     return ( 
         <div>
             <div className="card rounded">
@@ -27,22 +35,34 @@ function UserList() {
                     <h3>Manage user lists</h3>
                 </div>
                 <div className="card-body">
-                    <div className="row">
+                    <div className="row my-3">
                         <div className="col-md-8">
                             <div className="form-outline mb-4">
                                 <label>Enter the name or email for searching</label>
-                                <input type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
+                                <input onChange={e => setSearch(e.target.value)} type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
                             </div>
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                             <div className="form-group">
                                 <label>Filter</label>
-                                <select className="form-control" id="exampleFormControlSelect1">
-                                <option>Administrator</option>
-                                <option>Sale person</option>
-                                <option>Customer</option>
+                                <select
+                                    className="form-control"
+                                    id="exampleFormControlSelect1"
+                                    onChange={e => setRole(e.target.value)}
+                                >
+                                    <option value="">All users</option>
+                                    <option value="Administrator">Administrator</option>
+                                    <option value="Sale person">Sale person</option>
+                                    <option value="Customer">Customer</option>
                                 </select>
                             </div>
+                        </div>
+                        <div className="col-md-1">
+                            <label className='mr-1'>Click to refresh</label>
+                            <button onClick={refreshUsers} className="btn btn-primary">
+                                <i class="fa-solid fa-rotate-right mr-1"></i>
+                                Refresh
+                            </button>
                         </div>
                     </div>
                     <div className="row">
@@ -60,8 +80,12 @@ function UserList() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {users && users.map((user, index) => (
-                                        <UserItem key={index} index={index + 1} user={user}/>
+                                {users && users
+                                    .filter(user => user.role.includes(role)
+                                        && (user.name.toLowerCase().includes(search.toLowerCase())
+                                        || user.email.toLowerCase().includes(search.toLowerCase())))
+                                    .map((user, index) => (
+                                        <UserItem key={index} index={index + 1} user={user} />
                                     ))}
                                 </tbody>
                             </table>
