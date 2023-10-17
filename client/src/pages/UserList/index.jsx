@@ -1,4 +1,25 @@
+import UserItem from './user';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 function UserList() {
+    const [users, setUsers] = useState(null);
+
+    useEffect(() => {
+        axios.get('/api/users', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        .then(response => {
+            const res = response.data;
+            if (res.code === 0) {
+                setUsers(res.data);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);    
     return ( 
         <div>
             <div className="card rounded">
@@ -39,29 +60,9 @@ function UserList() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Nguyễn Văn A</td>
-                                        <td>nguyenvana@gmail.com</td>
-                                        <td>Administator</td>
-                                        <td>
-                                            <span className="badge badge-success">Active</span>
-                                        </td>
-                                        <td>
-                                            <button type="button" className="btn btn-outline-primary btn-sm mr-1">
-                                                <i className="fa-solid fa-circle-info mr-2"></i>
-                                                Details
-                                            </button>
-                                            <button type="button" className="btn btn-outline-secondary btn-sm mr-1">
-                                                <i className="fa-regular fa-pen-to-square mr-2"></i>
-                                                Edit
-                                            </button>
-                                            <button type="button" className="btn btn-danger btn-sm mr-1">
-                                                <i className="fa-solid fa-trash mr-2"></i>
-                                                Remove
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    {users && users.map((user, index) => (
+                                        <UserItem key={index} index={index + 1} user={user}/>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

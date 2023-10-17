@@ -34,6 +34,7 @@ require('./routes/logoutRoute')(app);
 require('./routes/uploadRoute')(app);
 require('./routes/registerSale')(app);
 require('./routes/updateProfileRoute')(app);
+require('./routes/usersRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
