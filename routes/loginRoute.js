@@ -31,14 +31,6 @@ module.exports = (app) =>{
             return;
         }
 
-        // Check password format length 6-> 32
-        if(password.length < 6 || password.length > 32){
-
-            res.json(package(3, "Password length must be from 6 to 32", null));
-
-            return;
-        }
-
         // Check email and password in DB
         const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
         const user = {
