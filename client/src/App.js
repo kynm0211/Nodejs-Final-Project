@@ -63,7 +63,7 @@ function App() {
 				key={index} 
 				path={route.path} 
 				element={
-					<Layout user={user}>
+					<Layout>
 						<Page />
 					</Layout>
 				}

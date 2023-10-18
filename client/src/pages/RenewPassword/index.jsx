@@ -56,27 +56,27 @@ function RenewPassword() {
             <div className="row p-0 m-0 d-flex align-items-center" style={{height: '100vh'}}>
                 <div className="col-md-4"></div>
                 <div className="col-md-4">
-                    <div class="card">
-                        <div class="card-header text-center text-white bg-secondary p-3">
+                    <div className="card">
+                        <div className="card-header text-center text-white bg-secondary p-3">
                             <h3>CHANGE YOUR PASSWORD</h3>
                         </div>
-                        <div class="card-body">
+                        <div className="card-body">
                             <form>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Password</label>
                                     <input 
                                         type="password" 
-                                        class="form-control"
+                                        className="form-control"
                                         id="password_txt" 
                                         placeholder="Password"
                                         onChange={(e) => setPassword(e.target.value)}
                                     required/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Password Confirm</label>
                                     <input 
                                         type="password" 
-                                        class="form-control" 
+                                        className="form-control" 
                                         id="confirm_password" 
                                         placeholder="Re-Password"
                                         onChange={(e) => setRepassword(e.target.value)}
@@ -88,11 +88,11 @@ function RenewPassword() {
                                 <button disabled={loading} type="submit" className="btn btn-primary m-1" onClick={(e) => handleSubmit(e)}>Submit</button>
                             </div>
                         </div>
-                        <div class="card-footer">
+                        <div className="card-footer">
                             {loading && <div className="text-center">
                                 <LoadingImg />
                             </div>} 
-                            {error && <div class="alert alert-danger">
+                            {error && <div className="alert alert-danger">
                                 <strong>Error!</strong> { error}
                             </div>}
                         </div>

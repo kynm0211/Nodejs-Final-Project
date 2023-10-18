@@ -17,7 +17,6 @@ import DirectLogin from '../pages/DirectLogin';
 export const publicRouters = [
     { path: '/forget', element: ForgetPassword, layout: null},
     { path: '/login', element: Login, layout: null},
-    {path: '/renew-password', element: RenewPassword, layout: null},
     { path: '/direct', element: DirectLogin, layout: null}
 ];
 
@@ -28,8 +27,7 @@ export const privateRouters = [
     { path: '/setting', element: Setting},
     { path: '/profile', element: Profile},
     { path: '/change-password', element: ChangePassword},
-
-
+    {path: '/renew-password', element: RenewPassword, layout: null},
 ];
 
 
