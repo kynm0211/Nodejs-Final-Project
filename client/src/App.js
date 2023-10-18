@@ -8,65 +8,65 @@ import LoadingScreen from "./components/LoadingScreen";
 
 
 function App() {
-  // Initial Authentication State
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+	// Initial Authentication State
+	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 
   
-  useEffect(() => {
-	// Check if a token exists in local storage
-	const token = localStorage.getItem('token');
-	if (token) {
-		// Fetch user data
-		axios.get('/api/current_user', { headers: { 'Authorization': token } })
-		  .then(response => {
-			setUser(response.data);
+  	useEffect(() => {
+		// Check if a token exists in local storage
+		const token = localStorage.getItem('token');
+		if (token) {
+			// Fetch user data
+			axios.get('/api/current_user', { headers: { 'Authorization': token } })
+			.then(response => {
+				setUser(response.data);
+				setLoading(false);
+			})
+			.catch(error => {
+				console.error ('Error fetching user data', error);
+				setLoading(false);
+
+			});
+		} else {
 			setLoading(false);
-		  })
-		  .catch(error => {
-			console.error ('Error fetching user data', error);
-			setLoading(false);
-
-		  });
-	} else {
-		setLoading(false);
-	}
-  }, []);
-
-  const handleRenderRouters = (routers) =>{
-	const paths = routers.map((route, index) => {
-
-		let Layout = DefaultLayout;
-
-		if(route.layout){
-			Layout = route.layout
-		}else if(route.layout === null){
-			Layout = Fragment;
 		}
+  	}, []);
 
-		const Page = route.element;
-		let tempRole = <Route 
-			key={index} 
-			path={route.path} 
-			element={
-				<Layout user={user}>
-					<Page />
-				</Layout>
+  	const handleRenderRouters = (routers) =>{
+		const paths = routers.map((route, index) => {
+
+			let Layout = DefaultLayout;
+
+			if(route.layout){
+				Layout = route.layout
+			}else if(route.layout === null){
+				Layout = Fragment;
 			}
-		/>
-		if(!user){
-			tempRole = <Route 
+
+			const Page = route.element;
+			let tempRole = <Route 
 				key={index} 
 				path={route.path} 
 				element={
-					<Layout>
+					<Layout user={user}>
 						<Page />
 					</Layout>
 				}
 			/>
-		}
-		return tempRole;
-	});
+			if(!user){
+				tempRole = <Route 
+					key={index} 
+					path={route.path} 
+					element={
+						<Layout>
+							<Page />
+						</Layout>
+					}
+				/>
+			}
+			return tempRole;
+		});
 	return paths;
   }
 
