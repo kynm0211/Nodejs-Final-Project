@@ -10,7 +10,6 @@ import LoadingScreen from "./components/LoadingScreen";
 function App() {
   // Initial Authentication State
   const [user, setUser] = useState(null);
-  const [navigator, setNavigator] = useState(false);
   const [loading, setLoading] = useState(true);
 
   
@@ -23,7 +22,6 @@ function App() {
 		  .then(response => {
 			setUser(response.data);
 			setLoading(false);
-			setNavigator(false);
 		  })
 		  .catch(error => {
 			console.error ('Error fetching user data', error);
@@ -32,10 +30,8 @@ function App() {
 		  });
 	} else {
 		setLoading(false);
-		setNavigator(true);
-
 	}
-  }, [navigator]);
+  }, []);
 
   const handleRenderRouters = (routers) =>{
 	const paths = routers.map((route, index) => {
@@ -74,9 +70,9 @@ function App() {
 	return paths;
   }
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+  	if (loading) {
+    	return <LoadingScreen />;
+  	}
 	return (
 		<Router>
 			<div className="App">
