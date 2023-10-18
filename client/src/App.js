@@ -82,13 +82,14 @@ function App() {
 			<div className="App">
 				<Routes>
 					{handleRenderRouters(publicRouters)}
+					{user ? handleRenderRouters(privateRouters) : (
+						<Route path="*" element={<Navigate to="/login" />} />
+					)}
 					{user && user.role === 'Administrator' && handleRenderRouters(adminRouters)}
 					{user && user.role === 'Sale person' && handleRenderRouters(salerRouters)}
 					{user && user.role === 'Customer' && handleRenderRouters(customerRouters)}
-					{user && handleRenderRouters(privateRouters)}
 				</Routes>
-				{user && user.status === 'InActive' && <Navigate to='/saler/renew-password' />}
-				{navigator && <Navigate to="/login" />}
+				{user && user.status === 'InActive' && <Navigate to='/renew-password' />}
 			</div>
 		</Router>
 	);

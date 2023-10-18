@@ -9,6 +9,7 @@ import ChangePassword from '../pages/ChangePassWord';
 import UserList from '../pages/UserList';
 import ResendEmail from '../pages/ResendEmail';
 import RenewPassword from '../pages/RenewPassword';
+import DirectLogin from '../pages/DirectLogin';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
 
@@ -16,6 +17,8 @@ import RenewPassword from '../pages/RenewPassword';
 export const publicRouters = [
     { path: '/forget', element: ForgetPassword, layout: null},
     { path: '/login', element: Login, layout: null},
+    {path: '/renew-password', element: RenewPassword, layout: null},
+    { path: '/direct', element: DirectLogin, layout: null}
 ];
 
 export const privateRouters = [
@@ -37,7 +40,6 @@ export const adminRouters = [
 ];
 
 export const salerRouters = [
-    {path: 'saler/renew-password', element: RenewPassword, layout: null},
 ];
 
 export const customerRouters = [];
