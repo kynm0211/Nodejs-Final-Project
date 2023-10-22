@@ -43,7 +43,7 @@ function ProductListAdmin() {
                     <div className="row my-3">
                         <div className="col-md-8">
                             <div className="form-outline mb-4">
-                                <label>Enter the name or email for searching</label>
+                                <label>Enter the name or barcode for searching</label>
                                 <input onChange={e => setSearch(e.target.value)} type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
                             </div>
                         </div>

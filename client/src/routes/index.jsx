@@ -13,6 +13,7 @@ import DirectLogin from '../pages/DirectLogin';
 //import ProductList from '../pages/ProductList';
 import AddProduct from '../pages/AddProduct';
 import ProductListAdmin from '../pages/ProductListAdmin';
+import Product from '../pages/Product';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
 
@@ -41,6 +42,7 @@ export const adminRouters = [
     { path: '/product/list', element: ProductListAdmin},
     { path: '/product/product-management', element: ProductListAdmin},
     { path: '/product/add-new', element: AddProduct},
+    { path: '/product/:barcode', element: Product}
 ];
 
 export const salerRouters = [
