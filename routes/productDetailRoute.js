@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 const package = require('../middlewares/package');
-
+const requiredLogin = require('../middlewares/requiredLogin');
 
 module.exports = (app) => {
-    app.get('/api/product/:barcode', async (req, res)=>{
+    app.get('/api/product/:barcode', requiredLogin, async (req, res)=>{
 
         const barcode = req.params.barcode;
 

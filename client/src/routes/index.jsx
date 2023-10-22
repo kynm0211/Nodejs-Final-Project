@@ -13,6 +13,7 @@ import DirectLogin from '../pages/DirectLogin';
 //import ProductList from '../pages/ProductList';
 import AddProduct from '../pages/AddProduct';
 import ProductListAdmin from '../pages/ProductListAdmin';
+import ProductListSaler from '../pages/ProductListSaler';
 import Product from '../pages/Product';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
@@ -46,6 +47,7 @@ export const adminRouters = [
 ];
 
 export const salerRouters = [
+    { path: '/product/list', element: ProductListSaler},
 ];
 
 export const customerRouters = [];

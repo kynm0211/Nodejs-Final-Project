@@ -7,10 +7,11 @@ const User = mongoose.model('User');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../service/gmailSender');
 const dateTime = require('../service/getCurrentTime');
+const requiredLogin = require('../middlewares/requiredLogin');
 module.exports = (app) => {
     app.use(bodyParser.json()); // Sử dụng body-parser
 
-    app.post('/api/admin/create-account-sale', async (req, res) => {
+    app.post('/api/admin/create-account-sale', requiredLogin, async (req, res) => {
         const name = req.body.name;
         const email = req.body.email;
         const username = extractUsername(email);
