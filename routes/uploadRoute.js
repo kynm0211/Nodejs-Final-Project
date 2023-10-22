@@ -36,7 +36,7 @@ module.exports = (app) => {
 				metadata: {
 				contentType: uploadedFile.mimetype,
 				},
-				public: true, // Make the file publicly accessible (optional)
+				public: true,
 			});
 
 			stream.on("error", (error) => {

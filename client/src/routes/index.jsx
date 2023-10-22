@@ -10,6 +10,9 @@ import UserList from '../pages/UserList';
 import ResendEmail from '../pages/ResendEmail';
 import RenewPassword from '../pages/RenewPassword';
 import DirectLogin from '../pages/DirectLogin';
+//import ProductList from '../pages/ProductList';
+import AddProduct from '../pages/AddProduct';
+import ProductListAdmin from '../pages/ProductListAdmin';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
 
@@ -32,9 +35,12 @@ export const privateRouters = [
 
 
 export const adminRouters = [
-    { path: '/admin/create-sale', element: CreateSale},
-    { path: '/admin/user-list', element: UserList},
-    { path: '/admin/resend-email', element: ResendEmail},
+    { path: '/user/create-sale', element: CreateSale},
+    { path: '/user/user-list', element: UserList},
+    { path: '/user/resend-email', element: ResendEmail},
+    { path: '/product/list', element: ProductListAdmin},
+    { path: '/product/product-management', element: ProductListAdmin},
+    { path: '/product/add-new', element: AddProduct},
 ];
 
 export const salerRouters = [

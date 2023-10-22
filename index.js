@@ -23,7 +23,7 @@ mongoose.connect(KEY.mongoURI, {
 
 // Models
 require('./models/UserModel');
-
+require('./models/ProductModel');
 // Middleware
 
 
@@ -35,9 +35,10 @@ require('./routes/uploadRoute')(app);
 require('./routes/registerSale')(app);
 require('./routes/updateProfileRoute')(app);
 require('./routes/usersRoute')(app);
+require('./routes/productsRoute')(app);
 require('./routes/renewPassword')(app);
 require('./routes/changePasswordRoute')(app);
-
+require('./routes/addProductRoute')(app);
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
 });

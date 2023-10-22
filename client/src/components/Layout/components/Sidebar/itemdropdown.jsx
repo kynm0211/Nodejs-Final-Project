@@ -1,7 +1,9 @@
 import {Link} from 'react-router-dom';
-function ItemDropDown({title, url}) {
+function ItemDropDown({title, url, icon}) {
     return ( 
-        <Link to={url} className="link">{title}</Link>
+        <Link to={url} title={title} className="link">
+        <i className={"mr-2 "+ icon}></i>
+        {title}</Link>
      );
 }
 

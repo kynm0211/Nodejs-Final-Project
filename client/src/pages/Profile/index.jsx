@@ -40,40 +40,40 @@ function Profile() {
   	const fileInputRef = useRef(null);
 
   	const handleFileChange = () => {
-    fileInputRef.current.click();
+    	fileInputRef.current.click();
   	};
 
   	const handleFileSelected = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      console.log(selectedFile);
-      const imageUrl = URL.createObjectURL(selectedFile);
-      setUser((prevState) => ({ ...prevState, image: imageUrl }));
-      setIsUpdated(true);
-      setFileImage(selectedFile);
-    }
+		const selectedFile = e.target.files[0];
+		if (selectedFile) {
+		console.log(selectedFile);
+		const imageUrl = URL.createObjectURL(selectedFile);
+		setUser((prevState) => ({ ...prevState, image: imageUrl }));
+		setIsUpdated(true);
+		setFileImage(selectedFile);
+		}
   	};
   	const handleUpdateAvatar = async () => {
-	const imageData = new FormData();
-	imageData.append("file", fileImage);
-  
-	if (!fileImage) return null;
-  
-	try {
-	  const response = await axios.post('/api/users/upload', imageData, {
-		headers: { 'Authorization': token },
-	  });
-  
-	  if (response.status !== 200) {
-		throw new Error('Network response was not ok');
-	  }
-  
-	  return response.data.data;
-	} catch (error) {
-	  console.error(error);
-	  return null;
-	}
-  };
+		const imageData = new FormData();
+		imageData.append("file", fileImage);
+	
+		if (!fileImage) return null;
+	
+		try {
+			const response = await axios.post('/api/users/upload', imageData, {
+				headers: { 'Authorization': token },
+			});
+		
+			if (response.status !== 200) {
+				throw new Error('Network response was not ok');
+			}
+	
+			return response.data.data;
+		} catch (error) {
+			console.error(error);
+			return null;
+		}
+  	};
   
   const updateUserProfile = async () => {
 	setUpdateState(true);

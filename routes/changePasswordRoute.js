@@ -25,16 +25,16 @@ module.exports = (app) => {
         const username = extractUsernameFromToken(token);
 
         if (!username) {
-            res.json(package(9, "Token không hợp lệ hoặc đã hết hạn", null));
-            return;
+            return res.json(package(9, "Token không hợp lệ hoặc đã hết hạn", null));
+            
         }
 
         try {
             const userDB = await User.findOne({ username });
 
             if (!userDB) {
-                res.json(package(10, "Tài khoản không tồn tại", null));
-                return;
+                return res.json(package(10, "Tài khoản không tồn tại", null));
+                
             }
 
             const userWithoutPassword = { ...userDB.toObject() };
@@ -42,7 +42,7 @@ module.exports = (app) => {
 
             res.json(package(0, "Lấy thông tin người dùng thành công", userWithoutPassword));
         } catch (error) {
-            res.json(package(11, "Lỗi nội bộ", error));
+            return res.json(package(11, "Lỗi nội bộ", error));
         }
     });
 
@@ -51,8 +51,8 @@ module.exports = (app) => {
         const username = extractUsernameFromToken(token);
 
         if (!username) {
-            res.json(package(9, "Token không hợp lệ hoặc đã hết hạn", null));
-            return;
+            return res.json(package(9, "Token không hợp lệ hoặc đã hết hạn", null));
+            
         }
 
         const currentPassword = req.body.currentPassword;
@@ -60,34 +60,34 @@ module.exports = (app) => {
         const confirmPassword = req.body.confirmPassword;
 
         if (!currentPassword || !newPassword || !confirmPassword) {
-            res.json(package(7, "Vui lòng cung cấp đầy đủ thông tin.", null));
-            return;
+            return res.json(package(7, "Vui lòng cung cấp đầy đủ thông tin.", null));
+            
         }
 
         try {
             const userDB = await User.findOne({ username });
 
             if (!userDB) {
-                res.json(package(10, "Tài khoản không tồn tại", null));
-                return;
+                return res.json(package(10, "Tài khoản không tồn tại", null));
+                
             }
 
             if (hashPassword(currentPassword, KEY.SECRET_SALT) !== userDB.password) {
-                res.json(package(10, "Mật khẩu hiện tại không đúng", null));
-                return;
+                return res.json(package(10, "Mật khẩu hiện tại không đúng", null));
+                
             }
 
             if (newPassword !== confirmPassword) {
-                res.json(package(8, "Mật khẩu xác nhận không khớp", null));
-                return;
+                return res.json(package(8, "Mật khẩu xác nhận không khớp", null));
+                
             }
 
             userDB.password = hashPassword(newPassword, KEY.SECRET_SALT);
             await userDB.save();
 
-            res.json(package(0, "Đổi mật khẩu thành công", "Success"));
+            return res.json(package(0, "Đổi mật khẩu thành công", "Success"));
         } catch (error) {
-            res.json(package(11, "Lỗi nội bộ", error));
+            return res.json(package(11, "Lỗi nội bộ", error));
         }
     });
 }
