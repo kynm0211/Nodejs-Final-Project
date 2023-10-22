@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import AddNew from './add-new';
+import AddwBarcode from "./add-with-barcode";
 function AddProduct() {
     return (
         <Fragment>
@@ -8,7 +9,7 @@ function AddProduct() {
                     <a className="nav-link active" data-toggle="tab" href="#addnew">Add a new</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" data-toggle="tab" href="#menu1">Add with barcode</a>
+                    <a className="nav-link" data-toggle="tab" href="#withbarcode">Add with barcode</a>
                 </li>
             </ul>
 
@@ -16,8 +17,8 @@ function AddProduct() {
                 <div className="tab-pane container active" id="addnew">
                     <AddNew />
                 </div>
-                <div className="tab-pane container fade" id="menu1">
-                    <AddNew />
+                <div className="tab-pane container fade" id="withbarcode">
+                    <AddwBarcode />
                 </div>
             </div>
         </Fragment>

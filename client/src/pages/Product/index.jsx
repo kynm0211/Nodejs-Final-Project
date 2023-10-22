@@ -37,7 +37,6 @@ function Product() {
             const res = response.data;
             if (res.code === 0) {
                 setProduct(res.data);
-                console.log(product);
             }
         })
         .catch(error => {
@@ -67,6 +66,9 @@ function Product() {
                             </div>
                             <div className="">
                                 <span>Quantity: {product.quantity}</span>
+                            </div>
+                            <div className="">
+                            <span>Creation Date: {new Date(product.creation_date).toLocaleDateString()}</span>
                             </div>
                             <div className="">
                                 <span>Barcode: {product.barcode}</span>

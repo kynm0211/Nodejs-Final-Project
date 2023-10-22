@@ -67,8 +67,8 @@ function AddNew() {
     }, [image]);
     return ( 
         <div className="card">
-            <div className="card-header text-center">
-                <h3 style={{"text-transform": "uppercase"}}>Add a new Product</h3>
+            <div className="card-header text-center text-uppercase">
+                <h3>Add a new Product</h3>
             </div>
             <div className="card-body">
                 <form>

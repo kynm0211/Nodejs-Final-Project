@@ -80,13 +80,14 @@ function ProductListAdmin() {
                                         <th scope="col">Category</th>
                                         <th scope="col">Import Price</th>
                                         <th scope="col">Retail Price</th>
+                                        <th scope="col">Creation Date</th>
                                         <th scope="col">Option</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {loading === false && <tr className='text-center'>
-                                    <td colSpan={6}><LoadingImg /></td>
+                                    <td colSpan={7}><LoadingImg /></td>
                                 </tr>}
                                 {loading && products && products
                                     .filter(product => product.category.includes(category)

@@ -33,6 +33,10 @@ const ProductSchema = new mongoose.Schema({
         type: String, 
         required: true,
     },
+    creation_date: {
+        type: Date, 
+        required: false,
+    },
     purchase: {
         type: Boolean, 
         required: true,
