@@ -1,6 +1,7 @@
 import UserItem from './user';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserDetailDialog from '../../components/User/UserDetailDialog';
 import LoadingImg from '../../components/Layout/components/LoadingImg';
 function UserList() {
     const [users, setUsers] = useState(null);
@@ -102,6 +103,8 @@ function UserList() {
                 </div>
                 <div className="card-footer">Footer</div>
             </div>
+            <UserDetailDialog />
+
         </div>
     );
 }
