@@ -147,3 +147,7 @@ button{
   transform-origin: 0 0; /* see note above */
 }
 .ldio-7y0xet08uv4 div { box-sizing: content-box; }
+#modaluser__img{
+  max-width: 350px;
+  max-height: 350px;
+}

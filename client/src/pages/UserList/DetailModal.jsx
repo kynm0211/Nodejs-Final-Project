@@ -11,7 +11,9 @@ function DetailModal() {
 
             <div class="modal-body" id="modal-body-userlist">
                 <div class="card">
-                    <img id="modaluser__img" class="card-img-top" alt="Card image" />
+                    <div className="text-center">
+                        <img id="modaluser__img" class="card-img-top" alt="Card image" />
+                    </div>
                     <div class="card-body">
                         <h4 class="card-title" id="modal__username">username</h4>
                         <div className="m-1">
