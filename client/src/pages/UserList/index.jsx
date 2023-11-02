@@ -1,8 +1,12 @@
 import UserItem from './user';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserDetailDialog from '../../components/User/UserDetailDialog';
 import LoadingImg from '../../components/Layout/components/LoadingImg';
+import DetailModal from './DetailModal';
+import DeleteModal from './DeleteModal';
+import EditModal from './EditModal';
+
+
 function UserList() {
     const [users, setUsers] = useState(null);
     const [role, setRole] = useState("");
@@ -103,8 +107,12 @@ function UserList() {
                 </div>
                 <div className="card-footer">Footer</div>
             </div>
-            <UserDetailDialog />
+            {/* Show modal of detail and edit */}
+            <DetailModal />
+            <EditModal />
 
+            {/* Show modal of delete */}
+            <DeleteModal />
         </div>
     );
 }

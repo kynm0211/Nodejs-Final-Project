@@ -1,15 +1,20 @@
 import React, { useState, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import 'reactjs-popup/dist/index.css'; // Import CSS
-import UserDetailDialog from '../../components/User/UserDetailDialog';
-
+import $ from 'jquery';
 function UserItem({ index, user }) {
-  const [showDetailDialog, setShowDetailDialog] = useState(false);
 
-  const handleDetailClick = () => setShowDetailDialog(!showDetailDialog);
 
-  const handleCloseDetailDialog = () => setShowDetailDialog(!showDetailDialog);
+	const handleViewModal = (user) => {
+		$('#modaluser__img').attr('src', user.image);
+		$('#modal__username').html(user.name);
+		$('#modal__email').html(user.email);
+		$('#modal__role').html(user.role);
+		$('#modal__status').html(user.status);
+	}
 
+	// const handleEditModal = (user) => {
+	// 	$('#modal-title-userlist').html("Edit information");
+	// 	$('#modal-body-userlist').html('asdasdasdasd');
+	// }
   return (
     <Fragment>
       <tr>
@@ -24,28 +29,29 @@ function UserItem({ index, user }) {
         <button
           type="button"
           className="btn btn-outline-primary btn-sm m-1"
-          onClick={handleDetailClick}
+          data-toggle="modal" data-target="#detailModal"
+		  onClick={() => handleViewModal(user)}
         >
           <i className="fa-solid fa-circle-info mr-2"></i>
           Details
         </button>
-        <Link
-          to={"/admin/user-list/user?id=" + user._id + "&edit=true"}
+        <button
           type="button"
           className="btn btn-outline-secondary btn-sm m-1"
+          data-toggle="modal" data-target="#editModal"
         >
           <i className="fa-regular fa-pen-to-square mr-2"></i>
           Edit
-        </Link>
-        <button type="button" className="btn btn-danger btn-sm m-1">
+        </button>
+        <button
+			data-toggle="modal" data-target="#deleteModal"
+			type="button"
+			className="btn btn-danger btn-sm m-1">
           <i className="fa-solid fa-trash mr-2"></i>
           Remove
         </button>
       </td>
     </tr>
-    {/* {showDetailDialog && (
-        
-    )} */}
     </Fragment>
   );
 }
