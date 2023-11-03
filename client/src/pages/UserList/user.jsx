@@ -11,10 +11,18 @@ function UserItem({ index, user }) {
 		$('#modal__status').html(user.status);
 	}
 
-	// const handleEditModal = (user) => {
-	// 	$('#modal-title-userlist').html("Edit information");
-	// 	$('#modal-body-userlist').html('asdasdasdasd');
-	// }
+  const handleEditModal = (user) => {
+    $('#edit__img').attr('src', user.image);
+    $('#edit__id').val(user._id);
+    $('#edit__username').val(user.username);
+    $('#edit__email').val(user.email);
+    $('#edit__role').val(user.role);
+    $('#edit__status').val(user.status);
+    $('#editModal').modal('show');
+  }
+  
+  
+  
   return (
     <Fragment>
       <tr>
@@ -30,7 +38,7 @@ function UserItem({ index, user }) {
           type="button"
           className="btn btn-outline-primary btn-sm m-1"
           data-toggle="modal" data-target="#detailModal"
-		  onClick={() => handleViewModal(user)}
+		      onClick={() => handleViewModal(user)}
         >
           <i className="fa-solid fa-circle-info mr-2"></i>
           Details
@@ -38,11 +46,14 @@ function UserItem({ index, user }) {
         <button
           type="button"
           className="btn btn-outline-secondary btn-sm m-1"
-          data-toggle="modal" data-target="#editModal"
+          data-toggle="modal"
+          data-target="#editModal"
+          onClick={() => handleEditModal(user)}
         >
           <i className="fa-regular fa-pen-to-square mr-2"></i>
           Edit
         </button>
+
         <button
 			data-toggle="modal" data-target="#deleteModal"
 			type="button"

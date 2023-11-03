@@ -109,7 +109,7 @@ function UserList() {
             </div>
             {/* Show modal of detail and edit */}
             <DetailModal />
-            <EditModal />
+            <EditModal/>
 
             {/* Show modal of delete */}
             <DeleteModal />

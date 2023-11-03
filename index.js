@@ -40,6 +40,7 @@ require('./routes/renewPassword')(app);
 require('./routes/changePasswordRoute')(app);
 require('./routes/addProductRoute')(app);
 require('./routes/productDetailRoute')(app);
+require('./routes/updateUser')(app);
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
 });
