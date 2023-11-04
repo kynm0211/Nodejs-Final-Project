@@ -107,11 +107,8 @@ function UserList() {
                 </div>
                 <div className="card-footer">Footer</div>
             </div>
-            {/* Show modal of detail and edit */}
             <DetailModal />
             <EditModal/>
-
-            {/* Show modal of delete */}
             <DeleteModal />
         </div>
     );

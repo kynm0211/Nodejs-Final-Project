@@ -27,4 +27,31 @@ module.exports = (app) => {
       }
     });
   });
+  app.delete('/api/delete_user/:userId', (req, res) => {
+    const token = req.header('Authorization');
+
+    if (!token) {
+      return res.sendStatus(401);
+    }
+
+    jwt.verify(token, KEY.SECRET_SESSION_KEY, async (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+
+      const { userId } = req.params;
+
+      try {
+        const deletedUser = await User.findByIdAndRemove(userId);
+
+        if (!deletedUser) {
+          return res.status(404).json({ error: 'Người dùng không tồn tại.' });
+        }
+
+        res.json({ message: 'Người dùng đã bị xóa thành công.' });
+      } catch (error) {
+        res.status(500).json({ error: 'Lỗi xóa người dùng.' });
+      }
+    });
+  });
 };

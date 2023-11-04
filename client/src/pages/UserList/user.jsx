@@ -20,6 +20,14 @@ function UserItem({ index, user }) {
     $('#edit__status').val(user.status);
     $('#editModal').modal('show');
   }
+
+  const handleDeleteModal = (user) => {
+    console.log("hello")
+    console.log(user)
+    $('#username-delete').text(user.name);
+    $('#id-delete').text(user._id);
+
+  }
   
   
   
@@ -56,6 +64,7 @@ function UserItem({ index, user }) {
 
         <button
 			data-toggle="modal" data-target="#deleteModal"
+      onClick={() => handleDeleteModal(user)}
 			type="button"
 			className="btn btn-danger btn-sm m-1">
           <i className="fa-solid fa-trash mr-2"></i>
