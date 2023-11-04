@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import $ from 'jquery';
 
-function EditModal() {
+function EditModal({refreshUsers}) {
 
     const user = {
         id: $('#edit__id').val(),
@@ -44,7 +44,7 @@ function EditModal() {
       success: function (response) {
         
         $('#editModal').modal('hide');
-        window.location.reload();
+        refreshUsers()
       },
       error: function (error) {
 
