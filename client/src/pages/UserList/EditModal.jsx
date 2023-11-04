@@ -72,6 +72,9 @@ function EditModal() {
               </div>
               <div className="card-body">
               <div className="m-1">
+                <h4 class="card-title" id='nameOfUser'></h4>
+              </div>
+              <div className="m-1">
                 <span className="badge badge-secondary p-2 mr-2">ID: </span>
                 <input
                   disabled="true"
@@ -86,6 +89,7 @@ function EditModal() {
               <div className="m-1">
                 <span className="badge badge-secondary p-2 mr-2">Username: </span>
                 <input
+                  disabled="true"
                   type="text"
                   className="form-control"
                   id="edit__username"
@@ -106,26 +110,33 @@ function EditModal() {
                   />
                 </div>
                 <div className="m-1">
-                  <span className="badge badge-secondary p-2 mr-2">Role: </span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="edit__role"
-                    name="role"
-                    value={userData.role}
-                    onChange={handleInputChange}
-                  />
-                </div>
+                  <span className="badge badge-secondary p-2 mr-2">Role:</span>
+                  <select
+                      className="form-control"
+                      id="edit__role"
+                      name="role"
+                      value={userData.role}
+                      onChange={handleInputChange}
+                  >
+                      <option value="Administrator">Administrator</option>
+                      <option value="Sale person">Sale person</option>
+                      <option value="Customer">Customer</option>
+                  </select>
+              </div>
+
+
                 <div className="m-1">
                   <span className="badge badge-secondary p-2 mr-2">Status: </span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="edit__status"
-                    name="status"
-                    value={userData.status}
-                    onChange={handleInputChange}
-                  />
+                  <select
+                      className="form-control"
+                      id="edit__status"
+                      name="status"
+                      value={userData.status}
+                      onChange={handleInputChange}
+                  >
+                      <option value="Active">Active</option>
+                      <option value="InActive">InActive</option>
+                  </select>
                 </div>
               </div>
             </div>

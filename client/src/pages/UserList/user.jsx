@@ -13,12 +13,21 @@ function UserItem({ index, user }) {
 
   const handleEditModal = (user) => {
     $('#edit__img').attr('src', user.image);
+    $('#nameOfUser').html(user.name);
     $('#edit__id').val(user._id);
     $('#edit__username').val(user.username);
     $('#edit__email').val(user.email);
     $('#edit__role').val(user.role);
     $('#edit__status').val(user.status);
     $('#editModal').modal('show');
+}
+
+
+  const handleDeleteModal = (user) => {
+
+    $('#username-delete').text(user.name);
+    $('#id-delete').text(user._id);
+
   }
   
   
@@ -56,6 +65,7 @@ function UserItem({ index, user }) {
 
         <button
 			data-toggle="modal" data-target="#deleteModal"
+      onClick={() => handleDeleteModal(user)}
 			type="button"
 			className="btn btn-danger btn-sm m-1">
           <i className="fa-solid fa-trash mr-2"></i>

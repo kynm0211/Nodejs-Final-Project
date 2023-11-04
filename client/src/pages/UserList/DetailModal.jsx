@@ -12,21 +12,21 @@ function DetailModal() {
             <div class="modal-body" id="modal-body-userlist">
                 <div class="card">
                     <div className="text-center">
-                        <img id="modaluser__img" class="card-img-top" alt="Card image" />
+                        <img id="modaluser__img" class="card-img-top mt-3" alt="Card image" />
                     </div>
                     <div class="card-body">
                         <h4 class="card-title" id="modal__username">username</h4>
                         <div className="m-1">
-                            <span class="badge badge-secondary p-2 mr-2">Email: </span>
-                            <span id="modal__email"></span>
+                            <span class="badge badge-secondary p-2 mr-2">Email:  </span>
+                            <span id="modal__email" className="form-control"></span>
                         </div>
                         <div className="m-1">
-                            <span class="badge badge-secondary p-2 mr-2">Role: </span>
-                            <span id="modal__role"></span>
+                            <span class="badge badge-secondary p-2 mr-2">Role:   </span>
+                            <span id="modal__role" className="form-control"></span>
                         </div>
                         <div className="m-1">
                             <span class="badge badge-secondary p-2 mr-2">Status: </span>
-                            <span id="modal__status"></span>
+                            <span id="modal__status" className="form-control"></span>
                         </div>
                     </div>
                 </div>
