@@ -120,7 +120,6 @@ function EditModal({refreshUsers}) {
                   >
                       <option value="Administrator">Administrator</option>
                       <option value="Sale person">Sale person</option>
-                      <option value="Customer">Customer</option>
                   </select>
               </div>
 
@@ -136,6 +135,7 @@ function EditModal({refreshUsers}) {
                   >
                       <option value="Active">Active</option>
                       <option value="InActive">InActive</option>
+                      <option value="Lock">Lock</option>
                   </select>
                 </div>
               </div>
