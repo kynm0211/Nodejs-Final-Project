@@ -151,3 +151,11 @@ button{
   max-width: 350px;
   max-height: 350px;
 }
+.nav__pos{
+  background-color: #333 !important;
+  color: white !important;
+}
+
+ul > li {
+  cursor: pointer;
+}

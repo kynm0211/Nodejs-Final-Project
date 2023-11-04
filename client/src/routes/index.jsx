@@ -14,9 +14,11 @@ import DirectLogin from '../pages/DirectLogin';
 import AddProduct from '../pages/AddProduct';
 import ProductListAdmin from '../pages/ProductListAdmin';
 import ProductListSaler from '../pages/ProductListSaler';
+import POS from '../pages/PointOfSales';
 import Product from '../pages/Product';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
+import {POSLayout} from '../components/Layout';
 
 
 export const publicRouters = [
@@ -48,6 +50,7 @@ export const adminRouters = [
 
 export const salerRouters = [
     { path: '/product/list', element: ProductListSaler},
+    { path: '/point-of-sale', element: POS, layout: POSLayout},
 ];
 
 export const customerRouters = [];
