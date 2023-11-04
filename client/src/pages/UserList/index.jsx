@@ -108,8 +108,8 @@ function UserList() {
                 <div className="card-footer">Footer</div>
             </div>
             <DetailModal />
-            <EditModal/>
-            <DeleteModal />
+            <EditModal refreshUsers= {refreshUsers}/>
+            <DeleteModal refreshUsers= {refreshUsers}/>
         </div>
     );
 }

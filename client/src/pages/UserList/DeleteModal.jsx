@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-function DeleteModal() {
+function DeleteModal({refreshUsers}) {
     const handleDeleteUser = () => {
         const userId = $('#id-delete').text();
         $.ajax({
@@ -10,7 +10,8 @@ function DeleteModal() {
             Authorization: localStorage.getItem('token'),
           },
           success: function (response) {
-            window.location.reload();
+            $('#deleteModal').modal('hide');
+            refreshUsers()
           },
           error: function (error) {
             console.error('Lỗi xóa người dùng', error);

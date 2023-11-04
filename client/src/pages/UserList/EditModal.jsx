@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import $ from 'jquery';
 
-function EditModal() {
+function EditModal({refreshUsers}) {
 
     const user = {
         id: $('#edit__id').val(),
@@ -44,7 +44,7 @@ function EditModal() {
       success: function (response) {
         
         $('#editModal').modal('hide');
-        window.location.reload();
+        refreshUsers()
       },
       error: function (error) {
 
@@ -120,7 +120,6 @@ function EditModal() {
                   >
                       <option value="Administrator">Administrator</option>
                       <option value="Sale person">Sale person</option>
-                      <option value="Customer">Customer</option>
                   </select>
               </div>
 
@@ -136,6 +135,7 @@ function EditModal() {
                   >
                       <option value="Active">Active</option>
                       <option value="InActive">InActive</option>
+                      <option value="Lock">Lock</option>
                   </select>
                 </div>
               </div>
