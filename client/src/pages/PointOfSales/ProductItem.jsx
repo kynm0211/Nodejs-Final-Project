@@ -10,7 +10,7 @@ function ProductItem({product}) {
         <div className="col-md-4 p-2">
             <div class="card border-rounded">
                 <div class="card-body">
-                    <img src="https://didongmoi.com.vn/data/cms-image/fix%20h%C3%ACnh/xuat-hien-iphone-xs-max-gia-3-trieu-dong-tiet-lo-bi-quyet-phan-biet-that-gia-1.jpg" alt="" width={'100%'} />
+                    <img src={product.image} alt="Image" width={'100%'} />
                     <div className="card__title mt-2">
                         <h5 title={product.name}>{name}</h5>
                     </div>

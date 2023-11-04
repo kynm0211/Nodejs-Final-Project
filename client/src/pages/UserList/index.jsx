@@ -70,7 +70,7 @@ function UserList() {
                         <div className="col-md-1">
                             <label className='mr-1'>Click to refresh</label>
                             <button onClick={refreshUsers} className="btn btn-primary">
-                                <i class="fa-solid fa-rotate-right mr-1"></i>
+                                <i className="fa-solid fa-rotate-right mr-1"></i>
                                 Refresh
                             </button>
                         </div>
@@ -98,7 +98,7 @@ function UserList() {
                                         && (user.name.toLowerCase().includes(search.toLowerCase())
                                         || user.email.toLowerCase().includes(search.toLowerCase())))
                                     .map((user, index) => (
-                                        <UserItem key={index} index={index + 1} user={user} />
+                                        <UserItem key={index} index={index + 1} user={user}/>
                                     ))}
                                 </tbody>
                             </table>

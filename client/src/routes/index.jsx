@@ -51,6 +51,7 @@ export const adminRouters = [
 export const salerRouters = [
     { path: '/product/list', element: ProductListSaler},
     { path: '/point-of-sale', element: POS, layout: POSLayout},
+    { path: '/product/:barcode', element: Product}
 ];
 
 export const customerRouters = [];
