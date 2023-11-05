@@ -1,11 +1,26 @@
-function CardDetail() {
+import { useEffect } from "react";
+import CartItem from "./CartItem";
+function CardDetail({cart}) {
+    useEffect(() => {
+        console.log("Card Detail: ", cart);
+    }, [cart]);
+
+
     return ( 
         <div className="card">
             <div className="card-header bg-dark text-light">
                 Cart Detail
                 <i className="fa-solid fa-cart-shopping ml-2"></i>
             </div>
-            <div className="card-body">Content</div>
+            <div className="card-body">
+                {cart.map((product, index)=> {
+                    return (
+                        <CartItem key={index} product={product}/>
+                    )
+                })}
+            </div>
+
+
             <div className="card-footer text-center">
                 <div className="d-flex justify-content-between">
                     <span>5 items</span>

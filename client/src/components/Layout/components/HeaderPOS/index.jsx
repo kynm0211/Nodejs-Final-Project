@@ -26,7 +26,7 @@ function Header({user, layout}) {
 		<div className="custom-nav-side ml-auto" id="navbarNav">
 			<ul className="navbar-nav navbar-nav-inline">
 				<li>
-					<i class="fa-solid fa-wifi" style={{'color': '#1eff00'}}></i>
+					<i className="fa-solid fa-wifi" style={{'color': '#1eff00'}}></i>
 				</li>
 				<li className="nav-item active">
 					<span className="badge badge-danger">{tempUser.role}</span>
@@ -37,7 +37,7 @@ function Header({user, layout}) {
 					<img className="p-1 mx-2 rounded-circle border border-success" src={tempUser.image} height="40" width="40" alt="User Avatar" />
 				</li>
 				<li onClick={handleCloseSession}>
-					<i class="fa-solid fa-right-from-bracket"></i>
+					<i className="fa-solid fa-right-from-bracket"></i>
 				</li>
 			</ul>
 		</div>

@@ -1,15 +1,29 @@
 import ProductItem from "./ProductItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
-function Products() {
 
+function Products({AddToCart}) {
     const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         handleFetchProducts();
-        console.log(products);
-    }, []);
 
+        // Find duplicates in cart
+        const reduceCart = cart.reduce((acc, product) => {
+            const found = acc.find((item) => item._id === product._id);
+            if (found) {
+                found.amount += 1;
+            } else {
+                acc.push({
+                    ...product,
+                    amount: 1,
+                });
+            }
+            return acc;
+        }, [])
+        AddToCart(reduceCart);
+    }, [cart]);
 
     const handleFetchProducts = async () => {
         axios.get('/api/products', {
@@ -28,15 +42,22 @@ function Products() {
         });
     }
 
+    const handleSetCart = (newState) => {
+        setCart([...cart, newState]);
+    };
 
-    return ( 
+    return (
         <div className="row mt-5">
             <div className="col-md-12">
-                <div class="card">
-                    <div class="card-body">
+                <div className="card">
+                    <div className="card-body">
                         <div className="row">
-                            {products && products.map((product, index) => (
-                                <ProductItem key={index} product={product} />
+                            {products.map((product) => (
+                                <ProductItem
+                                    key={product._id}
+                                    product={product}
+                                    addToCart={handleSetCart}
+                                />
                             ))}
                         </div>
                     </div>
