@@ -9,20 +9,8 @@ function Products({AddToCart}) {
     useEffect(() => {
         handleFetchProducts();
 
-        // Find duplicates in cart
-        const reduceCart = cart.reduce((acc, product) => {
-            const found = acc.find((item) => item._id === product._id);
-            if (found) {
-                found.amount += 1;
-            } else {
-                acc.push({
-                    ...product,
-                    amount: 1,
-                });
-            }
-            return acc;
-        }, [])
-        AddToCart(reduceCart);
+
+        AddToCart(cart);
     }, [cart]);
 
     const handleFetchProducts = async () => {
