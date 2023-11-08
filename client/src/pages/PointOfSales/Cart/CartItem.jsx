@@ -1,4 +1,4 @@
-function CartItem({product, UpdateCartItem}) {
+function CartItem({product, UpdateCart}) {
 
     const handleChangeAmount = (type)=>{
         const id = document.getElementById(product._id);
@@ -17,7 +17,7 @@ function CartItem({product, UpdateCartItem}) {
                     cart[i].amount--;
                     if(cart[i].amount <= 0){
                         cart.splice(i, 1);
-                        UpdateCartItem();
+                        UpdateCart();
                     }                    
                 }else if(type === '+'){
                     // Plus Amount
@@ -32,7 +32,7 @@ function CartItem({product, UpdateCartItem}) {
 
         localStorage.setItem('cart', JSON.stringify(cart));
 
-        UpdateCartItem();
+        UpdateCart();
 
     }
 
@@ -51,7 +51,17 @@ function CartItem({product, UpdateCartItem}) {
         }
         
         localStorage.setItem('cart', JSON.stringify(cart));
-        UpdateCartItem();
+        UpdateCart();
+    }
+
+    const handleConfirmDelete = (id, name) => {
+        const nameHTML = document.getElementById('rm__name-product');
+        nameHTML.innerHTML = name;
+
+        const btnDelete = document.getElementById('btn-rm__cartItem');
+        btnDelete.addEventListener('click', ()=>{
+            handleRemoveItem(id);
+        });
     }
     return (
         <div className="d-flex my-1">
@@ -69,18 +79,17 @@ function CartItem({product, UpdateCartItem}) {
                             type="number"
                             className="form-control form-control-sm"
                             value={product.amount}
-                            min={1}
+                            min="1"
                             style={{width: '50px'}}
                             id={product._id}
                         />
                         <button onClick={()=> handleChangeAmount('+')} className="btn btn-sm btn-secondary">+</button>
-
-
                     </div>
                     <button
-                        onClick={()=> handleRemoveItem(product._id)}
+                        onClick={() => handleConfirmDelete(product._id, product.name)}
                         title="Click here to remove this product"
                         className="btn btn-sm btn-danger mt-1"
+                        data-toggle="modal" data-target="#deleteModal"
                     ><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>

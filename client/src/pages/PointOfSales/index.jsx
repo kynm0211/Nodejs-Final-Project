@@ -1,32 +1,18 @@
-import FindProducts from "./findProductBar";
+import FindProducts from "./FindProducts";
 import Products from "./Products";
-import CardDetail from "./CartDetail";
+import CardDetail from "./Cart";
 import { useState } from "react";
+import DeleteModal from "./Modal/DeleteModal";
+import ResetModal from "./Modal/ResetModal";
+import PaymentModal from "./Modal/PaymentModal";
+
 function POS() {
 
     const [cart, setCart] = useState(0);
+
     const AddToCart = () => {
         setCart(cart + 1);
     }
-    // useEffect(() => {
-    //     // Find duplicates in cart
-    //     const duplicates = cart.reduce((acc, product) => {
-    //         const found = acc.find((item) => item.barcode === product.barcode);
-    //         if (found) {
-    //         found.amount += 1;
-    //         } else {
-    //         acc.push({
-    //             ...product,
-    //             amount: 1,
-    //         });
-    //         }
-    //         return acc;
-    //     }, []);
-
-        
-
-    //     setReduce(duplicates);
-    // }, [cart]);
 
     return ( 
         <div>
@@ -39,9 +25,15 @@ function POS() {
                 </div>
                 <div className="col-md-4">
                     {/* Card Detail */}
-                    <CardDetail AddToCart={cart}/>
+                    <CardDetail AddToCart={cart} UpdateCart={AddToCart}/>
                 </div>
             </div>
+            {/* Delete modal dialog */}
+            <DeleteModal />
+            {/* Reset Modal dialog */}
+            <ResetModal />
+            {/* Payment Modal dialog */}
+            <PaymentModal UpdateCart={cart}/>
         </div>
     );
 }

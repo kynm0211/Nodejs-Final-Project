@@ -1,35 +1,52 @@
 import { useEffect, useState } from "react";
 import CartItem from "./CartItem";
-function CardDetail({AddToCart}) {
+function CardDetail({AddToCart, UpdateCart}) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     const [count, setCount] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [tax, setTax] = useState(0);
     const [total, setTotal] = useState(0);
-    const [reset, setReset] = useState(false);
     const [error, setError] = useState(null);
 	const [update, setUpdate] = useState(true);
 	const handleUpdateCartItem = () => setUpdate(!update);
+	const handleUpdateCart = () => UpdateCart();
 
     useEffect(() => {
         cart = JSON.parse(localStorage.getItem('cart')) || [];
-        console.log(cart);
         // Set count and reduceCart
         const tempCount = cart
             .map((item) => item.amount)
             .reduce((acc, cur) => acc + cur, 0);
-        setCount(tempCount);
 
         // Set total
         const subTotalTemp = cart
             .map((item) => item.retail_price * item.amount)
             .reduce((acc, cur) => acc + cur, 0);
-        setSubTotal(subTotalTemp);
+        
+        
+        
 
-        setTotal(subTotalTemp + (subTotalTemp * tax) / 100);
+        const taxfee = (subTotalTemp * tax) / 100;
+        const totalTemp = subTotalTemp + taxfee;
 
-    }, [AddToCart, tax, update]);
+
+        setTotal(totalTemp);
+		setSubTotal(subTotalTemp);
+        setCount(tempCount);
+
+		const cartDetail = {
+			subTotal: subTotalTemp,
+			count: tempCount,
+			taxfee: taxfee,
+			total: totalTemp,
+			tax: tax
+		}
+
+		// Store cart detail to localStorage
+        localStorage.setItem('cartDetail', JSON.stringify(cartDetail));
+
+    }, [AddToCart, tax]);
 
 
     const handleSetTax = (e) => {
@@ -40,11 +57,17 @@ function CardDetail({AddToCart}) {
         } else {
             setTax(newTax);
         }
+		handleUpdateCart();
     };
 
     const handleReset = () => {
-		localStorage.removeItem('cart');
-		setUpdate(!update);
+      localStorage.removeItem('cart');
+	  handleUpdateCart();
+    }
+
+    const handleConfirmReset = () => {
+        const btn = document.getElementById('btn-rs__cart');
+        btn.addEventListener('click', handleReset);
     }
 
     return (
@@ -55,7 +78,9 @@ function CardDetail({AddToCart}) {
       </div>
       <div className="card-body">
         {cart.map((product, index) => {
-          return <CartItem key={index} product={product} UpdateCartItem={handleUpdateCartItem}/>;
+          return <CartItem key={index}
+		  	product={product}
+			UpdateCart={UpdateCart}/>;
         })}
       </div>
 
@@ -86,7 +111,8 @@ function CardDetail({AddToCart}) {
           <button
             title="Click here to reset bill"
             className="btn btn-warning mr-3"
-            onClick={handleReset}
+            data-toggle="modal" data-target="#resetModal"
+			onClick={() => handleConfirmReset()}
           >
             <i className="fa-solid fa-trash"></i>
           </button>
@@ -94,6 +120,7 @@ function CardDetail({AddToCart}) {
             disabled={error ? true : false}
             title="Click here to make a payment"
             className="btn btn-success"
+            data-toggle="modal" data-target="#paymentModal"
           >
             PAYMENT
             <i className="fa-solid fa-chevron-right ml-3"></i>
