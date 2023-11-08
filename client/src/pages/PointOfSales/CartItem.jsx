@@ -15,6 +15,10 @@ function CartItem({product, UpdateCartItem}) {
                 if(type === '-'){
                     // Minus Amount
                     cart[i].amount--;
+                    if(cart[i].amount <= 0){
+                        cart.splice(i, 1);
+                        UpdateCartItem();
+                    }                    
                 }else if(type === '+'){
                     // Plus Amount
                     cart[i].amount++;
