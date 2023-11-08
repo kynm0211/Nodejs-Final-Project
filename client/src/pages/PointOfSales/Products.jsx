@@ -4,14 +4,12 @@ import axios from "axios";
 
 function Products({AddToCart}) {
     const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
+    
 
     useEffect(() => {
         handleFetchProducts();
 
-
-        AddToCart(cart);
-    }, [cart]);
+    }, []);
 
     const handleFetchProducts = async () => {
         axios.get('/api/products', {
@@ -30,10 +28,7 @@ function Products({AddToCart}) {
         });
     }
 
-    const handleSetCart = (newState) => {
-        setCart([...cart, newState]);
-    };
-
+    
     return (
         <div className="row mt-5">
             <div className="col-md-12">
@@ -44,7 +39,7 @@ function Products({AddToCart}) {
                                 <ProductItem
                                     key={product._id}
                                     product={product}
-                                    addToCart={handleSetCart}
+                                    AddToCart={AddToCart}
                                 />
                             ))}
                         </div>

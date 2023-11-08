@@ -1,8 +1,39 @@
 import {Link} from 'react-router-dom';
-function ProductItem({product, addToCart}) {
+function ProductItem({product, AddToCart}) {
 
-    const handleAddToCart = () => {
-        addToCart(product);
+    const handleAddToCart = (product) => {
+        const storedCart = localStorage.getItem('cart');
+        const cart = storedCart ? JSON.parse(storedCart) : [];
+
+        if(cart.length === 0) {
+            cart.push({
+                ...product,
+                amount: 1,
+            });
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }else{
+            // insert a new product into cart if it dupplicates add amount to 1
+            let flag = false;
+            for(let i = 0; i < cart.length; i++){
+                if(cart[i].barcode === product.barcode){
+                    cart[i].amount += 1;
+                    flag = true;
+                    break;
+                }
+            }
+
+            if(!flag){
+                cart.push({
+                    ...product,
+                    amount: 1,
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+        }
+
+        AddToCart();
     }
 
     let name;
@@ -30,7 +61,7 @@ function ProductItem({product, addToCart}) {
                 </div>
                 <div className="card-footer text-center">
                     <button className="btn btn-success"
-                     onClick={handleAddToCart}
+                     onClick={() => handleAddToCart(product)}
                     >Add to cart
                         <i className="fa-solid fa-cart-plus ml-1"></i>
                     </button>

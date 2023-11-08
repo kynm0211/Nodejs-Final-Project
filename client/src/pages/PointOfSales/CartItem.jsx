@@ -1,4 +1,54 @@
-function CartItem({product}) {
+function CartItem({product, UpdateCartItem}) {
+
+    const handleChangeAmount = (type)=>{
+        const id = document.getElementById(product._id);
+        const value = id.value;
+
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if(cart.length === 0){
+            return  window.alert('Invalid product');
+        }
+
+        for(let i = 0; i < cart.length; i++){
+            if(cart[i]._id === product._id){
+                if(type === '-'){
+                    // Minus Amount
+                    cart[i].amount--;
+                }else if(type === '+'){
+                    // Plus Amount
+                    cart[i].amount++;
+
+                }else{
+                    window.alert('Invalid operator');
+                }
+                break;
+            }
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        UpdateCartItem();
+
+    }
+
+    const handleRemoveItem = (id) => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        if(cart.length === 0){
+            window.alert('Cart is not available');
+        }
+
+        for(let i = 0; i < cart.length; i++){
+            if(cart[i]._id === id){
+                cart.splice(i, 1);
+                break;
+            }
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        UpdateCartItem();
+    }
     return (
         <div className="d-flex my-1">
             <img src={product.image} width={100} alt="" />
@@ -8,7 +58,26 @@ function CartItem({product}) {
                     <span>{formatCurrencyVND(product.retail_price)}</span>
                 </div>
                 <div className="text-right">
-                    <span>Quantity: {product.amount}</span>
+                    <span>Quantity</span>
+                    <div className="d-flex flex-rows align-content-center">
+                        <button onClick={()=> handleChangeAmount('-')} className="btn btn-sm btn-secondary">-</button>
+                        <input
+                            type="number"
+                            className="form-control form-control-sm"
+                            value={product.amount}
+                            min={1}
+                            style={{width: '50px'}}
+                            id={product._id}
+                        />
+                        <button onClick={()=> handleChangeAmount('+')} className="btn btn-sm btn-secondary">+</button>
+
+
+                    </div>
+                    <button
+                        onClick={()=> handleRemoveItem(product._id)}
+                        title="Click here to remove this product"
+                        className="btn btn-sm btn-danger mt-1"
+                    ><i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ function getCurrentDateTime() {
       hour12: false 
     };
     
-    return currentDate.toLocaleString(undefined, options);
+    return currentDate.toLocaleTimeString(undefined, options);
   }
 const dateTime = getCurrentDateTime();
 module.exports = dateTime;

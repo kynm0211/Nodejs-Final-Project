@@ -54,6 +54,9 @@ module.exports = (app) =>{
 
                 prepairUser = {...userWithoutPassword};
                 prepairUser._doc.token = jwt.sign(prepairUser._doc, KEY.SECRET_SESSION_KEY , { expiresIn: '24h' });
+                if(prepairUser._doc.status === 'InActive'){
+                    return res.json(package(12, "Your account is not active", null));
+                }
                 res.json(
                     package(0, "Login success", prepairUser._doc)
                 );

@@ -76,8 +76,12 @@ module.exports = (app) => {
 
         const findUser = await User.findOne({ email });
         if (findUser) {
-            findUser.time = dateTime;
-            const token = jwt.sign({ findUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
+
+            const preUser = {...findUser._doc};
+            delete preUser.password;
+
+
+            const token = jwt.sign({ preUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
 
             const loginLink = `http://localhost:3000/direct?token=${token}`;
             sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
@@ -88,6 +92,30 @@ module.exports = (app) => {
         }
     });
 
+    app.post('/api/auth/direct-login', async (req, res) => {
+        const token = req.body.token;
+        if (!token) {
+            return res.json(package(1, "Missing required fields", null));
+        }
+
+        try {
+            const decoded = jwt.verify(token, KEY.SECRET_SESSION_KEY);
+            const user = decoded.preUser;
+            const userDB = await User.findOne({ username: user.username });
+            if (!userDB) {
+                return res.json(package(10, "Invalid username or password", null));
+            }
+            if(userDB._doc.status === 'InActive'){
+                return res.json(package(12, "Your account is not active", null));
+            }
+
+            return res.json(
+                package(0, "Login success", userDB._doc)
+            );
+        } catch (error) {
+            return res.json(package(11, "Internal error", error));
+        }
+    });
 
     function extractUsername(email) {
 		if (typeof email !== 'string') {

@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import CartItem from "./CartItem";
-function CardDetail({ cart, rsCart }) {
+function CardDetail({AddToCart}) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
     const [count, setCount] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [tax, setTax] = useState(0);
     const [total, setTotal] = useState(0);
     const [reset, setReset] = useState(false);
     const [error, setError] = useState(null);
-
-
+	const [update, setUpdate] = useState(true);
+	const handleUpdateCartItem = () => setUpdate(!update);
 
     useEffect(() => {
-        
-
+        cart = JSON.parse(localStorage.getItem('cart')) || [];
+        console.log(cart);
         // Set count and reduceCart
         const tempCount = cart
             .map((item) => item.amount)
@@ -27,12 +29,7 @@ function CardDetail({ cart, rsCart }) {
 
         setTotal(subTotalTemp + (subTotalTemp * tax) / 100);
 
-        if (reset) {
-            rsCart();
-            handleReset();
-            setReset(false);
-        }
-    }, [cart,reset, tax]);
+    }, [AddToCart, tax, update]);
 
 
     const handleSetTax = (e) => {
@@ -46,14 +43,10 @@ function CardDetail({ cart, rsCart }) {
     };
 
     const handleReset = () => {
-        cart = [];
-        setCount(0);
-        setSubTotal(0);
-        setTax(0);
-        setTotal(0);
-        setError(null);
-        
-    };
+		localStorage.removeItem('cart');
+		setUpdate(!update);
+    }
+
     return (
     <div className="card">
       <div className="card-header bg-dark text-light">
@@ -62,7 +55,7 @@ function CardDetail({ cart, rsCart }) {
       </div>
       <div className="card-body">
         {cart.map((product, index) => {
-          return <CartItem key={index} product={product} />;
+          return <CartItem key={index} product={product} UpdateCartItem={handleUpdateCartItem}/>;
         })}
       </div>
 
@@ -91,9 +84,9 @@ function CardDetail({ cart, rsCart }) {
         </div>
         <div className="d-flex text-center justify-content-between">
           <button
-            onClick={() => setReset(true)}
             title="Click here to reset bill"
             className="btn btn-warning mr-3"
+            onClick={handleReset}
           >
             <i className="fa-solid fa-trash"></i>
           </button>
