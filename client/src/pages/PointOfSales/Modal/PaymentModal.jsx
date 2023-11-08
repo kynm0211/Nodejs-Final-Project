@@ -1,7 +1,6 @@
 import ProductTab from "./PaymentComponents/ProductTab";
 import DetailFee from "./PaymentComponents/DetailFee";
 import CustomerTab from "./PaymentComponents/CustomerTab";
-import InvoiceTab from "./PaymentComponents/InvoiceTab";
 import { useEffect, useState } from "react";
 function PaymentModal({UpdateCart}) {
 
@@ -10,7 +9,7 @@ function PaymentModal({UpdateCart}) {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
     }, [UpdateCart]);
 
-
+    
     return ( 
         <div class="modal fade" id="paymentModal">
             <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -37,23 +36,18 @@ function PaymentModal({UpdateCart}) {
                     {/* <!-- Tab panes --> */}
                     <div class="tab-content">
                         <div id="products_tab" class="container tab-pane active"><br/>
-                            <ProductTab cart={cart}/>
+                            <ProductTab cart={cart}>
+                                <DetailFee />
+                            </ProductTab>
                         </div>
                         <div id="customer_tab" class="container tab-pane fade"><br/>
                             <CustomerTab />
                         </div>
-                        <div id="invoice_tab" class="container tab-pane fade"><br/>
-                            <InvoiceTab>
-                                <ProductTab cart={cart}/>
-                            </InvoiceTab>
-                        </div>
                     </div>
-
-                    {/* Footer tabs */}
-                    <DetailFee/>
                 </div>
                 
                 <div class="modal-footer">
+                    <button id="btn_make-payment" type="button" class="btn btn-success" data-toggle="modal" data-target="#invoiceModal">MAKE A PAYMENT</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
                 

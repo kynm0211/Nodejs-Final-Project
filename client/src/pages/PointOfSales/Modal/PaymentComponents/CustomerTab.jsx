@@ -6,10 +6,14 @@ function CustomerTab() {
     const [paymentMethod, setPaymentMethod] = useState(0);
 
     useEffect(()=>{
-        console.log(phone);
-        console.log(name);
-        console.log(address);
-        console.log(paymentMethod);
+        const customer = {
+            phone: phone,
+            name: name,
+            address: address,
+            paymentMethod: paymentMethod
+        };
+
+        localStorage.setItem('customer', JSON.stringify(customer));
     
     }, [phone, name, address, paymentMethod])
 

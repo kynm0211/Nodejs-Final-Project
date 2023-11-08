@@ -5,7 +5,7 @@ import { useState } from "react";
 import DeleteModal from "./Modal/DeleteModal";
 import ResetModal from "./Modal/ResetModal";
 import PaymentModal from "./Modal/PaymentModal";
-
+import InvoiceTab from "./Modal/PaymentComponents/InvoiceTab";
 function POS() {
 
     const [cart, setCart] = useState(0);
@@ -34,6 +34,8 @@ function POS() {
             <ResetModal />
             {/* Payment Modal dialog */}
             <PaymentModal UpdateCart={cart}/>
+            {/* Invoice Modal dialog */}
+            <InvoiceTab />
         </div>
     );
 }
