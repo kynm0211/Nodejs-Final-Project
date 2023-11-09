@@ -19,6 +19,11 @@ module.exports = (app) => {
                     package(404, "Product not found", null)
                 );
             }
+            if (product.purchase == true){
+                return res.json(
+                    package(2, "Product was purchased", null)
+                );
+            }
 
             await Product.findOneAndRemove({ barcode });
 

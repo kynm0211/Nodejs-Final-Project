@@ -5,7 +5,15 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 function ProductItem({index, product,refreshProducts}) {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [showPurchasedModal, setShowPurchasedModal] = useState(false);
 
+    const openPurchasedModal = () => {
+        setShowPurchasedModal(true);
+    };
+    
+    const closePurchasedModal = () => {
+        setShowPurchasedModal(false);
+    };
     const openConfirmModal = () => {
         setShowConfirmModal(true);
       };
@@ -23,6 +31,10 @@ function ProductItem({index, product,refreshProducts}) {
         })
         .then(response => {
           const res = response.data;
+          if (res.code === 2) {
+            closeConfirmModal();
+            openPurchasedModal();
+          }
           if (res.code === 0) {
             refreshProducts()
           }
@@ -76,21 +88,41 @@ function ProductItem({index, product,refreshProducts}) {
                 </button>
                 {/* Modal xác nhận */}
                 <Modal show={showConfirmModal} onHide={closeConfirmModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Xác nhận</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Bạn có chắc chắn muốn xóa sản phẩm này?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={closeConfirmModal}>
-                    Hủy
-                    </Button>
-                    <Button variant="danger" onClick={handleRemoveProduct}>
-                    Xóa
-                    </Button>
-                </Modal.Footer>
+                  <Modal.Header closeButton>
+                      <Modal.Title>Confirm delete</Modal.Title>
+                      <button type="button" className="close" onClick={closeConfirmModal}>
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </Modal.Header>
+                  <Modal.Body>
+                      Are you sure to delete this product?
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={closeConfirmModal}>
+                      Cancel
+                      </Button>
+                      <Button variant="danger" onClick={handleRemoveProduct}>
+                      Remove
+                      </Button>
+                  </Modal.Footer>
                 </Modal>
+
+                <Modal show={showPurchasedModal} onHide={closePurchasedModal}>
+                  <Modal.Header closeButton>
+                      <Modal.Title className='text-danger'>Warning!</Modal.Title>
+                      <button type="button" className="close" onClick={closePurchasedModal}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </Modal.Header>
+                  <Modal.Body>
+                      Product was purchased
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={closePurchasedModal}>
+                          Close
+                      </Button>
+                  </Modal.Footer>
+              </Modal>
             </td>
         </tr>
      );
