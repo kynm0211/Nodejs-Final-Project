@@ -7,7 +7,11 @@ import LoadingImg from "../../components/Layout/components/LoadingImg";
 export const Login = (props) => {
     const [login, setLogin] = useState(false);
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
     function handleLogin(event) {
         setLogin(true);
         setError(null);
@@ -59,8 +63,24 @@ export const Login = (props) => {
 
                 {/* Login Form */}
                 <form>
+                    <div className="input-container">
                     <input type="text" id="username" className="fadeIn second" name="username" placeholder="username" />
-                    <input type="password" id="password" className="fadeIn third" name="password" placeholder="password" />
+                    </div>
+                    <div className="input-container">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            className="fadeIn third"
+                            name="password"
+                            placeholder="Password"
+                        />
+                        <i
+                            className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"} toggle-password-icon`}
+                            onClick={togglePasswordVisibility}
+                        ></i>
+                    </div>
+
+                    
                     <input type="submit" id="login-btn" onClick={handleLogin} className="fadeIn fourth" value="Log In" disabled={login}/>
                     {error && <div className="alert alert-success">
                         <strong>Error!</strong> {error}

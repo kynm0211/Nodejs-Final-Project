@@ -263,3 +263,23 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.input-container {
+  position: relative;
+}
+
+.input-container input {
+  padding-right: 30px;
+  width: 100%;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-container .toggle-password-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+}
