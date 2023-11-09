@@ -45,6 +45,8 @@ require('./routes/renewPassword')(app);
 require('./routes/changePasswordRoute')(app);
 require('./routes/addProductRoute')(app);
 require('./routes/productDetailRoute')(app);
+require('./routes/productEditRoute')(app);
+require('./routes/productDeleteRoute')(app);
 require('./routes/updateUser')(app);
 
 

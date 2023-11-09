@@ -1,5 +1,52 @@
 import {Link} from 'react-router-dom';
-function ProductItem({index, product}) {
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+function ProductItem({index, product,refreshProducts}) {
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [showPurchasedModal, setShowPurchasedModal] = useState(false);
+
+    const openPurchasedModal = () => {
+        setShowPurchasedModal(true);
+    };
+    
+    const closePurchasedModal = () => {
+        setShowPurchasedModal(false);
+    };
+    const openConfirmModal = () => {
+        setShowConfirmModal(true);
+      };
+      
+      const closeConfirmModal = () => {
+        setShowConfirmModal(false);
+      };
+
+      const handleRemoveProduct = () => {
+
+        axios.delete(`/api/product/delete/${product.barcode}`, {
+          headers: {
+            'Authorization': localStorage.getItem('token')
+          }
+        })
+        .then(response => {
+          const res = response.data;
+          if (res.code === 2) {
+            closeConfirmModal();
+            openPurchasedModal();
+          }
+          if (res.code === 0) {
+            refreshProducts()
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      };
+      
+      
+      
+
     function formatCurrencyVND(value) {
         const numericValue = parseFloat(value);
         if (!isNaN(numericValue)) {
@@ -31,10 +78,51 @@ function ProductItem({index, product}) {
                     <i className="fa-regular fa-pen-to-square mr-2"></i>
                     Edit
                 </Link>
-                <button type="button" className="btn btn-danger btn-sm m-1">
+                <button
+                    type="button"
+                    className="btn btn-danger btn-sm m-1"
+                    onClick={openConfirmModal}
+                    >
                     <i className="fa-solid fa-trash mr-2"></i>
                     Remove
                 </button>
+                {/* Modal xác nhận */}
+                <Modal show={showConfirmModal} onHide={closeConfirmModal}>
+                  <Modal.Header closeButton>
+                      <Modal.Title>Confirm delete</Modal.Title>
+                      <button type="button" className="close" onClick={closeConfirmModal}>
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </Modal.Header>
+                  <Modal.Body>
+                      Are you sure to delete this product?
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={closeConfirmModal}>
+                      Cancel
+                      </Button>
+                      <Button variant="danger" onClick={handleRemoveProduct}>
+                      Remove
+                      </Button>
+                  </Modal.Footer>
+                </Modal>
+
+                <Modal show={showPurchasedModal} onHide={closePurchasedModal}>
+                  <Modal.Header closeButton>
+                      <Modal.Title className='text-danger'>Warning!</Modal.Title>
+                      <button type="button" className="close" onClick={closePurchasedModal}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </Modal.Header>
+                  <Modal.Body>
+                      Product was purchased
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={closePurchasedModal}>
+                          Close
+                      </Button>
+                  </Modal.Footer>
+              </Modal>
             </td>
         </tr>
      );

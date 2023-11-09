@@ -15,10 +15,11 @@ import AddProduct from '../pages/AddProduct';
 import ProductListAdmin from '../pages/ProductListAdmin';
 import ProductListSaler from '../pages/ProductListSaler';
 import POS from '../pages/PointOfSales';
-import Product from '../pages/Product';
+import Product from '../pages/Product/detailProduct';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
 import {POSLayout} from '../components/Layout';
+import EditProduct from '../pages/Product/editProduct';
 
 
 export const publicRouters = [
@@ -45,7 +46,8 @@ export const adminRouters = [
     { path: '/product/list', element: ProductListAdmin},
     { path: '/product/product-management', element: ProductListAdmin},
     { path: '/product/add-new', element: AddProduct},
-    { path: '/product/:barcode', element: Product}
+    { path: '/product/:barcode', element: Product},
+    { path: '/product/edit/:barcode', element: EditProduct}
 ];
 
 export const salerRouters = [
