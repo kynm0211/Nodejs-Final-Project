@@ -14,25 +14,21 @@ function CardDetail({AddToCart, UpdateCart}) {
 
     useEffect(() => {
         cart = JSON.parse(localStorage.getItem('cart')) || [];
-        // Set count and reduceCart
-        const tempCount = cart
-            .map((item) => item.amount)
-            .reduce((acc, cur) => acc + cur, 0);
-
-        // Set total
-        const subTotalTemp = cart
-            .map((item) => item.retail_price * item.amount)
-            .reduce((acc, cur) => acc + cur, 0);
-        
-        
-        
+        const { tempCount, subTotalTemp } = cart.reduce(
+          (accumulator, item) => {
+            accumulator.tempCount += item.amount;
+            accumulator.subTotalTemp += item.retail_price * item.amount;
+            return accumulator;
+          },
+          { tempCount: 0, subTotalTemp: 0 }
+        );
 
         const taxfee = (subTotalTemp * tax) / 100;
         const totalTemp = subTotalTemp + taxfee;
 
 
         setTotal(totalTemp);
-		setSubTotal(subTotalTemp);
+		    setSubTotal(subTotalTemp);
         setCount(tempCount);
 
 		const cartDetail = {

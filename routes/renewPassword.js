@@ -55,7 +55,8 @@ module.exports = (app) => {
 
   });
 
-  const fetchUser = async (req, token) => { // Pass token as an argument
+  const fetchUser = async (req, token) => {
+    // Pass token as an argument
     if (!token) {
       return null;
     }
