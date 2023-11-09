@@ -94,7 +94,7 @@ function ProductListAdmin() {
                                         && (product.name.toLowerCase().includes(search.toLowerCase())
                                         || product.barcode.toLowerCase().includes(search.toLowerCase())))
                                     .map((product, index) => (
-                                        <ProductItem key={index} index={index + 1} product={product} />
+                                        <ProductItem key={index} index={index + 1} product={product} refreshProducts={refreshProducts}/>
                                     ))}
                                 </tbody>
                             </table>

@@ -1,5 +1,40 @@
 import {Link} from 'react-router-dom';
-function ProductItem({index, product}) {
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+function ProductItem({index, product,refreshProducts}) {
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+    const openConfirmModal = () => {
+        setShowConfirmModal(true);
+      };
+      
+      const closeConfirmModal = () => {
+        setShowConfirmModal(false);
+      };
+
+      const handleRemoveProduct = () => {
+
+        axios.delete(`/api/product/delete/${product.barcode}`, {
+          headers: {
+            'Authorization': localStorage.getItem('token')
+          }
+        })
+        .then(response => {
+          const res = response.data;
+          if (res.code === 0) {
+            refreshProducts()
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      };
+      
+      
+      
+
     function formatCurrencyVND(value) {
         const numericValue = parseFloat(value);
         if (!isNaN(numericValue)) {
@@ -31,10 +66,31 @@ function ProductItem({index, product}) {
                     <i className="fa-regular fa-pen-to-square mr-2"></i>
                     Edit
                 </Link>
-                <button type="button" className="btn btn-danger btn-sm m-1">
+                <button
+                    type="button"
+                    className="btn btn-danger btn-sm m-1"
+                    onClick={openConfirmModal}
+                    >
                     <i className="fa-solid fa-trash mr-2"></i>
                     Remove
                 </button>
+                {/* Modal xác nhận */}
+                <Modal show={showConfirmModal} onHide={closeConfirmModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Bạn có chắc chắn muốn xóa sản phẩm này?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closeConfirmModal}>
+                    Hủy
+                    </Button>
+                    <Button variant="danger" onClick={handleRemoveProduct}>
+                    Xóa
+                    </Button>
+                </Modal.Footer>
+                </Modal>
             </td>
         </tr>
      );
