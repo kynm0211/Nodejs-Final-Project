@@ -8,7 +8,6 @@ function CustomerTab({isPay}) {
     const [address, setAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
     const [error, setError] = useState(null);
-    const [isEdit, setIsEdit] = useState(true);
     useEffect(()=>{
         const customer = {
             phone: phone,
@@ -19,8 +18,13 @@ function CustomerTab({isPay}) {
 
         localStorage.setItem('customer', JSON.stringify(customer));
         
-        isPay(!isEdit);
-    }, [phone, name, address, paymentMethod, isEdit])
+        if(phone.length > 0 && name.length > 0 && address.length > 0){
+            setError(null);
+            isPay(true);
+        }else{
+            isPay(false);
+        }
+    }, [phone, name, address, paymentMethod])
 
     /*
         0: COD
@@ -55,21 +59,7 @@ function CustomerTab({isPay}) {
         }
     }
 
-    const handleConfirm = () => {
-        if(phone.length === 0){
-            document.getElementById('phone').focus();
-            return;
-        }
-        if(name.length === 0){
-            document.getElementById('fullname').focus();
-            return;
-        }
-        if(address.length === 0){
-            document.getElementById('address').focus();
-            return;
-        }
-        setIsEdit(false);
-    }
+
     return ( 
         <div>
             <div className="text-center">
@@ -85,10 +75,9 @@ function CustomerTab({isPay}) {
                             id="phone" placeholder="Enter phone's customer"
                             name="phone"
                             onChange={(e) => setPhone(e.target.value)}
-                            disabled={!isEdit}
                         />
                         {error && <span class="d-block text-danger">{error}</span>}
-                        <button disabled={!isEdit} onClick={handleCheckout} className="my-2 btn btn-primary">Checkout <i class="fa-solid fa-check-to-slot"></i></button>
+                        <button  onClick={handleCheckout} className="my-2 btn btn-primary">Checkout <i class="fa-solid fa-check-to-slot"></i></button>
                     </div>
                     <div class="col">
                         <label >Full of name</label>
@@ -100,7 +89,6 @@ function CustomerTab({isPay}) {
                             name="fullname"
                             onChange={(e) => setName(e.target.value)}
                             value={name}
-                            disabled={!isEdit}
                         />
                     </div>
                 </div>
@@ -115,7 +103,6 @@ function CustomerTab({isPay}) {
                             name="address"
                             onChange={(e) => setAddress(e.target.value)}
                             value={address}
-                            disabled={!isEdit}
                         />
                     </div>
                 </div>
@@ -129,10 +116,6 @@ function CustomerTab({isPay}) {
                         <option value={2}>Momo</option>
                         <option value={3}>VN Pay</option>
                     </select>
-                </div>
-                <div className="text-center my-4">
-                    <button onClick={handleConfirm} className="btn btn-primary mx-2">Confirm</button>
-                    <button onClick={()=> setIsEdit(true)} className="btn btn-warning mx-2">Edit</button>
                 </div>
             </div>
         </div>

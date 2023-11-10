@@ -1,15 +1,12 @@
 import ProductTab from "./ProductTab";
-import DetailFee from "./DetailFee";
 import html2canvas from 'html2canvas';
 import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 
 function InvoiceTab({invoice}) {
-    const [receipt, setReceipt] = useState(null);
+
     useEffect(() => {
-        setReceipt(invoice);
-        console.log("Receipt: ", receipt);
-    }, [invoice]);
+    }, [invoice]); 
 
     const downloadPDF = ()=>{
         const capture = document.querySelector('.capture-invoice');
@@ -21,44 +18,53 @@ function InvoiceTab({invoice}) {
                 console.log(componentWidth);
                 const componentHeight = doc.internal.pageSize.getHeight();
                 doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-                doc.save("invoice.pdf");
+                doc.save(`invoice-${invoice.order.order_number}.pdf`);
             })
     }
-
 
     return ( 
         <div class="modal fade" id="invoiceModal">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                 
-                    <div class="modal-header">
-                    <h4 class="modal-title">Invoice Information</h4>
+                    <div class="modal-header bg-main text-light">
+                        <div class="modal-title">
+                            <h4>Invoice Information</h4>
+                        </div>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     
                     <div class="modal-body capture-invoice">
                         <div className="row">
                             <div className="col">
-                                <h2 className="text-uppercase">Invoice</h2>
+                                <h2 className="text-uppercase"><strong>Invoice</strong></h2>
+                                <img
+                                    width={100} 
+                                    src="https://firebasestorage.googleapis.com/v0/b/nodejs-final-8bdf4.appspot.com/o/919825.png?alt=media&token=29bd9385-a5f1-4e95-ab7b-86747f4d62f9"/>
                             </div>
                             <div className="col">
-                                <p>Invoice Number: {receipt&&receipt.order_number}</p>
-                                <p>Invoice Date: {receipt&&receipt.created_date}</p>
+                                <p><strong>Invoice Number</strong>: {invoice&&invoice.order.order_number}</p>
+                                <p><strong>Invoice Date:</strong> {invoice&& new Date(invoice.order.created_date).toDateString()}</p>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row mt-4">
                             <div className="col">
-                                <p>Billing Information</p>
+                                <p><strong>Billing Information</strong></p>
 
                                 <div className="form-group">
                                     <label><strong>Company</strong></label>
                                     <br />
-                                    <span>NodeJS POS</span>
+                                    <span>NodeJS POS Inc.</span>
                                 </div>
                                 <div className="form-group">
                                     <label><strong>Name Staff</strong></label>
                                     <br />
-                                    <span>Nguyễn Minh Kỳ</span>
+                                    <span>{invoice&&invoice.staff.name}</span>
+                                </div>
+                                <div className="form-group">
+                                    <label><strong>Email</strong></label>
+                                    <br />
+                                    <span>{invoice&&invoice.staff.email}</span>
                                 </div>
                                 <div className="form-group">
                                     <label><strong>Address</strong></label>
@@ -67,22 +73,22 @@ function InvoiceTab({invoice}) {
                                 </div>
                             </div>
                             <div className="col">
-                                <p>Customer Information</p>
-
-                                <div className="form-group">
-                                    <label><strong>Phone</strong></label>
-                                    <br />
-                                    <span>0899910699</span>
-                                </div>
+                                <p><strong>Customer Information</strong></p>
+                                
                                 <div className="form-group">
                                     <label><strong>Full of name</strong></label>
                                     <br />
-                                    <span>Nguyễn Minh Kỳ</span>
+                                    <span>{invoice&&invoice.customer.name}</span>
+                                </div>
+                                <div className="form-group">
+                                    <label><strong>Phone</strong></label>
+                                    <br />
+                                    <span>{invoice&&invoice.customer.phone}</span>
                                 </div>
                                 <div className="form-group">
                                     <label><strong>Address</strong></label>
                                     <br />
-                                    <span>19 Nguyen Huu Tho, P. Tan Phong, D.7, Ho Chi Minh City</span>
+                                    <span>{invoice&&invoice.customer.address}</span>
                                 </div>
                             </div>
                         </div>
@@ -91,8 +97,31 @@ function InvoiceTab({invoice}) {
                                 <div className="text-center">
                                     <h3>Order Information</h3>
                                 </div>
-                                {receipt&&<ProductTab cart={receipt.products}>
-                                    <DetailFee />
+                                {invoice&&<ProductTab cart={invoice.orderDetail.products}>
+                                    <table className="table table-sm table-bordered w-25 ml-auto m-3">
+                                        <tbody>
+                                            <tr>
+                                                <th>Subtotal</th>
+                                                <td>{formatCurrencyVND(invoice&&invoice.order.sub_total)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tax rate</th>
+                                                <td>{invoice&&invoice.order.taxrate} %</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tax fee</th>
+                                                <td>{formatCurrencyVND(invoice&&invoice.order.taxfee)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total of quantity</th>
+                                                <td>{invoice&&invoice.order.quantity}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total</th>
+                                                <td>{formatCurrencyVND(invoice&&invoice.order.total)}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </ProductTab>}
                             </div>
                         </div>
@@ -107,6 +136,20 @@ function InvoiceTab({invoice}) {
         
         </div>
     );
+    function formatCurrencyVND(value) {
+        const numericValue = parseFloat(value);
+        if (!isNaN(numericValue)) {
+          const formatter = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+            minimumFractionDigits: 0,
+          });
+    
+          return formatter.format(numericValue);
+        } else {
+          return "Invalid Number";
+        }
+    }
 }
 
 export default InvoiceTab;

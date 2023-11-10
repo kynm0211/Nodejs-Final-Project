@@ -33,7 +33,7 @@ function POS() {
             {/* Reset Modal dialog */}
             <ResetModal />
             {/* Payment Modal dialog */}
-            <PaymentModal UpdateCart={cart}/>
+            <PaymentModal UpdateCart={cart} resetCart={AddToCart}/>
             {/* Invoice Modal dialog */}
             <InvoiceTab />
         </div>

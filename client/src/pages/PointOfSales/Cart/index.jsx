@@ -8,8 +8,6 @@ function CardDetail({AddToCart, UpdateCart}) {
     const [tax, setTax] = useState(0);
     const [total, setTotal] = useState(0);
     const [error, setError] = useState(null);
-	const [update, setUpdate] = useState(true);
-	const handleUpdateCartItem = () => setUpdate(!update);
 	const handleUpdateCart = () => UpdateCart();
 
     useEffect(() => {
@@ -28,7 +26,7 @@ function CardDetail({AddToCart, UpdateCart}) {
 
 
         setTotal(totalTemp);
-		    setSubTotal(subTotalTemp);
+		setSubTotal(subTotalTemp);
         setCount(tempCount);
 
 		const cartDetail = {
@@ -58,7 +56,7 @@ function CardDetail({AddToCart, UpdateCart}) {
 
     const handleReset = () => {
       localStorage.removeItem('cart');
-	  handleUpdateCart();
+	    handleUpdateCart();
     }
 
     const handleConfirmReset = () => {
@@ -108,7 +106,7 @@ function CardDetail({AddToCart, UpdateCart}) {
             title="Click here to reset bill"
             className="btn btn-warning mr-3"
             data-toggle="modal" data-target="#resetModal"
-			onClick={() => handleConfirmReset()}
+			      onClick={() => handleConfirmReset()}
           >
             <i className="fa-solid fa-trash"></i>
           </button>

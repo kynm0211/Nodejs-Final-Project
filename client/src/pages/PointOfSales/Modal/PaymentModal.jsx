@@ -7,35 +7,34 @@ import $ from 'jquery';
 import LoadingImg from "../../../components/Layout/components/LoadingImg";
 import axios from 'axios';
 
-function PaymentModal({UpdateCart}) {
+function PaymentModal({UpdateCart, resetCart}) {
 
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(null);
     const [payable, setPayable] = useState(false);
+    const [loadInvoices, setLoadInvoices] = useState(null);
     
-
-    const [invoice, setInvoice] = useState(null);
-
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem('cart')) || []);
     }, [UpdateCart, payable]);
 
 
     const handleMakePayment = () => {
+        setLoadInvoices(null);
         try{
             setError(null);
-        setLoading(true);
-        const taxrate = JSON.parse(localStorage.getItem('cartDetail')).tax;
-        const customer = localStorage.getItem('customer');
-        const cart = localStorage.getItem('cart');
-        const token = localStorage.getItem('token');
-        const payment = {
-            taxrate: taxrate,
-            customer: customer,
-            cart: cart,
-            token: token
-        }
+            setLoading(true);
+            const taxrate = JSON.parse(localStorage.getItem('cartDetail')).tax;
+            const customer = localStorage.getItem('customer');
+            const cart = localStorage.getItem('cart');
+            const token = localStorage.getItem('token');
+            const payment = {
+                taxrate: taxrate,
+                customer: customer,
+                cart: cart,
+                token: token
+            }
         axios.post('/api/create-a-bill', payment)
             .then(response => {
                 const data = response.data;
@@ -44,32 +43,29 @@ function PaymentModal({UpdateCart}) {
                 }else{
                     const order = data.data;
                     const order_number = order.order_number;
-                    let order_detail;
                     axios.get('/api/find-order-detail/'+order_number)
                         .then(response => {
                             const data = response.data;
                             if(data.code !== 0){
                                 setError(data.message);
                             }else{
-                                order_detail = data.data;
-                                const products = order_detail.products;
-
-                                let tempInvoice = order;
-                                tempInvoice.products = products;
-                                setInvoice(tempInvoice);
+                                const order_detail = data.data;
+                                setLoadInvoices(order_detail);
                                 $("#invoiceModal").modal('show');
 
+                                // Clear cart information
+                                localStorage.removeItem('customer');
+                                localStorage.removeItem('cart');
+                                localStorage.removeItem('cartDetail');
+                                resetCart();
                             }
                         })
                         .catch(error => {
+                            setLoadInvoices(null);
                             setError(error);
                         })
-                    // $("#paymentModal").modal('hide');
                 }
                 setLoading(false);
-                // localStorage.removeItem('cart');
-                // localStorage.removeItem('cartDetail');
-                // localStorage.removeItem('customer');
             })
             .catch((error) => {
                 setError(error);
@@ -131,7 +127,7 @@ function PaymentModal({UpdateCart}) {
                     >MAKE A PAYMENT</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-                {invoice && <InvoiceTab invoice={invoice}/>}
+                <InvoiceTab invoice={loadInvoices}/>
             </div>
             </div>
         </div>
