@@ -9,6 +9,11 @@ const OrderDetailSchema = new mongoose.Schema({
         ref: 'Order',
         unique: true
     },
+    order_number:{
+        type: String,
+        required: true,
+        unique: true,
+    },
     products: [ProductCart],
 });
 const OrderDetail = mongoose.model('OrderDetail', OrderDetailSchema);

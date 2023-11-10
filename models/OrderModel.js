@@ -10,8 +10,17 @@ const OrderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    order_number:{
+        type: String,
+        required: true,
+        unique: true,
+    },
     taxrate:{
         type: Number, 
+        required: true,
+    },
+    taxfee:{
+        type: Number,
         required: true,
     },
     sub_total:{
@@ -23,6 +32,10 @@ const OrderSchema = new Schema({
         required: true,
     },
     quantity: {
+        type: Number, 
+        required: true,
+    },
+    paymentMethod: {
         type: Number, 
         required: true,
     },

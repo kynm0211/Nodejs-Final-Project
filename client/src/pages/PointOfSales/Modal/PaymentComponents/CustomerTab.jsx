@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-function CustomerTab() {
+import InvoiceTab from "./InvoiceTab";
+import axios from "axios";
+
+function CustomerTab({isPay}) {
     const [phone, setPhone] = useState("");
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
-
+    const [error, setError] = useState(null);
+    const [isEdit, setIsEdit] = useState(true);
     useEffect(()=>{
         const customer = {
             phone: phone,
@@ -14,8 +18,9 @@ function CustomerTab() {
         };
 
         localStorage.setItem('customer', JSON.stringify(customer));
-    
-    }, [phone, name, address, paymentMethod])
+        
+        isPay(!isEdit);
+    }, [phone, name, address, paymentMethod, isEdit])
 
     /*
         0: COD
@@ -23,6 +28,48 @@ function CustomerTab() {
         2: Momo
         3: VNPay
     */
+
+
+    const handleCheckout = () => {
+        setError(null);
+        if(phone.length === 0){
+            setError("The phone number is not ok");
+            return;
+        }
+        try{
+            axios.get('/api/find-customer/'+phone)
+            .then(response => {
+                const data = response.data;
+                if(data.code !== 0){
+                    setError(data.message);
+                }else{
+                    setName(data.data.name);
+                    setAddress(data.data.address);
+                }
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
+        }catch(err){
+            setError(err.message);
+        }
+    }
+
+    const handleConfirm = () => {
+        if(phone.length === 0){
+            document.getElementById('phone').focus();
+            return;
+        }
+        if(name.length === 0){
+            document.getElementById('fullname').focus();
+            return;
+        }
+        if(address.length === 0){
+            document.getElementById('address').focus();
+            return;
+        }
+        setIsEdit(false);
+    }
     return ( 
         <div>
             <div className="text-center">
@@ -38,8 +85,10 @@ function CustomerTab() {
                             id="phone" placeholder="Enter phone's customer"
                             name="phone"
                             onChange={(e) => setPhone(e.target.value)}
+                            disabled={!isEdit}
                         />
-                        <button className="my-2 btn btn-primary">Checkout <i class="fa-solid fa-check-to-slot"></i></button>
+                        {error && <span class="d-block text-danger">{error}</span>}
+                        <button disabled={!isEdit} onClick={handleCheckout} className="my-2 btn btn-primary">Checkout <i class="fa-solid fa-check-to-slot"></i></button>
                     </div>
                     <div class="col">
                         <label >Full of name</label>
@@ -47,8 +96,11 @@ function CustomerTab() {
                             type="text"
                             class="form-control"
                             placeholder="Enter customer's name"
+                            id="fullname"
                             name="fullname"
                             onChange={(e) => setName(e.target.value)}
+                            value={name}
+                            disabled={!isEdit}
                         />
                     </div>
                 </div>
@@ -59,8 +111,11 @@ function CustomerTab() {
                             type="text"
                             class="form-control"
                             placeholder="Enter customer's address"
+                            id="address"
                             name="address"
                             onChange={(e) => setAddress(e.target.value)}
+                            value={address}
+                            disabled={!isEdit}
                         />
                     </div>
                 </div>
@@ -76,8 +131,8 @@ function CustomerTab() {
                     </select>
                 </div>
                 <div className="text-center my-4">
-                    <button className="btn btn-primary mx-2">Confirm</button>
-                    <button className="btn btn-warning mx-2">Edit</button>
+                    <button onClick={handleConfirm} className="btn btn-primary mx-2">Confirm</button>
+                    <button onClick={()=> setIsEdit(true)} className="btn btn-warning mx-2">Edit</button>
                 </div>
             </div>
         </div>

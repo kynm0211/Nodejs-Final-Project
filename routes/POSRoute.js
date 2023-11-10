@@ -17,9 +17,17 @@ module.exports = (app) => {
     });
 
     // Find the user in db
-    app.post('/api/find-customer/:phone',async (req, res) => {
+    app.get('/api/find-customer/:phone',async (req, res) => {
         const phone = req.params.phone;
-        return findCustomer(phone, res);
+        const result = await findCustomer(phone);
+        return res.send(result);
+    });
+
+    // Find order detail by order_number
+    app.get('/api/find-order-detail/:order_number',async (req, res) => {
+        const order_number = req.params.order_number;
+        const result = await findOrderDetail(order_number);
+        return res.send(result);
     });
 
     app.post('/api/add-order-detail',async (req, res) => {
@@ -37,19 +45,21 @@ module.exports = (app) => {
 
 
     app.post('/api/create-a-bill',async (req,res)=>{
-
-        // Get data from client and Extract properties from req.body
-        let getCustomer = req.body.customer;
-        let getCart = req.body.cart;
-        let getToken = req.body.token;
-        let taxrate = req.body.taxrate;
-
-        getCustomer = JSON.parse(getCustomer);
-        getCart = JSON.parse(getCart);
-
-
-        // Validate data
         try{
+            // Get data from client and Extract properties from req.body
+            let getCustomer = req.body.customer;
+            let getCart = req.body.cart;
+            let getToken = req.body.token;
+            let taxrate = req.body.taxrate;
+
+            getCustomer = JSON.parse(getCustomer);
+            getCart = JSON.parse(getCart);
+            let paymentMethod = getCustomer.paymentMethod;
+
+
+
+            // Validate data
+        
             // Customer session
             let customer = await findCustomer(getCustomer.phone);
             if(customer.code !== 0){
@@ -97,6 +107,8 @@ module.exports = (app) => {
 
             const taxfee = (sub_total * taxrate) / 100;
             const total = sub_total + taxfee;
+            const order_number = new Date().getTime().toString();
+            console.log(taxfee);
             // End calulating
 
             // Create order
@@ -104,10 +116,13 @@ module.exports = (app) => {
             const order = {
                 customer_id: customer._id,
                 staff_id: staff._id,
+                order_number: order_number,
                 taxrate: taxrate,
+                taxfee: taxfee,
                 sub_total: sub_total,
                 total: total,
                 quantity: count,
+                paymentMethod: paymentMethod,
                 created_date: new Date(),
 
             }
@@ -117,13 +132,14 @@ module.exports = (app) => {
             // Create order detail
             const orderDetail = {
                 order_id: createdOrder._id,
+                order_number: createdOrder.order_number,
                 products: cart,
             }
             const newOrderDetail = new OrderDetail(orderDetail);
             await newOrderDetail.save();
 
             return res.send(
-                package(0, 'Create bill successfully', null)
+                package(0, 'Create bill successfully', createdOrder)
             )
 
             
@@ -145,9 +161,11 @@ module.exports = (app) => {
             const customer = await Customer.findOne({phone});
 
             if(!customer){
-                return package(404, 'Customer not found', null)
+                return package(404, 'Customer does not exist in the system', null)
             }
-            return package(0, 'Customer found', customer)
+            const prepairCustomer = {...customer._doc};
+            delete prepairCustomer.password;
+            return package(0, 'Customer found', prepairCustomer)
             
         }catch(err){
             return package(500, 'Server error', null)
@@ -219,5 +237,17 @@ module.exports = (app) => {
         }
 
         
+    }
+
+    const findOrderDetail = async (order_number) => {
+        try{
+            const orderDetail = await OrderDetail.findOne({order_number});
+            if(!orderDetail){
+                return package(404, 'Order detail does not exist in the system', null);
+            }
+            return package(0, 'Success', orderDetail);
+        }catch(err){
+            return package(500, 'Server error', err.message);
+        }
     }
 }

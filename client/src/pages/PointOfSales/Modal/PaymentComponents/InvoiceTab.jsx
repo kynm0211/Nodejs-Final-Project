@@ -1,10 +1,16 @@
 import ProductTab from "./ProductTab";
 import DetailFee from "./DetailFee";
 import html2canvas from 'html2canvas';
+import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 
-function InvoiceTab() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+function InvoiceTab({invoice}) {
+    const [receipt, setReceipt] = useState(null);
+    useEffect(() => {
+        setReceipt(invoice);
+        console.log("Receipt: ", receipt);
+    }, [invoice]);
+
     const downloadPDF = ()=>{
         const capture = document.querySelector('.capture-invoice');
         html2canvas(capture)
@@ -36,8 +42,8 @@ function InvoiceTab() {
                                 <h2 className="text-uppercase">Invoice</h2>
                             </div>
                             <div className="col">
-                                <p>Invoice Number: </p>
-                                <p>Invoice Date: </p>
+                                <p>Invoice Number: {receipt&&receipt.order_number}</p>
+                                <p>Invoice Date: {receipt&&receipt.created_date}</p>
                             </div>
                         </div>
                         <div className="row">
@@ -85,9 +91,9 @@ function InvoiceTab() {
                                 <div className="text-center">
                                     <h3>Order Information</h3>
                                 </div>
-                                <ProductTab cart={cart}>
+                                {receipt&&<ProductTab cart={receipt.products}>
                                     <DetailFee />
-                                </ProductTab>
+                                </ProductTab>}
                             </div>
                         </div>
                     </div>
