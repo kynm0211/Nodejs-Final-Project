@@ -281,7 +281,6 @@ body{
 }
 .product-img-preview{
     width: 100%;
-    height: 100%;
 }
 /* ============ Responsive / Breakpoints ========== */
 @media (max-width: 1080px){

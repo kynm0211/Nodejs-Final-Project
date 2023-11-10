@@ -200,7 +200,7 @@ module.exports = (app) => {
                 if(product.quanity < amount){
                     return package(1, 'The amount of the product is not enough', null);
                 }
-                product.quanity -= amount;
+                product.quantity -= amount;
                 product.purchase = true;
                 await product.save();
                 
