@@ -109,10 +109,13 @@ button{
   bottom: 0;
   display: flex;
   justify-content: end;
-  width: 100%;
   right: 0;
   margin: 20px;
+  z-index: 10000;
 
+}
+.toast-body{
+  padding: 12px 24px;
 }
 @keyframes ldio-7y0xet08uv4 {
   0% { transform: translate(-50%,-50%) rotate(0deg); }
@@ -162,4 +165,7 @@ ul > li {
 
 .bg-main{
   background-color: orangered !important;
+}
+.product__item{
+  height: 250px;
 }

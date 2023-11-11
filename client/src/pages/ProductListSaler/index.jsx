@@ -41,13 +41,13 @@ function ProductListSaler() {
                 </div>
                 <div className="card-body">
                     <div className="row my-3">
-                        <div className="col-md-8">
+                        <div className="col-sm-12 col-md-12 col-lg-8">
                             <div className="form-outline mb-4">
                                 <label>Enter the name or barcode for searching</label>
                                 <input onChange={e => setSearch(e.target.value)} type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
                             </div>
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-sm-12 col-md-12 col-lg-3">
                             <div className="form-group">
                                 <label>Filter</label>
                                 <select
@@ -62,9 +62,8 @@ function ProductListSaler() {
                                 </select>
                             </div>
                         </div>
-                        <div className="col-md-1">
-                            <label className='mr-1'>Click to refresh</label>
-                            <button onClick={refreshProducts} className="btn btn-primary">
+                        <div className="col-sm-12 col-md-12 col-lg-1">
+                            <button onClick={refreshProducts} className="btn btn-sm btn-primary">
                                 <i class="fa-solid fa-rotate-right mr-1"></i>
                                 Refresh
                             </button>

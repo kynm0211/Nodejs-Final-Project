@@ -270,8 +270,6 @@ a {
 
 .input-container input {
   padding-right: 30px;
-  width: 100%;
-
   border: 1px solid #ccc;
   border-radius: 5px;
 }

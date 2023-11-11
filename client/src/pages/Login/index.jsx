@@ -74,10 +74,10 @@ export const Login = (props) => {
                             name="password"
                             placeholder="Password"
                         />
-                        <i
-                            className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"} toggle-password-icon`}
-                            onClick={togglePasswordVisibility}
-                        ></i>
+                        <div className="form-input my-3">
+                            <input type="checkbox" id="showPassword" className="form-check-input" onClick={togglePasswordVisibility} />
+                            <label className="form-check-label">Show Password</label>
+                        </div>
                     </div>
 
                     

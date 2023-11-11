@@ -43,15 +43,17 @@ function ProductItem({product, AddToCart}) {
         name = product.name;
     }
     return ( 
-        <div className="col-md-4 p-2">
+        <div className="col-sm-12 col-md-6 col-lg-3 p-2">
             <div className="card border-rounded">
-                <div className="card-body">
+                <div className="card-body product__item">
                     <div className="text-right mb-2">
                         <a title='Click here to view more detail' className="btn btn-sm btn-primary" target='_blank' href={'/product/'+product.barcode}>
                             <i className="fa-solid fa-circle-info"></i>
                         </a>
                     </div>
-                    <img src={product.image} alt="Image" width={'100'} height={'100'} />
+                    <div className="text-center">
+                        <img src={product.image} alt="Image" width={'100'} height={'100'} />
+                    </div>
                     <div className="card__title mt-2">
                         <h5 title={product.name}>{name}</h5>
                     </div>

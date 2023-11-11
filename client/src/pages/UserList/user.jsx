@@ -65,7 +65,7 @@ function UserItem({ index, user }) {
 
         <button
 			data-toggle="modal" data-target="#deleteModal"
-      onClick={() => handleDeleteModal(user)}
+      		onClick={() => handleDeleteModal(user)}
 			type="button"
 			className="btn btn-danger btn-sm m-1">
           <i className="fa-solid fa-trash mr-2"></i>

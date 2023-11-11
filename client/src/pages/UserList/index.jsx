@@ -46,13 +46,13 @@ function UserList() {
                 </div>
                 <div className="card-body">
                     <div className="row my-3">
-                        <div className="col-md-8">
+                        <div className="col-sm-12 col-md-12 col-lg-8">
                             <div className="form-outline mb-4">
                                 <label>Enter the name or email for searching</label>
                                 <input onChange={e => setSearch(e.target.value)} type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
                             </div>
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-sm-12 col-md-12 col-lg-3">
                             <div className="form-group">
                                 <label>Filter</label>
                                 <select
@@ -67,9 +67,8 @@ function UserList() {
                                 </select>
                             </div>
                         </div>
-                        <div className="col-md-1">
-                            <label className='mr-1'>Click to refresh</label>
-                            <button onClick={refreshUsers} className="btn btn-primary">
+                        <div className="col-sm-12 col-md-12 col-lg-1">
+                            <button onClick={refreshUsers} className="btn btn-sm btn-primary">
                                 <i className="fa-solid fa-rotate-right mr-1"></i>
                                 Refresh
                             </button>
@@ -77,7 +76,7 @@ function UserList() {
                     </div>
                     <div className="row">
                         <div className="col-12 center-table">
-                            <table className="table table-responsive-sm table-responsive-md table-striped rounded text-center">
+                            <table className="table table-responsive-sm table-responsive-md table-responsive-lg table-striped rounded text-center">
                                 <thead className="thead-dark rounded">
                                     <tr>
                                         <th scope="col">Order</th>

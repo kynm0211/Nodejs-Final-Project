@@ -2,7 +2,7 @@ import ProductItem from "./ProductItem";
 function ProductTab({cart, children}) {
     return ( 
         <div>
-            <table className="table table-bordered table-striped text-center table-hover">
+            <table className="table table-responsive-sm table-bordered table-striped text-center table-hover">
                 <thead>
                     <tr>
                         <th>Order</th>

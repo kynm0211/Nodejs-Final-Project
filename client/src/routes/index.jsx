@@ -48,9 +48,9 @@ export const privateRouters = [
 
 export const adminRouters = [
     { path: '/user/create-sale', element: CreateSale},
-    { path: '/user/user-list', element: UserList},
+    { path: '/users', element: UserList},
     { path: '/user/resend-email', element: ResendEmail},
-    { path: '/product/list', element: ProductListAdmin},
+    { path: '/products', element: ProductListAdmin},
     { path: '/product/product-management', element: ProductListAdmin},
     { path: '/product/add-new', element: AddProduct},
     { path: '/product/:barcode', element: Product},
@@ -58,7 +58,7 @@ export const adminRouters = [
 ];
 
 export const salerRouters = [
-    { path: '/product/list', element: ProductListSaler},
+    { path: '/products', element: ProductListSaler},
     { path: '/point-of-sale', element: POS, layout: POSLayout},
     { path: '/product/:barcode', element: Product},
     { path: '/orders', element: Orders},

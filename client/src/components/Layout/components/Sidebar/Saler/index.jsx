@@ -5,7 +5,7 @@ function SalerSideBar() {
         <Fragment>
             {/* <!-- -------- Non Dropdown List Item ------- --> */}
             <ItemSidebar title="Dashboard" url="/dashboard" icon="fa-solid fa-home"/>
-            <ItemSidebar title="Product" url="/product/list" icon="fa-solid fa-box"/>
+            <ItemSidebar title="Product" url="/products" icon="fa-solid fa-box"/>
             <ItemSidebar title="POS" url="/point-of-sale" icon="fa-solid fa-calculator"/>
             <ItemSidebar title="Order" url="/orders" icon="fa-solid fa-shopping-cart"/>
             <ItemSidebar title="Customer" url="/customers" icon="fa-solid fa-users"/>
