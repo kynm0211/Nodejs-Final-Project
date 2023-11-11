@@ -7,7 +7,7 @@ function SalerSideBar() {
             <ItemSidebar title="Dashboard" url="/dashboard" icon="fa-solid fa-home"/>
             <ItemSidebar title="Product" url="/product/list" icon="fa-solid fa-box"/>
             <ItemSidebar title="POS" url="/point-of-sale" icon="fa-solid fa-calculator"/>
-            <ItemSidebar title="Order" url="/order" icon="fa-solid fa-shopping-cart"/>
+            <ItemSidebar title="Order" url="/orders" icon="fa-solid fa-shopping-cart"/>
             <ItemSidebar title="Customer" url="/customer" icon="fa-solid fa-users"/>
         </Fragment>
     );
