@@ -51,7 +51,7 @@ function ProductItem({product, AddToCart}) {
                             <i className="fa-solid fa-circle-info"></i>
                         </a>
                     </div>
-                    <img src={product.image} alt="Image" width={'100%'} />
+                    <img src={product.image} alt="Image" width={'100'} height={'100'} />
                     <div className="card__title mt-2">
                         <h5 title={product.name}>{name}</h5>
                     </div>

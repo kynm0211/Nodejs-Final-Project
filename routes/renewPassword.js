@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const requiredLogin = require('../middlewares/requiredLogin');
 const package = require('../middlewares/package');
 const hash256 = require('../service/hash256');
+
+
 module.exports = (app) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));

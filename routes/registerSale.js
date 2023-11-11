@@ -51,7 +51,7 @@ module.exports = (app) => {
             newUser.time = dateTime;
             const token = jwt.sign({ newUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
 
-            const loginLink = `http://localhost:3000/direct?token=${token}`;
+            const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
             sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
 
             return res.json(package(0, "Registration success", newUser));
@@ -83,7 +83,7 @@ module.exports = (app) => {
 
             const token = jwt.sign({ preUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
 
-            const loginLink = `http://localhost:3000/direct?token=${token}`;
+            const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
             sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
 
             return res.json(package(0, "Resend email success", null));

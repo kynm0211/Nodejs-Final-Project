@@ -20,15 +20,13 @@ module.exports = (app) =>{
         
         const username = req.body.username;
         const password = req.body.password;
-        console.log("Account " + username + " " + password);
         // Check fields
         
         if(!username || username.length < 1){
-            res.json(package(7, "Please provide your username!", null));
-            return;
+            return res.json(package(7, "Please provide your username!", null));
+            
         }else if(!password || password.length < 1){
-            res.json(package(8, "Please provide your password!", null));
-            return;
+            return res.json(package(8, "Please provide your password!", null));
         }
 
         // Check email and password in DB
@@ -42,8 +40,8 @@ module.exports = (app) =>{
             const userDB = await User.findOne({ username });
         
             if (!userDB) {
-              res.json(package(10, "Invalid username or password", null));
-              return;
+                return res.json(package(10, "Invalid username or password", null));
+              
             }
         
             
@@ -56,18 +54,21 @@ module.exports = (app) =>{
                 prepairUser._doc.token = jwt.sign(prepairUser._doc, KEY.SECRET_SESSION_KEY , { expiresIn: '24h' });
                 if(prepairUser._doc.status === 'InActive'){
                     return res.json(package(12, "Your account is not active", null));
+                }else if(prepairUser._doc.status === 'Lock'){
+                    return res.json(package(12, "Your account is locked by Administator", null));
                 }
-                res.json(
+
+
+                return res.json(
                     package(0, "Login success", prepairUser._doc)
                 );
-                return;
+                
             } else {
-                res.json(package(10, "Invalid username or password", null));
-                return;
+                return res.json(package(10, "Invalid username or password", null));
+                
             }
         } catch (error) {
-            res.json(package(11, "Internal error", error));
-            return;
+            return res.json(package(11, "Internal error", error.message));
         }
 
     });
