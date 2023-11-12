@@ -1,19 +1,7 @@
 import {Link} from 'react-router-dom';
+import Num2VND from '../../components/Num2VND';
 function OrderItem({index, order}) {
-    function formatCurrencyVND(value) {
-        const numericValue = parseFloat(value);
-        if (!isNaN(numericValue)) {
-            const formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                minimumFractionDigits: 0,
-            });
-    
-            return formatter.format(numericValue);
-        } else {
-            return 'Invalid Number';
-        }
-    }
+
     return ( 
         <tr>
             <th scope="row">1</th>

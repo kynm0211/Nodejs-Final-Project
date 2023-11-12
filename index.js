@@ -49,6 +49,7 @@ require('./routes/productEditRoute')(app);
 require('./routes/productDeleteRoute')(app);
 require('./routes/updateUser')(app);
 require('./routes/POSRoute')(app);
+require('./routes/customersRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
