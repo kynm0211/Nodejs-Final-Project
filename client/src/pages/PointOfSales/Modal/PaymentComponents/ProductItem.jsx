@@ -1,3 +1,4 @@
+import Num2VND from "../../../../components/Num2VND";
 function ProductItem({index, product}) {
     return ( 
         <tr>
@@ -6,26 +7,10 @@ function ProductItem({index, product}) {
                 <img src={product.image} width={50} />
             </td>
             <td>{product.name}</td>
-            <td>{formatCurrencyVND(product.retail_price)}</td>
+            <td>{Num2VND(product.retail_price)}</td>
             <td>{product.amount}</td>
         </tr>
     );
-
-    // Convert to currency
-    function formatCurrencyVND(value) {
-        const numericValue = parseFloat(value);
-        if (!isNaN(numericValue)) {
-            const formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                minimumFractionDigits: 0,
-            });
-    
-            return formatter.format(numericValue);
-        } else {
-            return 'Invalid Number';
-        }
-    }
 }
 
 export default ProductItem;

@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import Num2VND from '../../../components/Num2VND';
 function ProductItem({product, AddToCart}) {
 
     const handleAddToCart = (product) => {
@@ -58,7 +58,7 @@ function ProductItem({product, AddToCart}) {
                         <h5 title={product.name}>{name}</h5>
                     </div>
                     <div className="text-center text-danger">
-                        <span>{formatCurrencyVND(product.retail_price)}</span>
+                        <span>{Num2VND(product.retail_price)}</span>
                     </div>
                 </div>
                 <div className="card-footer text-center">
@@ -71,22 +71,6 @@ function ProductItem({product, AddToCart}) {
             </div>                
         </div>
     );
-
-    // Convert to currency
-    function formatCurrencyVND(value) {
-        const numericValue = parseFloat(value);
-        if (!isNaN(numericValue)) {
-            const formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                minimumFractionDigits: 0,
-            });
-    
-            return formatter.format(numericValue);
-        } else {
-            return 'Invalid Number';
-        }
-    }
 }
 
 export default ProductItem;

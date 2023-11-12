@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-
+import Num2VND from '../../components/Num2VND';
 function EditProduct() {
     const { barcode } = useParams();
     const [product, setProduct] = useState(null);
@@ -21,22 +21,6 @@ function EditProduct() {
         setModalContent("");
       };
       
-
-
-    function formatCurrencyVND(value) {
-        const numericValue = parseFloat(value);
-        if (!isNaN(numericValue)) {
-            const formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                minimumFractionDigits: 0,
-            });
-
-            return formatter.format(numericValue);
-        } else {
-            return 'Invalid Number';
-        }
-    }
 
     useEffect(() => {
         fetchProduct();
@@ -114,7 +98,7 @@ function EditProduct() {
                                     <span>Category: {product.category}</span>
                                 </div>
                                 <div className="mb-3">
-                                    <span>Price: {formatCurrencyVND(product.retail_price)}</span>
+                                    <span>Price: {Num2VND(product.retail_price)}</span>
                                 </div>
                                 <div className="mb-3">
                                     <div className="fw-bold">Quantity:</div>

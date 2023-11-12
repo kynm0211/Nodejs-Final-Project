@@ -27,6 +27,14 @@ const OrderSchema = new Schema({
         type: Number, 
         required: true,
     },
+    cash:{
+        type: Number,
+        required: false,
+    },
+    change:{
+        type: Number,
+        required: false,
+    },
     total:{
         type: Number, 
         required: true,

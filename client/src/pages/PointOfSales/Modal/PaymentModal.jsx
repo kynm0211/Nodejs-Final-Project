@@ -26,6 +26,7 @@ function PaymentModal({UpdateCart, resetCart}) {
             setError(null);
             setLoading(true);
             const taxrate = JSON.parse(localStorage.getItem('cartDetail')).tax;
+            const cash = JSON.parse(localStorage.getItem('cartDetail')).cash;
             const customer = localStorage.getItem('customer');
             const cart = localStorage.getItem('cart');
             const token = localStorage.getItem('token');
@@ -33,6 +34,7 @@ function PaymentModal({UpdateCart, resetCart}) {
                 taxrate: taxrate,
                 customer: customer,
                 cart: cart,
+                cash: cash,
                 token: token
             }
         axios.post('/api/create-a-bill', payment)

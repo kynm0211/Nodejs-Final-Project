@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import CartItem from "./CartItem";
+import Num2VND from "../../../components/Num2VND";
+
 function CardDetail({AddToCart, UpdateCart}) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     const [count, setCount] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [tax, setTax] = useState(0);
+    const [cash, setCash] = useState(0);
+	const [change, setChange] = useState(0);
     const [total, setTotal] = useState(0);
+	const [isPayable, setIsPayable] = useState(false);
     const [error, setError] = useState(null);
 	const handleUpdateCart = () => UpdateCart();
 
@@ -20,7 +25,10 @@ function CardDetail({AddToCart, UpdateCart}) {
           },
           { tempCount: 0, subTotalTemp: 0 }
         );
-
+		if(cart.length === 0){
+			setTax(0);
+			setCash(0);
+		}
         const taxfee = (subTotalTemp * tax) / 100;
         const totalTemp = subTotalTemp + taxfee;
 
@@ -28,11 +36,16 @@ function CardDetail({AddToCart, UpdateCart}) {
         setTotal(totalTemp);
 		setSubTotal(subTotalTemp);
         setCount(tempCount);
+		setChange(cash - totalTemp);
+		setIsPayable(cash >= totalTemp ? true : false);
+		
 
 		const cartDetail = {
 			subTotal: subTotalTemp,
 			count: tempCount,
 			taxfee: taxfee,
+			cash: cash,
+			change: change,
 			total: totalTemp,
 			tax: tax
 		}
@@ -40,7 +53,7 @@ function CardDetail({AddToCart, UpdateCart}) {
 		// Store cart detail to localStorage
         localStorage.setItem('cartDetail', JSON.stringify(cartDetail));
 
-    }, [AddToCart, tax]);
+    }, [AddToCart, tax, cash]);
 
 
     const handleSetTax = (e) => {
@@ -51,12 +64,23 @@ function CardDetail({AddToCart, UpdateCart}) {
         } else {
             setTax(newTax);
         }
-		handleUpdateCart();
+		  handleUpdateCart();
     };
 
+    const handleSetCash = (e) =>{
+        setError(null);
+        const newCash = e.target.value;
+        if (newCash < 0) {
+            setError("Cash must be greater than 0");
+        } else {
+            setCash(newCash);
+        }
+        handleUpdateCart();
+    }
+
     const handleReset = () => {
-      localStorage.removeItem('cart');
-	    handleUpdateCart();
+      	localStorage.removeItem('cart');
+		handleUpdateCart();
     }
 
     const handleConfirmReset = () => {
@@ -82,23 +106,46 @@ function CardDetail({AddToCart, UpdateCart}) {
         <div className="d-flex justify-content-between">
           <span>{count} items</span>
           <span>
-            Subtotal: <strong>{formatCurrencyVND(subTotal)}</strong>
+            Subtotal: <strong>{Num2VND(subTotal)}</strong>
           </span>
         </div>
         <div className="text-right my-1">
-          <label>Tax fee</label>
+          <label><strong>Tax fee</strong></label>
           <input
             placeholder="%"
             min={0}
             max={100}
             type="number"
             className="form-control"
+			value={tax}
             onChange={(e) => handleSetTax(e)}
+          />
+        </div>
+        <div className="text-right my-1">
+          <label><strong>Cash</strong></label>
+          <input
+            placeholder="1,000,000vnđ"
+            min={0}
+            type="text"
+            className="form-control"
+			value={cash}
+            onChange={(e) => handleSetCash(e)}
+          />
+        </div>
+        <div className="text-right my-1">
+          <label><strong>Change</strong></label>
+          <input
+            placeholder="1,000,000vnđ"
+            min={0}
+            type="text"
+            className="form-control"
+            value={Num2VND(change)}
+            disabled={true}
           />
         </div>
         <div className="my-3">
           <span>
-            Total: <strong>{formatCurrencyVND(total)}</strong>
+            Total: <strong>{Num2VND(total)}</strong>
           </span>
         </div>
         <div className="d-flex text-center justify-content-between">
@@ -111,7 +158,7 @@ function CardDetail({AddToCart, UpdateCart}) {
             <i className="fa-solid fa-trash"></i>
           </button>
           <button
-            disabled={error ? true : false}
+            disabled={error || isPayable === false? true : false}
             title="Click here to make a payment"
             className="btn btn-success"
             data-toggle="modal" data-target="#paymentModal"
@@ -128,21 +175,6 @@ function CardDetail({AddToCart, UpdateCart}) {
       </div>
     </div>
   );
-  // Convert to currency
-  function formatCurrencyVND(value) {
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue)) {
-      const formatter = new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-        minimumFractionDigits: 0,
-      });
-
-      return formatter.format(numericValue);
-    } else {
-      return "Invalid Number";
-    }
-  }
 }
 
 export default CardDetail;

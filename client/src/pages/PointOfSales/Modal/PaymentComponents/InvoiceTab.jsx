@@ -2,7 +2,7 @@ import ProductTab from "./ProductTab";
 import html2canvas from 'html2canvas';
 import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
-
+import Num2VND from "../../../../components/Num2VND";
 function InvoiceTab({invoice}) {
 
     useEffect(() => {
@@ -102,7 +102,7 @@ function InvoiceTab({invoice}) {
                                         <tbody>
                                             <tr>
                                                 <th>Subtotal</th>
-                                                <td>{formatCurrencyVND(invoice&&invoice.order.sub_total)}</td>
+                                                <td>{Num2VND(invoice&&invoice.order.sub_total)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Tax rate</th>
@@ -110,7 +110,15 @@ function InvoiceTab({invoice}) {
                                             </tr>
                                             <tr>
                                                 <th>Tax fee</th>
-                                                <td>{formatCurrencyVND(invoice&&invoice.order.taxfee)}</td>
+                                                <td>{Num2VND(invoice&&invoice.order.taxfee)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Cash</th>
+                                                <td>{Num2VND(invoice&&invoice.order.cash)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Change</th>
+                                                <td>{Num2VND(invoice&&invoice.order.change)}</td>
                                             </tr>
                                             <tr>
                                                 <th>Total of quantity</th>
@@ -118,7 +126,7 @@ function InvoiceTab({invoice}) {
                                             </tr>
                                             <tr>
                                                 <th>Total</th>
-                                                <td>{formatCurrencyVND(invoice&&invoice.order.total)}</td>
+                                                <td>{Num2VND(invoice&&invoice.order.total)}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -136,20 +144,6 @@ function InvoiceTab({invoice}) {
         
         </div>
     );
-    function formatCurrencyVND(value) {
-        const numericValue = parseFloat(value);
-        if (!isNaN(numericValue)) {
-          const formatter = new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-            minimumFractionDigits: 0,
-          });
-    
-          return formatter.format(numericValue);
-        } else {
-          return "Invalid Number";
-        }
-    }
 }
 
 export default InvoiceTab;

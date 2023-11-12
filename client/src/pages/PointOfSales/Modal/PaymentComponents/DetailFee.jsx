@@ -1,3 +1,4 @@
+import Num2VND from "../../../../components/Num2VND";
 function DetailFee() {
 
     const cartDetail = JSON.parse(localStorage.getItem('cartDetail')) || {};
@@ -6,7 +7,7 @@ function DetailFee() {
             <tbody>
                 <tr>
                     <th>Subtotal</th>
-                    <td>{formatCurrencyVND(cartDetail.subTotal)}</td>
+                    <td>{Num2VND(cartDetail.subTotal)}</td>
                 </tr>
                 <tr>
                     <th>Tax rate</th>
@@ -14,7 +15,15 @@ function DetailFee() {
                 </tr>
                 <tr>
                     <th>Tax fee</th>
-                    <td>{formatCurrencyVND(cartDetail.taxfee)}</td>
+                    <td>{Num2VND(cartDetail.taxfee)}</td>
+                </tr>
+                <tr>
+                    <th>Cash</th>
+                    <td>{Num2VND(cartDetail.cash)}</td>
+                </tr>
+                <tr>
+                    <th>Change</th>
+                    <td>{Num2VND(cartDetail.change)}</td>
                 </tr>
                 <tr>
                     <th>Total of quantity</th>
@@ -22,27 +31,11 @@ function DetailFee() {
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td>{formatCurrencyVND(cartDetail.total)}</td>
+                    <td>{Num2VND(cartDetail.total)}</td>
                 </tr>
             </tbody>
         </table>
     );
-
-    // Convert to currency
-  function formatCurrencyVND(value) {
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue)) {
-      const formatter = new Intl.NumberFormat("vi-VN", {
-        style: "currency",
-        currency: "VND",
-        minimumFractionDigits: 0,
-      });
-
-      return formatter.format(numericValue);
-    } else {
-      return "Invalid Number";
-    }
-  }
 }
 
 export default DetailFee;

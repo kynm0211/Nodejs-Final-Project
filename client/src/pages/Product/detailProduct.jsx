@@ -1,25 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import Num2VND from '../../components/Num2VND';
 function Product() {
   const { barcode } = useParams();
   const [product, setProduct] = useState(null);
-
-  function formatCurrencyVND(value) {
-    const numericValue = parseFloat(value);
-    if (!isNaN(numericValue)) {
-      const formatter = new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-        minimumFractionDigits: 0,
-      });
-
-      return formatter.format(numericValue);
-    } else {
-      return 'Invalid Number';
-    }
-  }
 
   useEffect(() => {
     fetchProduct();
@@ -62,7 +47,7 @@ function Product() {
                 </div>
                 <div className="form-group">
                   <label>Price:</label>
-                  <p>{formatCurrencyVND(product.retail_price)}</p>
+                  <p>{Num2VND(product.retail_price)}</p>
                 </div>
                 <div className="form-group">
                   <label>Quantity:</label>

@@ -52,6 +52,7 @@ module.exports = (app) => {
             let getCart = req.body.cart;
             let getToken = req.body.token;
             let taxrate = req.body.taxrate;
+            let cash = req.body.cash;
 
             getCustomer = JSON.parse(getCustomer);
             getCart = JSON.parse(getCart);
@@ -109,7 +110,13 @@ module.exports = (app) => {
             const taxfee = (sub_total * taxrate) / 100;
             const total = sub_total + taxfee;
             const order_number = new Date().getTime().toString();
-            console.log(taxfee);
+            const change = cash - total;
+
+            if(change < 0){
+                return res.send(
+                    package(403, 'The cash is not enough', null)
+                );
+            }
             // End calulating
 
             // Create order
@@ -121,6 +128,8 @@ module.exports = (app) => {
                 taxrate: taxrate,
                 taxfee: taxfee,
                 sub_total: sub_total,
+                cash: cash,
+                change: change,
                 total: total,
                 quantity: count,
                 paymentMethod: paymentMethod,

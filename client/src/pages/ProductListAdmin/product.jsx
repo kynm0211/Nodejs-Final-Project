@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Num2VND from '../../components/Num2VND';
 function ProductItem({index, product,refreshProducts}) {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [showPurchasedModal, setShowPurchasedModal] = useState(false);
@@ -43,31 +44,13 @@ function ProductItem({index, product,refreshProducts}) {
           console.log(error);
         });
       };
-      
-      
-      
-
-    function formatCurrencyVND(value) {
-        const numericValue = parseFloat(value);
-        if (!isNaN(numericValue)) {
-            const formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                minimumFractionDigits: 0,
-            });
-    
-            return formatter.format(numericValue);
-        } else {
-            return 'Invalid Number';
-        }
-    }
     return ( 
         <tr>
             <th scope="row">{product.barcode}</th>
             <td>{product.name}</td>
             <td>{product.category}</td>
-            <td>{formatCurrencyVND(product.import_price)}</td>
-            <td>{formatCurrencyVND(product.retail_price)}</td>
+            <td>{Num2VND(product.import_price)}</td>
+            <td>{Num2VND(product.retail_price)}</td>
             <td>{new Date(product.creation_date).toLocaleDateString()}</td>
             <td>
                 <Link to={"/product/"+product.barcode} type="button" className="btn btn-outline-primary btn-sm m-1">
