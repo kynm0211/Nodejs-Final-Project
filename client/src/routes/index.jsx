@@ -10,6 +10,7 @@ import UserList from '../pages/UserList';
 import ResendEmail from '../pages/ResendEmail';
 import RenewPassword from '../pages/RenewPassword';
 import DirectLogin from '../pages/DirectLogin';
+import Error from '../pages/Error';
 //import ProductList from '../pages/ProductList';
 import AddProduct from '../pages/AddProduct';
 import ProductListAdmin from '../pages/ProductListAdmin';
@@ -32,7 +33,8 @@ import EditProduct from '../pages/Product/editProduct';
 export const publicRouters = [
     { path: '/forget', element: ForgetPassword, layout: null},
     { path: '/login', element: Login, layout: null},
-    { path: '/direct', element: DirectLogin, layout: null}
+    { path: '/direct', element: DirectLogin, layout: null},
+    { path: '/*', element: Error, layout: null}
 ];
 
 export const privateRouters = [

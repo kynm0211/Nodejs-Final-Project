@@ -74,10 +74,10 @@ export const Login = (props) => {
                             name="password"
                             placeholder="Password"
                         />
-                        <div className="form-input my-3">
-                            <input type="checkbox" id="showPassword" className="form-check-input" onClick={togglePasswordVisibility} />
-                            <label className="form-check-label">Show Password</label>
-                        </div>
+                    </div>
+                    <div className="fadeIn fourth form-input my-3" onClick={togglePasswordVisibility}>
+                        <input checked={showPassword? true : false} type="checkbox" id="showPassword" className="form-check-input" />
+                        <label className="form-check-label">Show Password</label>
                     </div>
 
                     
