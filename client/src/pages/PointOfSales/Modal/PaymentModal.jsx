@@ -45,7 +45,7 @@ function PaymentModal({UpdateCart, resetCart}) {
                 }else{
                     const order = data.data;
                     const order_number = order.order_number;
-                    axios.get('/api/find-order-detail/'+order_number)
+                    axios.get('/api/orders/'+order_number)
                         .then(response => {
                             const data = response.data;
                             if(data.code !== 0){
