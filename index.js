@@ -23,7 +23,6 @@ mongoose.connect(KEY.mongoURI, {
 
 // Models
 require('./models/UserModel');
-require('./models/ProductModel');
 //Test
 require('./models/CustomerModel');
 require('./models/ProductCartModel');
@@ -50,6 +49,7 @@ require('./routes/productDeleteRoute')(app);
 require('./routes/updateUser')(app);
 require('./routes/POSRoute')(app);
 require('./routes/customersRoute')(app);
+require('./routes/ordersRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);

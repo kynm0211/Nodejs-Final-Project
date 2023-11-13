@@ -20,7 +20,7 @@ import Product from '../pages/Product/detailProduct';
 
 // Import Orders
 import Orders from '../pages/Orders';
-
+import OrderDetail from '../pages/OrderDetail';
 
 // Import Customers
 import Customers from '../pages/Customers';
@@ -64,7 +64,8 @@ export const salerRouters = [
     { path: '/point-of-sale', element: POS, layout: POSLayout},
     { path: '/product/:barcode', element: Product},
     { path: '/orders', element: Orders},
-    { path: '/customers', element: Customers}
+    { path: '/customers', element: Customers},
+    { path: 'orders/:order_number', element: OrderDetail}
 ];
 
 export const customerRouters = [];

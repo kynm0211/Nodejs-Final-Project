@@ -3,8 +3,37 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import OrderItem from './order';
 function Orders() {
+    const [orders, setOrders] = useState(null);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const fetchOrders = async () => {
+        setLoading(true);
+        setError(null);
+        axios.get('/api/orders', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+            .then(response => {
+                const res = response.data;
+                if(res.code === 0){
+                    setOrders(res.data);
+                }else{
+                    setError(res.message);
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(err.message);
+                setLoading(false);
+            })
+    }
+
+    useEffect(() => {
+        fetchOrders();
+    },[search]);
     return ( 
         <div>
             <div className="card rounded">
@@ -56,23 +85,27 @@ function Orders() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {loading === false && <tr className='text-center'>
+                                {loading && <tr className='text-center'>
                                     <td colSpan={6}><LoadingImg /></td>
                                 </tr>}
-                                <OrderItem />
-                                {/* {loading && products && products
-                                    .filter(product => product.category.includes(category)
-                                        && (product.name.toLowerCase().includes(search.toLowerCase())
-                                        || product.barcode.toLowerCase().includes(search.toLowerCase())))
-                                    .map((product, index) => (
-                                        <ProductItem key={index} index={index + 1} product={product} />
-                                    ))} */}
+                                {orders && orders
+                                    .filter(order => order.order_number && order.order_number.toLowerCase().includes(search.toLowerCase()))
+                                    .map((order, index) => (
+                                        <OrderItem key={index} index={index + 1} order={order} />
+                                ))}
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div className="card-footer">Footer</div>
+                {error && (
+                    <div className="card-footer">
+                        <div className="alert alert-danger" role="alert">
+                            {error}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

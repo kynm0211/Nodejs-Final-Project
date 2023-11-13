@@ -4,13 +4,13 @@ function OrderItem({index, order}) {
 
     return ( 
         <tr>
-            <th scope="row">1</th>
-            <td>123123</td>
-            <td>120000</td>
-            <td>12</td>
-            <td>1/1/2023</td>
+            <th scope="row">{index}</th>
+            <td>{order.order_number}</td>
+            <td>{Num2VND(order.total)}</td>
+            <td>{order.quantity}</td>
+            <td>{new Date(order.created_date).toDateString()}</td>
             <td>
-                <Link to={"/orders/"} type="button" className="btn btn-outline-primary btn-sm m-1">
+                <Link to={"/orders/"+order.order_number} type="button" className="btn btn-outline-primary btn-sm m-1">
                     <i className="fa-solid fa-circle-info mr-2"></i>
                     Details
                 </Link>
