@@ -32,21 +32,15 @@ require('./models/OrderDetailModel');
 
 
 // Routes
-require('./routes/loginRoute')(app);
+require('./routes/authRoute')(app);
 require('./routes/registerRoute')(app);
-require('./routes/logoutRoute')(app);
 require('./routes/uploadRoute')(app);
 require('./routes/registerSale')(app);
 require('./routes/updateProfileRoute')(app);
 require('./routes/usersRoute')(app);
 require('./routes/productsRoute')(app);
 require('./routes/renewPassword')(app);
-require('./routes/changePasswordRoute')(app);
 require('./routes/addProductRoute')(app);
-require('./routes/productDetailRoute')(app);
-require('./routes/productEditRoute')(app);
-require('./routes/productDeleteRoute')(app);
-require('./routes/updateUser')(app);
 require('./routes/POSRoute')(app);
 require('./routes/customersRoute')(app);
 require('./routes/ordersRoute')(app);
