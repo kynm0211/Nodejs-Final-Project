@@ -24,6 +24,7 @@ import OrderDetail from '../pages/OrderDetail';
 
 // Import Customers
 import Customers from '../pages/Customers';
+import CustomerDetail from '../pages/Customers/Detail';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
 import {POSLayout} from '../components/Layout';
@@ -65,7 +66,8 @@ export const salerRouters = [
     { path: '/product/:barcode', element: Product},
     { path: '/orders', element: Orders},
     { path: '/customers', element: Customers},
-    { path: 'orders/:order_number', element: OrderDetail}
+    { path: 'orders/:order_number', element: OrderDetail},
+    { path: 'customers/:id', element: CustomerDetail}
 ];
 
 export const customerRouters = [];
