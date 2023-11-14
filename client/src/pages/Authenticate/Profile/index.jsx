@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useRef, Fragment } from "react";
-import ModalDialog from "../../components/Layout/components/ModalDialog";
+import ModalDialog from "../../../components/Layout/components/ModalDialog";
 
 function Profile() {
   	const token = window.localStorage.getItem("token");

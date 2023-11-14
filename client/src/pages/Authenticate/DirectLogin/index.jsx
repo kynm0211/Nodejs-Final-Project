@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom'; 
 import axios from 'axios';
-import InvalidToken from '../../components/InvalidToken';
+import InvalidToken from '../../../components/InvalidToken';
 
 function DirectLogin() {
     const location = useLocation();

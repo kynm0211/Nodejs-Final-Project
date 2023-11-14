@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import LoadingImg from "../../components/Layout/components/LoadingImg";
+import LoadingImg from "../../../components/Layout/components/LoadingImg";
 
 function RenewPassword() {
     const [loading, setLoading] = useState(false);

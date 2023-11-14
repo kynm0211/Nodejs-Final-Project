@@ -1,15 +1,15 @@
 import ForgetPassword from '../pages/ForgetPassword';
-import Login from '../pages/Login';
+import Login from '../pages/Authenticate/Login';
 import Logout from '../pages/Authenticate/Logout';
 import Setting from '../pages/Authenticate/Setting';
 import Dashboard from '../pages/Dashboard';
 import CreateSale  from '../pages/Users/CreateSale';
-import Profile from '../pages/Profile';
+import Profile from '../pages/Authenticate/Profile';
 import ChangePassword from '../pages/Authenticate/ChangePassword';
 import UserList from '../pages/Users';
 import ResendEmail from '../pages/Users/ResendEmail';
-import RenewPassword from '../pages/RenewPassword';
-import DirectLogin from '../pages/DirectLogin';
+import RenewPassword from '../pages/Authenticate/RenewPassword';
+import DirectLogin from '../pages/Authenticate/DirectLogin';
 import Error from '../pages/Authenticate/Error';
 
 

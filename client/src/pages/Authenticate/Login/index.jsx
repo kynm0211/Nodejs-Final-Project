@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './LoginRegister.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import LoadingImg from "../../components/Layout/components/LoadingImg";
+import LoadingImg from "../../../components/Layout/components/LoadingImg";
 
 export const Login = (props) => {
     const [login, setLogin] = useState(false);
