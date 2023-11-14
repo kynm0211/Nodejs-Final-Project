@@ -4,10 +4,28 @@ const requiredLogin = require('../middlewares/requiredLogin');
 const jwt = require('jsonwebtoken');
 const KEY = require('../config/key');
 module.exports = (app) => {
-    app.get('/api/users', requiredLogin, async (req, res) => {
+    app.get('/api/users', async (req, res) => {
+		const pageSize = 10;
+		const pageNumber = parseInt(req.query.page, 10) || 1;
+
+      	const skipAmount = (pageNumber - 1) * pageSize;
         try {
-            const users = await User.find({});
-            res.json(package(0, 'Success', users));
+			// Count total number of users
+			const totalUsers = await User.countDocuments({});
+			// Calculate total number of pages
+			const totalPages = Math.ceil(totalUsers / pageSize);
+			
+			// Calculate the skip amount based on the requested page
+			const skipAmount = (pageNumber - 1) * pageSize;
+
+            const users = await User.find({}).skip(skipAmount).limit(pageSize).lean();
+			
+
+			const data = {
+				users,
+				divider: totalPages,
+			}
+            res.json(package(0, 'Success', data));
         } catch (err) {
             console.error('Error:', err);
             res.status(500).json({ error: 'An error occurred while fetching users.' });

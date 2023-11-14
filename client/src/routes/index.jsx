@@ -61,6 +61,12 @@ export const adminRouters = [
     { path: '/products/add', element: AddProduct},
     { path: '/products/:barcode', element: Product},
     { path: '/products/edit/:barcode', element: EditProduct},
+    { path: '/orders', element: Orders},
+    { path: 'orders/:order_number', element: OrderDetail},
+    { path: '/customers', element: Customers},
+    { path: 'customers/:id', element: CustomerDetail},
+    { path: 'customers/history/:id', element: CustomerHistory},
+    
 ];
 
 export const salerRouters = [

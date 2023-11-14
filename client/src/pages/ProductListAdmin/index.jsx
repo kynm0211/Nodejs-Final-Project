@@ -47,6 +47,7 @@ function ProductListAdmin() {
                                 <input onChange={e => setSearch(e.target.value)} type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
                             </div>
                         </div>
+                        
                         <div className="col-sm-12 col-md-12 col-lg-3">
                             <div className="form-group">
                                 <label>Filter</label>
