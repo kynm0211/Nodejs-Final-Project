@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import Num2VND from '../../components/Num2VND';
+import Num2VND from '../../../components/Num2VND';
 function EditProduct() {
     const { barcode } = useParams();
     const [product, setProduct] = useState(null);

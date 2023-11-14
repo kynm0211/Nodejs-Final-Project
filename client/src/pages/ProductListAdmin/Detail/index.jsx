@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Num2VND from '../../components/Num2VND';
+import Num2VND from '../../../components/Num2VND';
 function Product() {
   const { barcode } = useParams();
   const [product, setProduct] = useState(null);

@@ -2,9 +2,9 @@ import UserItem from './user';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoadingImg from '../../components/Layout/components/LoadingImg';
-import DetailModal from './DetailModal';
-import DeleteModal from './DeleteModal';
-import EditModal from './EditModal';
+import DetailModal from './FunctionModal/DetailModal';
+import DeleteModal from './FunctionModal/DeleteModal';
+import EditModal from './FunctionModal/EditModal';
 
 
 function UserList() {

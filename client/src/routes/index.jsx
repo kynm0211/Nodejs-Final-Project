@@ -1,34 +1,37 @@
 import ForgetPassword from '../pages/ForgetPassword';
 import Login from '../pages/Login';
-import Logout from '../pages/Logout';
-import Setting from '../pages/Setting';
+import Logout from '../pages/Authenticate/Logout';
+import Setting from '../pages/Authenticate/Setting';
 import Dashboard from '../pages/Dashboard';
-import CreateSale  from '../pages/CreateSale';
+import CreateSale  from '../pages/Users/CreateSale';
 import Profile from '../pages/Profile';
-import ChangePassword from '../pages/ChangePassWord';
-import UserList from '../pages/UserList';
-import ResendEmail from '../pages/ResendEmail';
+import ChangePassword from '../pages/Authenticate/ChangePassword';
+import UserList from '../pages/Users';
+import ResendEmail from '../pages/Users/ResendEmail';
 import RenewPassword from '../pages/RenewPassword';
 import DirectLogin from '../pages/DirectLogin';
-import Error from '../pages/Error';
+import Error from '../pages/Authenticate/Error';
+
+
 //import ProductList from '../pages/ProductList';
-import AddProduct from '../pages/AddProduct';
+import Product from '../pages/ProductListAdmin/Detail';
+import AddProduct from '../pages/ProductListAdmin/AddProduct';
+import EditProduct from '../pages/ProductListAdmin/EditProduct';
 import ProductListAdmin from '../pages/ProductListAdmin';
 import ProductListSaler from '../pages/ProductListSaler';
 import POS from '../pages/PointOfSales';
-import Product from '../pages/Product/detailProduct';
 
 // Import Orders
 import Orders from '../pages/Orders';
-import OrderDetail from '../pages/OrderDetail';
+import OrderDetail from '../pages/Orders/OrderDetail';
 
 // Import Customers
 import Customers from '../pages/Customers';
 import CustomerDetail from '../pages/Customers/Detail';
+import CustomerHistory from '../pages/Customers/History';
 // Layouts
 //import {HeaderOnly} from '../components/Layout';
 import {POSLayout} from '../components/Layout';
-import EditProduct from '../pages/Product/editProduct';
 
 
 export const publicRouters = [
@@ -50,24 +53,25 @@ export const privateRouters = [
 
 
 export const adminRouters = [
-    { path: '/user/create-sale', element: CreateSale},
     { path: '/users', element: UserList},
-    { path: '/user/resend-email', element: ResendEmail},
+    { path: '/users/create', element: CreateSale},
+    { path: '/users/resend-email', element: ResendEmail},
     { path: '/products', element: ProductListAdmin},
-    { path: '/product/product-management', element: ProductListAdmin},
-    { path: '/product/add-new', element: AddProduct},
-    { path: '/product/:barcode', element: Product},
-    { path: '/product/edit/:barcode', element: EditProduct},
+    { path: '/products/manage', element: ProductListAdmin},
+    { path: '/products/add', element: AddProduct},
+    { path: '/products/:barcode', element: Product},
+    { path: '/products/edit/:barcode', element: EditProduct},
 ];
 
 export const salerRouters = [
-    { path: '/products', element: ProductListSaler},
     { path: '/point-of-sale', element: POS, layout: POSLayout},
-    { path: '/product/:barcode', element: Product},
+    { path: '/products', element: ProductListSaler},
+    { path: '/products/:barcode', element: Product},
     { path: '/orders', element: Orders},
-    { path: '/customers', element: Customers},
     { path: 'orders/:order_number', element: OrderDetail},
-    { path: 'customers/:id', element: CustomerDetail}
+    { path: '/customers', element: Customers},
+    { path: 'customers/:id', element: CustomerDetail},
+    { path: 'customers/history/:id', element: CustomerHistory},
 ];
 
 export const customerRouters = [];

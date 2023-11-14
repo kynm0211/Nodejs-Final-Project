@@ -1,7 +1,7 @@
 import { useState, Fragment } from "react";
 import axios from "axios";
-import Toast from "../../components/Layout/components/Toast/";
-import LoadingImg from "../../components/Layout/components/LoadingImg";
+import Toast from "../../../components/Layout/components/Toast/";
+import LoadingImg from "../../../components/Layout/components/LoadingImg";
 function ResendEmail() {
     const [email, setEmail] = useState(null);
     const [alert, setAlert] = useState(null);

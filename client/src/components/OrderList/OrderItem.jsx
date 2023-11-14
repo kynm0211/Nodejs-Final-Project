@@ -1,6 +1,6 @@
-import Num2VND from "../../../components/Num2VND";
+import Num2VND from "../Num2VND";
 import {Link} from 'react-router-dom';
-function TransItem({item, index}) {
+function OrderItem({index, item}) {
     return ( 
         <tr>
             <th scope="row">{index}</th>
@@ -18,4 +18,4 @@ function TransItem({item, index}) {
     );
 }
 
-export default TransItem;
+export default OrderItem;

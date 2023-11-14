@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Num2VND from '../../components/Num2VND';
+import Num2VND from '../../../components/Num2VND';
 import React, {useEffect, useState} from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from "jspdf";

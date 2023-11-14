@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import LoadingImg from "../../components/Layout/components/LoadingImg";
+import LoadingImg from "../../../components/Layout/components/LoadingImg";
 function AddNew() {
     const [barcode, setBarcode] = useState("");
     const [quantity, setQuantity] = useState("");

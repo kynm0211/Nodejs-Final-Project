@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import './CreateSale.css';
-import LoadingImg from "../../components/Layout/components/LoadingImg";
+import LoadingImg from "../../../components/Layout/components/LoadingImg";
 export const CreateSale = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
