@@ -14,7 +14,7 @@ function AdminSideBar() {
                 <ItemDropDown title="Product List" url="/products" icon="fa-solid fa-cube"/>
                 <ItemDropDown title="Add a new" url="/products/add" icon="fa-solid fa-plus"/>
             </ItemSidebar>
-            <ItemSidebar title="Customers" url="/customers" icon="fa-solid fa-users"/>
+            <ItemSidebar title="Customers" url="/customers" icon="fa-solid fa-user-tie"/>
             <ItemSidebar title="Orders" url="/orders" icon="fa-solid fa-shopping-cart"/>
         </Fragment>
      );

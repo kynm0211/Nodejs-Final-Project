@@ -125,6 +125,61 @@ module.exports = (app) => {
 
   });
 
+
+  app.get('/api/products/:barcode', async (req, res) => {
+    try {
+        const barcode = req.params.barcode;
+        const product = await ProductModel.findOne({ barcode }).lean();
+
+        if (!product) {
+            return res.json(
+                package(404, "Product not found", null)
+            );
+        }
+
+        return res.json(
+            package(0, "Get product successfully", product)
+        );
+    } catch (error) {
+        return res.json(
+            package(404, "Error getting product", error.message)
+        );
+    }
+    });
+
+    app.patch('/api/products/:barcode', async (req, res) => {
+        try {
+            const barcode = req.params.barcode;
+            const amount = req.body.amount;
+
+            if(amount === undefined || amount === null || amount <= 0) {
+                return res.json(
+                    package(404, "Amount should be greater than 0", null)
+                );
+            } 
+        
+            const product = await ProductModel.findOneAndUpdate(
+                { barcode },
+                { $inc: { quantity: amount } }, // Use $inc to increment the existing quantity
+                { new: true, lean: true } // Return the updated document as a plain JavaScript object
+            );
+        
+            if (!product) {
+                return res.json(
+                    package(404, "Product not found", null)
+                );
+            }
+        
+            return res.json(
+                package(0, "Update product successfully", product)
+            );
+        } catch (error) {
+            return res.json(
+                package(404, "Error updating product", error.message)
+            );
+        }        
+    });
+
   const handleUploadImg = async (image, token) => {
     const imageData = new FormData();
     imageData.append("file", image.buffer, { filename: image.originalname });

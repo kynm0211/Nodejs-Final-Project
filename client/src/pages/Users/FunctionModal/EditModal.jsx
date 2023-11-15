@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import $ from 'jquery';
-
+import axios from 'axios';
 function EditModal({refreshUsers}) {
-
     const user = {
         id: $('#edit__id').val(),
         username: $('#edit__username').val(),
@@ -11,47 +10,42 @@ function EditModal({refreshUsers}) {
         status: $('#edit__status').val(),
       };
       
-  const [userData, setUserData] = useState({
-    username: user.username,
-    email: user.email,
-    role: user.role,
-    status: user.status,
-  });
+	const [userData, setUserData] = useState({
+		username: user.username,
+		email: user.email,
+		role: user.role,
+		status: user.status,
+	});
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserData({
-      ...userData,
-      [name]: value,
-    });
-  };
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setUserData({
+		...userData,
+		[name]: value,
+		});
+	};
 
-  const handleSaveChanges = () => {
-    const updatedUser = {
-      username: userData.username,
-      email: userData.email,
-      role: userData.role,
-      status: userData.status,
-    };
+const handleSaveChanges = () => {
+	const updatedUser = {
+		username: userData.username,
+		email: userData.email,
+		role: userData.role,
+		status: userData.status,
+	};
 
-    $.ajax({
-      url: `/api/update_user/${user.id}`,
-      method: 'PUT',
-      headers: {
-        Authorization: localStorage.getItem('token'), 
-      },
-      data: updatedUser,
-      success: function (response) {
-        
-        $('#editModal').modal('hide');
-        refreshUsers()
-      },
-      error: function (error) {
-
-        console.error('Lỗi cập nhật thông tin người dùng', error);
-      },
-    });
-  };
+	axios.put(`/api/update_user/${user.id}`, updatedUser, {
+		headers: {
+			Authorization: localStorage.getItem('token'),
+		},
+	})
+		.then((response) => {
+			$('#editModal').modal('hide');
+			refreshUsers();
+		})
+		.catch((error) => {
+			console.error('Lỗi cập nhật thông tin người dùng', error);
+		});
+};
 
   return (
     <div className="modal fade" id="editModal">

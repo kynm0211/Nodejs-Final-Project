@@ -110,16 +110,21 @@ export const CreateSale = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="card-footer">
-                    {/* Loading */}
-                    {loading && <div className="text-center">
-                        <LoadingImg />
-                    </div>}
-                    {/* Show error message */}
-                    {error && <div className="alert alert-danger">
-                        <strong>Error!</strong> {error}
-                    </div>}
-                </div>
+                {/* Loading */}
+                {loading && (
+                    <div className="card-footer">
+                        <div className="text-center">
+                            <LoadingImg />
+                        </div>
+                    </div>
+                )}
+                {error &&(
+                    <div className="card-footer">
+                        <div className="alert alert-danger">
+                            <strong>Error!</strong> {error}
+                        </div>
+                    </div>
+                )}
             </div>
         </section>
     );

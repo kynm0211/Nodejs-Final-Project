@@ -18,6 +18,23 @@
     --color_Dark2: #252527;
     --color_Light1: #dfdfdf;
     --color_Light2: #c4c4c4;
+    --border-animation: animate 10s linear infinite;
+    --blue-gradient: linear-gradient(
+        0deg,
+        transparent,
+        transparent,
+        #45f3ff,
+        #45f3ff,
+        #45f3ff
+    );
+    --pink-gradient: linear-gradient(
+        0deg,
+        transparent,
+        transparent,
+        #ff2770,
+        #ff2770,
+        #ff2770
+    );
 }
 
 body{

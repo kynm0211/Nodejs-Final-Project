@@ -79,7 +79,6 @@ function UserList() {
                                     <option value="">All users</option>
                                     <option value="Administrator">Administrator</option>
                                     <option value="Sale person">Sale person</option>
-                                    <option value="Customer">Customer</option>
                                 </select>
                             </div>
                         </div>

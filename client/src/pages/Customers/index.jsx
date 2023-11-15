@@ -6,9 +6,11 @@ function Customers() {
     const [search, setSearch] = useState("");
     const [customers, setCustomers] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
 
     const handleFetchCustomers = async () => {
+        setError(null);
         setLoading(false);
         axios.get('/api/customers', {
             headers: {
@@ -18,14 +20,16 @@ function Customers() {
         .then(response => {
             const res = response.data;
             if (res.code === 0) {
-                setCustomers(res.data);
-                console.log(res.data);
+                setCustomers(res.data);                
+            }
+            else{
+                setError(res.message);
             }
             setLoading(true);
         })
         .catch(error => {
-            console.log(error);
             setLoading(false);
+            setError(error.message);
         });
     }
 
@@ -44,21 +48,6 @@ function Customers() {
                             <div className="form-outline mb-4">
                                 <label>Enter the name or barcode for searching</label>
                                 <input onChange={e => setSearch(e.target.value)} type="search" className="form-control" id="datatable-search-input" placeholder="Search"/>
-                            </div>
-                        </div>
-                        <div className="col-sm-12 col-md-12 col-lg-3">
-                            <div className="form-group">
-                                <label>Filter</label>
-                                <select
-                                    className="form-control"
-                                    id="exampleFormControlSelect1"
-                                    // onChange={e => setCategory(e.target.value)}
-                                >
-                                    <option value="">All product</option>
-                                    <option value="Iphone">Iphone</option>
-                                    <option value="Samsung">Samsung</option>
-                                    <option value="Xiaomi">Xiaomi</option>
-                                </select>
                             </div>
                         </div>
                         <div className="col-sm-12 col-md-12 col-lg-1">
@@ -96,7 +85,13 @@ function Customers() {
                         </div>
                     </div>
                 </div>
-                <div className="card-footer">Footer</div>
+                {error && (
+                    <div className="card-footer">
+                        <div class="alert alert-success">
+                            <strong>Error!</strong> {error}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
