@@ -124,7 +124,7 @@ function UserList() {
                                     <td colSpan={6}><LoadingImg /></td>
                                 </tr>}
                                 {loading && users && users
-                                    .filter(user => user.role.includes(role) && user.status.includes(status)
+                                    .filter(user => user.role.includes(role) && status == user.status || status == ""
                                         && (user.name.toLowerCase().includes(search.toLowerCase())
                                         || user.email.toLowerCase().includes(search.toLowerCase())))
                                     .map((user, index) => (
