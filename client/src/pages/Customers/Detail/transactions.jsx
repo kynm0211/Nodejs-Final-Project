@@ -5,13 +5,12 @@ function Transactions({customer_id}) {
 
     const [transactions, setTransactions] = useState(null);
     const [error, setError] = useState(null);
-    const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
 
 
     
-    const handleFetchTransactions = async (id) => {
-        axios.get('/api/customers/' + id + '/transactions', {
+    const handleFetchTransactions = async () => {
+        axios.get('/api/customers/' + customer_id + '/transactions', {
             headers: { 
                 'Authorization': localStorage.getItem('token')
             }
@@ -31,14 +30,14 @@ function Transactions({customer_id}) {
     }
 
     useEffect(() => {
-        handleFetchTransactions(customer_id);
+        handleFetchTransactions();
     }, []);
 
 
 
     return ( 
         <div>
-            <OrderList orders={transactions} />
+            <OrderList orders={transactions} fetch={handleFetchTransactions}/>
         </div>
     );
 }

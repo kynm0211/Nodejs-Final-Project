@@ -2,17 +2,26 @@ import LoadingImg from '../../components/Layout/components/LoadingImg';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Customer from './customer';
+import Pagination from '../../components/Pagination';
+import { useLocation } from 'react-router-dom';
 function Customers() {
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page');
+
+    
     const [search, setSearch] = useState("");
     const [customers, setCustomers] = useState(null);
+    const [divider, setDivider] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
 
     const handleFetchCustomers = async () => {
         setError(null);
-        setLoading(false);
-        axios.get('/api/customers', {
+        setLoading(true);
+        axios.get('/api/customers?page='+page, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -20,12 +29,13 @@ function Customers() {
         .then(response => {
             const res = response.data;
             if (res.code === 0) {
-                setCustomers(res.data);                
+                setCustomers(res.data.customers);
+                setDivider(res.data.divider);              
             }
             else{
                 setError(res.message);
             }
-            setLoading(true);
+            setLoading(false);
         })
         .catch(error => {
             setLoading(false);
@@ -35,7 +45,7 @@ function Customers() {
 
     useEffect(() => {
         handleFetchCustomers();
-    }, [search]);
+    }, [search, page]);
     return ( 
         <div>
             <div className="card rounded">
@@ -51,7 +61,7 @@ function Customers() {
                             </div>
                         </div>
                         <div className="col-sm-12 col-md-12 col-lg-1">
-                            <button className="btn btn-sm btn-primary">
+                            <button onClick={()=> handleFetchCustomers()} className="btn btn-sm btn-primary">
                                 <i class="fa-solid fa-rotate-right mr-1"></i>
                                 Refresh
                             </button>
@@ -71,10 +81,10 @@ function Customers() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {loading === false && <tr className='text-center'>
+                                {loading && <tr className='text-center'>
                                     <td colSpan={6}><LoadingImg /></td>
                                 </tr>}
-                                {loading && customers && customers
+                                {customers && customers
                                     .filter(customer => (customer.name.toLowerCase().includes(search.toLowerCase())
                                         || customer.phone.toLowerCase().includes(search.toLowerCase())))
                                     .map((customer, index) => (
@@ -83,6 +93,9 @@ function Customers() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div className="row">
+                        <Pagination root='customers' divider={divider} />
                     </div>
                 </div>
                 {error && (

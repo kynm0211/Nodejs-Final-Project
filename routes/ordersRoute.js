@@ -14,7 +14,7 @@ const package = require('../middlewares/package');
 module.exports = (app) =>{
     // Fetch ordered list
     app.get('/api/orders',async (req, res) => {
-        const result = await fetchOrderList();
+        const result = await fetchOrderList(req, res);
         return res.send(result);
     });
 
@@ -78,13 +78,25 @@ module.exports = (app) =>{
         }
     }
 
-    const fetchOrderList = async () =>{
+    const fetchOrderList = async (req, res) =>{
         try{
-            const orders = await Order.find({});
+            const pageSize = 10;
+            const pageNumber = parseInt(req.query.page, 10) || 1;
+      	    const skipAmount = (pageNumber - 1) * pageSize;
+
+            const totalOrders = await Order.countDocuments({});
+            const totalPages = Math.ceil(totalOrders / pageSize);
+
+            const orders = await Order.find({}).skip(skipAmount).limit(pageSize).lean();
             if(!orders){
                 return package(404, 'Order list is empty', null);
             }
-            return package(0, 'Success', orders);
+
+            const data = {
+                orders,
+                divider: totalPages,
+            }
+            return package(0, 'Success', data);
         }catch(err){
             return package(500, 'Server error', err.message);
         }

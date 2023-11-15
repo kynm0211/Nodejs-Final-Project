@@ -1,7 +1,7 @@
 import OrderItem from "./OrderItem";
 import { useState } from 'react';
 import LoadingImg from '../LoadingScreen/';
-function OrderList({orders}) {
+function OrderList({orders, fetch}) {
     const [search, setSearch] = useState("");
     return (
         <div>
@@ -14,21 +14,21 @@ function OrderList({orders}) {
                 </div>
                 <div className="col-sm-12 col-md-12 col-lg-3">
                     <div className="form-group">
-                        <label>Filter</label>
+                        <label>Sort by <i className="fa-solid fa-arrow-down-a-z"></i></label>
                         <select
                             className="form-control"
                             id="exampleFormControlSelect1"
                             // onChange={e => setCategory(e.target.value)}
                         >
-                            <option value="">All product</option>
-                            <option value="Iphone">Iphone</option>
-                            <option value="Samsung">Samsung</option>
-                            <option value="Xiaomi">Xiaomi</option>
+                            <option value="1">a-z</option>
+                            <option value="2">z-a</option>
+                            <option value="3">Highest Price</option>
+                            <option value="4">Lowest Price</option>
                         </select>
                     </div>
                 </div>
                 <div className="col-sm-12 col-md-12 col-lg-1">
-                    <button className="btn btn-sm btn-primary">
+                    <button className="btn btn-sm btn-primary" onClick={()=> fetch()}>
                         <i class="fa-solid fa-rotate-right mr-1"></i>
                         Refresh
                     </button>

@@ -94,10 +94,10 @@ function PaymentModal({UpdateCart, resetCart}) {
                 <div class="modal-body">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#products_tab">Products</a>
+                            <a class="nav-link active" data-toggle="tab" href="#customer_tab">Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#customer_tab">Customer</a>
+                            <a class="nav-link" data-toggle="tab" href="#products_tab">Products</a>
                         </li>
                     </ul>
 

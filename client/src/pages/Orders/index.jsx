@@ -2,16 +2,24 @@ import LoadingImg from '../../components/Layout/components/LoadingImg';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import OrderList from '../../components/OrderList';
+import Pagination from '../../components/Pagination';
+import { useLocation } from 'react-router-dom';
 function Orders() {
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page');
+
+
     const [orders, setOrders] = useState(null);
-    const [search, setSearch] = useState("");
+    const [divider, setDivider] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const fetchOrders = async () => {
         setLoading(true);
         setError(null);
-        axios.get('/api/orders', {
+        axios.get('/api/orders?page='+page, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -19,7 +27,8 @@ function Orders() {
             .then(response => {
                 const res = response.data;
                 if(res.code === 0){
-                    setOrders(res.data);
+                    setOrders(res.data.orders);
+                    setDivider(res.data.divider);
                 }else{
                     setError(res.message);
                 }
@@ -33,7 +42,7 @@ function Orders() {
 
     useEffect(() => {
         fetchOrders();
-    },[search]);
+    },[page]);
     return ( 
         <div>
             <div className="card rounded">
@@ -41,12 +50,22 @@ function Orders() {
                     <h3>Manage ordered list</h3>
                 </div>
                 <div className="card-body">
-                   <OrderList orders={orders} />
+                   <OrderList orders={orders} fetch={fetchOrders}/>
+                   <div className="row">
+                        <Pagination root='orders' divider={divider}/>
+                   </div>
                 </div>
                 {error && (
                     <div className="card-footer">
                         <div className="alert alert-danger" role="alert">
                             {error}
+                        </div>
+                    </div>
+                )}
+                {loading && (
+                    <div className="card-footer">
+                        <div className="text-center">
+                            <LoadingImg />
                         </div>
                     </div>
                 )}
