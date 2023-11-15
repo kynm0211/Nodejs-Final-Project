@@ -45,7 +45,7 @@ function CardDetail({AddToCart, UpdateCart}) {
 			count: tempCount,
 			taxfee: taxfee,
 			cash: cash,
-			change: change,
+			change: cash - totalTemp,
 			total: totalTemp,
 			tax: tax
 		}
