@@ -234,6 +234,10 @@ ul > li {
   animation-delay: -7.5s;
 }
 
+.border-main{
+  border: 1px solid orangered !important;
+}
+
 @keyframes animate {
   from {
     transform: rotate(0deg);

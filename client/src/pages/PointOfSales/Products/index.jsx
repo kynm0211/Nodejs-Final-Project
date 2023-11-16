@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../../components/Pagination";
-
+import LoadingImg from "../../../components/Layout/components/LoadingImg";
 function Products({AddToCart}) {
 
     const location = useLocation();
@@ -12,6 +12,8 @@ function Products({AddToCart}) {
 
     const [products, setProducts] = useState([]);
     const [divider, setDivider] = useState(1);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         handleFetchProducts();
@@ -19,6 +21,8 @@ function Products({AddToCart}) {
     }, [page]);
 
     const handleFetchProducts = async () => {
+        setError(null);
+        setLoading(true);
         axios.get('/api/products?page='+page, {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -29,10 +33,14 @@ function Products({AddToCart}) {
             if (res.code === 0) {
                 setProducts(res.data.products);
                 setDivider(res.data.divider);
+            }else{
+                setError(res.message);
             }
+            setLoading(false);
         })
         .catch(error => {
-            console.log(error);
+            setLoading(false);
+            setError(error.message);
         });
     }
 
@@ -43,6 +51,11 @@ function Products({AddToCart}) {
                 <div className="card">
                     <div className="card-body">
                         <div className="row">
+                            {loading && (
+                                <div className="col-md-12 text-center">
+                                    <LoadingImg />
+                                </div>
+                            )}
                             {products.map((product) => (
                                 <ProductItem
                                     key={product._id}
@@ -54,7 +67,16 @@ function Products({AddToCart}) {
                         <div className="row">
                             <Pagination root='point-of-sale' divider={divider}/>
                         </div>
-                    </div>
+                    </div> 
+                    {error && (
+                        <div className="card-footer">
+                            <div class="alert alert-dangere H
+                            
+                            ">
+                                <strong>Error!</strong> {error}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
