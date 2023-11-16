@@ -1,20 +1,28 @@
 import ProductItem from './product';
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoadingImg from '../../components/Layout/components/LoadingImg';
+import Pagination from '../../components/Pagination';
 function ProductListAdmin() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page');
+
+
     const [products, setProducts] = useState(null);
+    const [divider, setDivider] = useState(1);
     const [category, setCategory] = useState("");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         fetchProducts();
 
-    }, [category, search]);
+    }, [category, search, page]);
 
     const fetchProducts = async () => {
         setLoading(false);
-        axios.get('/api/products', {
+        axios.get('/api/products?page='+page, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -22,7 +30,8 @@ function ProductListAdmin() {
         .then(response => {
             const res = response.data;
             if (res.code === 0) {
-                setProducts(res.data);
+                setProducts(res.data.products);
+                setDivider(res.data.divider);
             }
             setLoading(true);
         })
@@ -73,7 +82,7 @@ function ProductListAdmin() {
                     </div>
                     <div className="row">
                         <div className="col-12 center-table">
-                            <table className="table table-responsive-sm table-responsive-md table-responsive-lg table-striped rounded text-center">
+                            <table className="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-striped rounded text-center">
                                 <thead className="thead-dark rounded">
                                     <tr>
                                         <th scope="col">Barcode</th>
@@ -100,6 +109,9 @@ function ProductListAdmin() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div className="row">
+                        <Pagination root='products' divider={divider}/>
                     </div>
                 </div>
                 <div className="card-footer">Footer</div>

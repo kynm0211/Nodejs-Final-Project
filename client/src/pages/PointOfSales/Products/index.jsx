@@ -1,18 +1,25 @@
 import ProductItem from "./ProductItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import Pagination from "../../../components/Pagination";
 
 function Products({AddToCart}) {
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page');
+
     const [products, setProducts] = useState([]);
-    
+    const [divider, setDivider] = useState(1);
 
     useEffect(() => {
         handleFetchProducts();
 
-    }, []);
+    }, [page]);
 
     const handleFetchProducts = async () => {
-        axios.get('/api/products', {
+        axios.get('/api/products?page='+page, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -20,7 +27,8 @@ function Products({AddToCart}) {
         .then(response => {
             const res = response.data;
             if (res.code === 0) {
-                setProducts(res.data);
+                setProducts(res.data.products);
+                setDivider(res.data.divider);
             }
         })
         .catch(error => {
@@ -42,6 +50,9 @@ function Products({AddToCart}) {
                                     AddToCart={AddToCart}
                                 />
                             ))}
+                        </div>
+                        <div className="row">
+                            <Pagination root='point-of-sale' divider={divider}/>
                         </div>
                     </div>
                 </div>

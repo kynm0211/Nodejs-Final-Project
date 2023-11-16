@@ -52,20 +52,31 @@ module.exports = (app) => {
         try{
             const id = req.params.id;
 
+            const pageSize = 10;
+            const pageNumber = parseInt(req.query.page, 10) || 1;
+            const skipAmount = (pageNumber - 1) * pageSize;
+
+            
+
             const customer = await Customer.findById(id).lean();
 
             if(!customer) return res.send(package(1, 'Customer not found'));
 
-            const transactions = await Order.find({customer_id: id}).lean();
+            const totalTransactions = await Order.countDocuments({customer_id: id});
+            const transactions = await Order.find({customer_id: id}).lean()
+                .skip(skipAmount)
+                .limit(pageSize)
+                .lean();
 
             if(!transactions) return res.send(package(1, 'No transactions found'));
 
+            const totalPages = Math.ceil(totalTransactions / pageSize);
 
             const data = {
                 customer: customer,
-                transactions: transactions
+                transactions: transactions,
+                divider: totalPages,
             }
-
             return res.json(package(0, 'Success', data));
         }
         catch(err){

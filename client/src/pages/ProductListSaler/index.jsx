@@ -1,20 +1,27 @@
 import ProductItem from './product';
 import { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 import LoadingImg from '../../components/Layout/components/LoadingImg';
+import Pagination from '../../components/Pagination';
 function ProductListSaler() {
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page');
+
     const [products, setProducts] = useState(null);
+    const [divider, setDivider] = useState(1);
     const [category, setCategory] = useState("");
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         fetchProducts();
 
-    }, [category, search]);
+    }, [category, search, page]);
 
     const fetchProducts = async () => {
         setLoading(false);
-        axios.get('/api/products', {
+        axios.get('/api/products?page='+page, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -22,7 +29,8 @@ function ProductListSaler() {
         .then(response => {
             const res = response.data;
             if (res.code === 0) {
-                setProducts(res.data);
+                setProducts(res.data.products);
+                setDivider(res.data.divider);
             }
             setLoading(true);
         })
@@ -97,6 +105,9 @@ function ProductListSaler() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div className="row">
+                        <Pagination root='products' divider={divider}/>
                     </div>
                 </div>
                 <div className="card-footer">Footer</div>
