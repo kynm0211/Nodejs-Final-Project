@@ -11,7 +11,7 @@ import ResendEmail from '../pages/Users/ResendEmail';
 import RenewPassword from '../pages/Authenticate/RenewPassword';
 import DirectLogin from '../pages/Authenticate/DirectLogin';
 import Error from '../pages/Authenticate/Error';
-
+import RegisterHidden from '../pages/RegisterHidden';
 
 //import ProductList from '../pages/ProductList';
 import Product from '../pages/ProductListAdmin/Detail';
@@ -38,7 +38,8 @@ export const publicRouters = [
     { path: '/forget', element: ForgetPassword, layout: null},
     { path: '/login', element: Login, layout: null},
     { path: '/direct', element: DirectLogin, layout: null},
-    { path: '/*', element: Error, layout: null}
+    { path: '/*', element: Error, layout: null},
+    { path: '/register_admin', element: RegisterHidden, layout: null},
 ];
 
 export const privateRouters = [
