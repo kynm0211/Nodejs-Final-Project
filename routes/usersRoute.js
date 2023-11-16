@@ -55,8 +55,8 @@ module.exports = (app) => {
             res.status(500).json({ error: 'Lỗi cập nhật dữ liệu.' });
           }
         });
-      });
-      app.delete('/api/delete_user/:userId', (req, res) => {
+    });
+    app.delete('/api/delete_user/:userId', (req, res) => {
         const token = req.header('Authorization');
     
         if (!token) {

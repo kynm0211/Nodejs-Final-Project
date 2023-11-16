@@ -34,7 +34,6 @@ require('./models/OrderDetailModel');
 // Routes
 require('./routes/authRoute')(app);
 require('./routes/registerRoute')(app);
-require('./routes/uploadRoute')(app);
 require('./routes/registerSale')(app);
 require('./routes/updateProfileRoute')(app);
 require('./routes/usersRoute')(app);
