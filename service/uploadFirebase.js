@@ -41,7 +41,7 @@ const uploadFile = (rcfile) => {
             })
                 .then((urls) => {
                     const downloadURL = urls[0];
-                    resolve({ code: 16, message: "Upload file successfully.", data: downloadURL });
+                    resolve({ code: 0, message: "Upload file successfully.", data: downloadURL });
                 })
                 .catch((error) => {
                     console.error("Error getting download URL:", error);

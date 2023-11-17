@@ -10,8 +10,7 @@ const Customer = mongoose.model('Customer');
 
 
 module.exports = (app) => {
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    
 
     app.get('/api/login', (req, res)=>{
         // Show does not suppot GET method

@@ -3,9 +3,11 @@ const express = require('express');
 const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const app = express();
+const bodyParser = require('body-parser');
 app.use(express.json());
 require('dotenv').config();
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Connect to the mongoose server
 mongoose.connect(KEY.mongoURI, {
