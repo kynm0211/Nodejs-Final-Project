@@ -23,7 +23,7 @@ export const CreateSale = (props) => {
             email: email
         };
 
-        axios.post('/api/admin/create-account-sale', userData, {
+        axios.post('/api/users/register', userData, {
             headers: { 
                 'Authorization': localStorage.getItem('token'),
             }

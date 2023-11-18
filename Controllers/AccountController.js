@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const KEY = require('../config/key');
-
-
+const uploadFile = require('../service/uploadFirebase');
+const Package = require('../middlewares/package');
 module.exports = {
     login: async (req, res) => {
         try{
@@ -127,6 +127,42 @@ module.exports = {
             return res.json(package(11, "Internal error", error.message));
         }
     },
+    updateProfile: async (req, res) =>{
+        try {
+            const { username, name } = req.body;
+            const image = req.file;
+
+            if(!username || !name){
+                return res.send(
+                    Package(400, "Missing required parameters", null)
+                );
+            }
+    
+            // Find the user by username
+            const user = await User.findOne({ username }).lean();
+            let _id = await user._id;
+
+            if (!user) {
+                return res.send(
+                    Package(404, "User not found", null)
+                );
+            }
+
+            let result;
+            if(image){
+                const uploadImage = await uploadFile(image);
+                const url = uploadImage.data;
+                result = await User.findByIdAndUpdate({ _id }, { name, image: url }, { new: true });
+            }else{
+                result = await User.findByIdAndUpdate({ _id }, { name }, { new: true });
+            }
+            
+
+            return res.send(Package(0, "Update profile successfully.", result));
+        } catch (error) {
+            return res.send(Package(500, "Error updating profile.", error.message));
+        }
+    },
     directLogin: async (req, res) =>{
         try{
             const token = req.body.token;
@@ -140,11 +176,14 @@ module.exports = {
                 if (!user) {
                     return res.json(package(10, "Invalid username", null));
                 }
+                delete user.password;
+
+                user.token = jwt.sign(user, KEY.SECRET_SESSION_KEY , { expiresIn: '1h' });
+
                 if(user.status === 'InActive'){
-                    return res.json(package(12, "Your account is not active", null));
+                    return res.json(package(12, "Your account is not active", user));
                 }
 
-                delete user.password;
                 
                 return res.json(
                     package(0, "Login success", user)
@@ -155,6 +194,46 @@ module.exports = {
         }
         catch(error){
             return res.json(package(403, "This token was not valid or expired", error.message));
+        }
+    },
+    renewPassword: async (req, res) =>{
+        try{
+            const token = req.header('Authorization');
+            const userToken = jwt.verify(token, KEY.SECRET_SESSION_KEY);
+            const {password} = req.body;
+            if(!userToken){
+                return res.json(package(402, "You must be login!", userToken))
+            }
+        
+            if(!password){
+                return res.json(package(402, "Password can not be null!", password))
+            }
+        
+            if(password.length > 36){
+                return res.json(405, "The length of password must be less than 36 chars!", null);
+            }
+        
+            const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
+            // Find the user by email
+            const email = userToken.email;
+            const user = await User.findOne({ email }).lean();
+
+            if (!user) {
+                return res.json(package(404, "Can not find the user", null));
+            }
+
+            // Update the user's name and image
+            const result = await User.findOneAndUpdate(
+                { email: userToken.email },
+                { $set: { password: hashedPassword, status: 'Active' } },
+                { new: true }
+            );
+            return res.json(
+                package(0, "Successfully", result)
+            );
+        }
+        catch(error){
+            return res.json(package(404, "The request failed", error.message));
         }
     }
 } 

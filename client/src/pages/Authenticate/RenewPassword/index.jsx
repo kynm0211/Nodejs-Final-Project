@@ -29,7 +29,7 @@ function RenewPassword() {
         const data = {
             password: password,
         };
-        axios.put('/api/renew-password', data, {
+        axios.put('/api/account/renew-password', data, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `${token}`
@@ -37,7 +37,6 @@ function RenewPassword() {
         })
             .then(response => {
                 const res = response.data;
-                console.log(res.data);
                 if (res.code === 0) {
                     localStorage.removeItem('token');
                     window.location.href = '/';

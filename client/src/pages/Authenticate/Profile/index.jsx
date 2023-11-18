@@ -22,6 +22,7 @@ function Profile() {
       .then((response) => {
         const res = response.data;
         setUser(res.data);
+		setName(res.data.name);
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +55,7 @@ function Profile() {
 		formData.append("file", image);
 		formData.append("username", user.username);
 
-		axios.patch("/api/users/profile", formData, {
+		axios.patch("/api/account/", formData, {
 			headers: {
 				Authorization: token,
 			}

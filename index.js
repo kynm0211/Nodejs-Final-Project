@@ -36,15 +36,11 @@ require('./models/OrderDetailModel');
 
 
 // Assign the Routers
-app.use('/api/account', require('./Routers/account'));
-
+app.use('/api/account', require('./Routers/AccountRoute'));
+app.use('/api/users', require('./Routers/UsersRoute'));
 // Routes
 require('./routes/registerRoute')(app);
-require('./routes/registerSale')(app);
-require('./routes/updateProfileRoute')(app);
-require('./routes/usersRoute')(app);
 require('./routes/productsRoute')(app);
-require('./routes/renewPassword')(app);
 require('./routes/addProductRoute')(app);
 require('./routes/POSRoute')(app);
 require('./routes/customersRoute')(app);

@@ -33,14 +33,17 @@ const handleSaveChanges = () => {
 		status: userData.status,
 	};
 
-	axios.put(`/api/update_user/${user.id}`, updatedUser, {
+	axios.put(`/api/users/${user.id}`, updatedUser, {
 		headers: {
 			Authorization: localStorage.getItem('token'),
 		},
 	})
 		.then((response) => {
-			$('#editModal').modal('hide');
-			refreshUsers();
+      const res = response.data;
+      if(res.code === 0){
+        $('#editModal').modal('hide');
+			  refreshUsers();
+      }
 		})
 		.catch((error) => {
 			console.error('Lỗi cập nhật thông tin người dùng', error);

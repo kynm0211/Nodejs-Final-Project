@@ -23,10 +23,11 @@ function DirectLogin() {
         .then(response => {
             setError(false);
             const res = response.data;
-            console.log(data);
             if(res.code === 12){
+                localStorage.setItem('token', res.data.token);
                 window.location.href = '/renew-password';
-            }else if(data.code === 0){
+            }else if(res.code === 0){
+                localStorage.setItem('token', res.data.token);
                 window.location.href = '/';
             }else{
                 setError(true);

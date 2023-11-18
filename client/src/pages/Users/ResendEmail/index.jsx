@@ -18,15 +18,13 @@ function ResendEmail() {
         setError(null);
         setStatus(true);
 
-        axios.post('/api/admin/resend-email', user)
+        axios.post('/api/users/resend', user)
             .then(respone => {
                 const res = respone.data;
                 if(res.code === 0){
                     setAlert(res.message);
-                    //<Toast type="success" message={alert} />
                 }else{
                     setError(res.message);
-                    //<Toast type="error" message={error} />
 
                 }
                 setStatus(false);
