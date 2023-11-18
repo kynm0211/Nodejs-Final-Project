@@ -18,7 +18,11 @@ function ResendEmail() {
         setError(null);
         setStatus(true);
 
-        axios.post('/api/users/resend', user)
+        axios.post('/api/users/resend',user, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            }
+        })
             .then(respone => {
                 const res = respone.data;
                 if(res.code === 0){

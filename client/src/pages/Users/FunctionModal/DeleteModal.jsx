@@ -3,9 +3,7 @@ import axios from "axios";
 function DeleteModal({ refreshUsers }) {
   const handleDeleteUser = () => {
     const userId = document.getElementById("id-delete").textContent;
-    axios({
-		method: "delete",
-		url: `/api/users/${userId}`,
+    axios.delete(`/api/users/${userId}`,{
 		headers: {
 			Authorization: localStorage.getItem("token"),
 		},

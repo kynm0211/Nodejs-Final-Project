@@ -41,7 +41,12 @@ function CustomerTab({isPay}) {
             return;
         }
         try{
-            axios.get('/api/find-customer/'+phone)
+            axios.get('/api/pos/find-customer/'+phone,{
+                headers: {
+                    'Authorization': localStorage.getItem('token'),
+                }
+            
+            })
             .then(response => {
                 const data = response.data;
                 if(data.code !== 0){

@@ -27,7 +27,6 @@ mongoose.connect(KEY.mongoURI, {
 
 // Models
 require('./models/UserModel');
-//Test
 require('./models/CustomerModel');
 require('./models/ProductCartModel');
 require('./models/OrderModel');
@@ -39,13 +38,13 @@ require('./models/OrderDetailModel');
 app.use('/api/account', require('./Routers/AccountRoute'));
 app.use('/api/users', require('./Routers/UsersRoute'));
 app.use('/api/products', require('./Routers/ProductsRoute'));
+app.use('/api/customers', require('./Routers/CustomersRoute'));
+app.use('/api/orders', require('./Routers/OrdersRoute'));
+app.use('/api/pos', require('./Routers/POSRoute'));
 // Routes
 //require('./routes/registerRoute')(app);
-// require('./routes/productsRoute')(app);
-//require('./routes/addProductRoute')(app);
 // require('./routes/POSRoute')(app);
 // require('./routes/customersRoute')(app);
-// require('./routes/ordersRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);

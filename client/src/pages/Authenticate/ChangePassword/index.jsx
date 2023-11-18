@@ -13,7 +13,7 @@ function ChangePassword() {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
-                setMessage('Xin vui lòng đăng nhập trước.');
+                setMessage('Please log in first.');
                 return;
             }
 
@@ -31,13 +31,13 @@ function ChangePassword() {
 
             if (code === 0) {
                 setMessage(message);
-                window.alert('Đổi mật khẩu thành công');
-                window.location.href = '/'; 
+                window.alert('Password changed successfully');
+                window.location.href = '/';
             } else {
                 setMessage(message);
             }
         } catch (error) {
-            setMessage('Có lỗi xảy ra');
+            setMessage('An error occurred');
         }
     };
 
@@ -79,7 +79,6 @@ function ChangePassword() {
                         <div></div>
                         <button type="submit" className="btn btn-primary ml-4">Change Password</button>
                         {message && (
-                            
                             <div className={message.startsWith('Success') ? 'alert alert-success' : 'alert alert-danger'}>
                                 {message}
                             </div>

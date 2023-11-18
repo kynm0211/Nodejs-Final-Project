@@ -1,33 +1,37 @@
+const package = require('../middlewares/package')
 const mongoose = require('mongoose');
 const Customer = mongoose.model('Customer');
 const User = mongoose.model('User');
 const Order = mongoose.model('Order');
 const OrderDetail = mongoose.model('OrderDetail');
 const Product = mongoose.model('Product');
-const bodyParser = require('body-parser');
-const package = require('../middlewares/package');
-const hashPassword = require('../service/hash256');
-const KEY = require('../config/key');
 const jwt = require('jsonwebtoken');
-module.exports = (app) => {
-    app.use(bodyParser.json());
-
-    app.post('/api/create-customer',async (req, res) => {
-        const user = req.body;
-        return res.send(createCustomer(user));
-    });
-
-    // Find the user in db
-    app.get('/api/find-customer/:phone',async (req, res) => {
-        const phone = req.params.phone;
-        const result = await findCustomer(phone);
-        return res.send(result);
-    });
-
-    
-
-
-    app.post('/api/create-a-bill',async (req,res)=>{
+const KEY = require('../config/key');
+module.exports = {
+    get_user: async (req, res) => {
+        try{
+            const phone = req.params.phone;
+            const result = await findCustomer(phone);
+            return res.send(result);
+        }
+        catch(err){
+            res.send(
+                package(404, err.message, null)
+            )
+        }
+    },
+    add_user: async (req, res) => {
+        try{
+            const user = req.body;
+            return res.send(createCustomer(user));
+        }
+        catch(err){
+            res.send(
+                package(404, err.message, null)
+            )
+        }
+    },
+    create_bill: async (req, res) =>{
         try{
             // Get data from client and Extract properties from req.body
             let getCustomer = req.body.customer;
@@ -71,6 +75,7 @@ module.exports = (app) => {
             if(cart.code !== 0){
                 return res.send(package(403, 'The products are not valid', null));
             }
+            console.log(staff);
             if(staff.code !== 0){
                 return res.send(package(403, 'The staff is not valid', null));
             }
@@ -133,102 +138,95 @@ module.exports = (app) => {
             return res.send(
                 package(0, 'Create bill successfully', createdOrder)
             )
-
-            
         }catch(err){
-            return res.send(
-                package(500, 'Server error', err.message)
-            );
-        }
-    });
-
-
-    // Sub Functions
-    const findCustomer = async (phone) =>{
-        if(phone.length < 8 || phone.length > 11){
-            return package(403, 'This phone number is invalid', null) 
-        }
-        // Find customer in db 
-        try{
-            const customer = await Customer.findOne({phone});
-
-            if(!customer){
-                return package(404, 'Customer does not exist in the system', null)
-            }
-            const prepairCustomer = {...customer._doc};
-            delete prepairCustomer.password;
-            return package(0, 'Customer found', prepairCustomer)
-            
-        }catch(err){
-            return package(500, 'Server error', null)
+            res.send(
+                package(404, err.message, null)
+            )
         }
     }
+}
 
-    const createCustomer = async (customer) =>{
+// Sub functions
+const createCustomer = async (customer) =>{
 
-        customer.password = hashPassword(customer.phone, KEY.SECRET_SALT);
+    const newUser = new Customer(customer);
+    try{
+        await newUser.save();
+        return package(0, 'Create customer successfully', newUser)
 
-        const newUser = new Customer(customer);
-        try{
-            await newUser.save();
-            return package(0, 'Create customer successfully', newUser)
-
-        }catch(err){
-            return  package(403, 'The data of the customer is not ok', null)
-            
-        }
-    }
-
-    const pullProducts = async (cart) => {
-        const tempCart = [];
-        for(let i = 0; i < cart.length; i++){
-            const id = cart[i]._id;
-            const amount = cart[i].amount;
-            try{
-                const product = await Product.findById(id);
-                if(!product){
-                    continue;
-                }
-                if(product.quanity < amount){
-                    return package(1, 'The amount of the product is not enough', null);
-                }
-                product.quantity -= amount;
-                product.purchase = true;
-                await product.save();
-                
-                const productCart = {
-                    _id: product._id,
-                    barcode: product.barcode,
-                    name: product.name,
-                    amount: amount,
-                    retail_price: product.retail_price,
-                }
-                tempCart.push(productCart);
-            }catch(err){
-                return package(501, 'Error happens at cart', err.message);
-            }
-        }
-        return package(0, 'Success', tempCart);
-    }
-
-    const verifyStaff = async (token) => {
-        try{
-            const isUser = jwt.verify(token, KEY.SECRET_SESSION_KEY, (err, user) => {
-                if (err) {
-                    return package(403, 'Access denied', null)
-                }
-                return package(0, 'Success', user);
-            });
-            return isUser;
-        }catch(err){
-            if (err.name === 'TokenExpiredError') {
-                return package(403, 'Token has expired', null);
-            } else {
-                return package(403, 'Access denied', null);
-            }
-        }
-
+    }catch(err){
+        return  package(403, 'The data of the customer is not ok', null)
         
+    }
+}
+
+const findCustomer = async (phone) =>{
+    if(phone.length < 8 || phone.length > 11){
+        return package(403, 'This phone number is invalid', null) 
+    }
+    // Find customer in db 
+    try{
+        const customer = await Customer.findOne({phone});
+
+        if(!customer){
+            return package(404, 'Customer does not exist in the system', null)
+        }
+        const prepairCustomer = {...customer._doc};
+        delete prepairCustomer.password;
+        return package(0, 'Customer found', prepairCustomer)
+        
+    }catch(err){
+        return package(500, 'Server error', null)
+    }
+}
+
+const pullProducts = async (cart) => {
+    const tempCart = [];
+    for(let i = 0; i < cart.length; i++){
+        const id = cart[i]._id;
+        const amount = cart[i].amount;
+        try{
+            const product = await Product.findById(id);
+            if(!product){
+                continue;
+            }
+            if(product.quanity < amount){
+                return package(1, 'The amount of the product is not enough', null);
+            }
+            product.quantity -= amount;
+            product.purchase = true;
+            await product.save();
+            
+            const productCart = {
+                _id: product._id,
+                barcode: product.barcode,
+                name: product.name,
+                amount: amount,
+                retail_price: product.retail_price,
+            }
+            tempCart.push(productCart);
+        }catch(err){
+            return package(501, 'Error happens at cart', err.message);
+        }
+    }
+    return package(0, 'Success', tempCart);
+}
+
+const verifyStaff = async (token) => {
+    try{
+        const isUser = jwt.verify(token, KEY.SECRET_SESSION_KEY, (err, user) => {
+            if (err) {
+                return package(403, err.message , null)
+            }
+            return package(0, 'Success', user);
+        });
+        return isUser;
+    }catch(err){
+        if (err.name === 'TokenExpiredError') {
+            return package(403, err.message, null);
+        } else {
+            return package(403, err.message, null);
+        }
     }
 
     
