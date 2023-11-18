@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import InvoiceTab from "./InvoiceTab";
 import axios from "axios";
 
@@ -66,7 +66,7 @@ function CustomerTab({isPay}) {
 
 
     return ( 
-        <div>
+        <Fragment>
             <div className="text-center">
                 <h3>Filling Information of Customer</h3>
             </div>
@@ -123,7 +123,7 @@ function CustomerTab({isPay}) {
                     </select>
                 </div>
             </div>
-        </div>
+        </Fragment>
     );
 }
 

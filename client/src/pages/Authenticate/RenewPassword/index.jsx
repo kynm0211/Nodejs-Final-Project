@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import axios from "axios";
 import LoadingImg from "../../../components/Layout/components/LoadingImg";
 
@@ -51,7 +51,7 @@ function RenewPassword() {
         });
     }
     return ( 
-        <div>
+        <Fragment>
             <div className="row p-0 m-0 d-flex align-items-center" style={{height: '100vh'}}>
                 <div className="col-md-4"></div>
                 <div className="col-md-4">
@@ -98,7 +98,7 @@ function RenewPassword() {
                     </div>
                 </div>
                 <div className="col-md-4"></div></div>
-        </div>
+        </Fragment>
     );
 }
 
