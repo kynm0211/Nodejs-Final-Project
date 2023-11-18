@@ -2,6 +2,7 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import { Fragment } from 'react';
 function DefaultLayout({children, user}) {
+    console.log('user', user);
     return (
         <Fragment>
             <Sidebar role={user.role}/>

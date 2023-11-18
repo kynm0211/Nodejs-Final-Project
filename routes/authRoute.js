@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const KEY = require('../config/key');
 const package = require('../middlewares/package');
 const hashPassword = require('../service/hash256');

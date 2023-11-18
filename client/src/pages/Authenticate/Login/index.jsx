@@ -25,7 +25,7 @@ export const Login = (props) => {
             password: password,
         };
           
-        axios.post('/api/login', data, {
+        axios.post('/api/account/login', data, {
             headers: {
               'Content-Type': 'application/json',
             }

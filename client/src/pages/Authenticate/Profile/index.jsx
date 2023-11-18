@@ -18,17 +18,10 @@ function Profile() {
 
   const handleFetchUser = async () => {
 	axios
-      .get("/api/current_user/", { headers: { Authorization: token } })
+      .get("/api/account/", { headers: { Authorization: token } })
       .then((response) => {
-        const data = response.data;
-        setUser({
-			username: data.username,
-        	name: data.name,
-        	role: data.role,
-        	email: data.email,
-        	status: data.status,
-        	image: data.image,
-        });
+        const res = response.data;
+        setUser(res.data);
       })
       .catch((error) => {
         console.log(error);

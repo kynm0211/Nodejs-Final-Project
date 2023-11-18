@@ -17,13 +17,13 @@ function ChangePassword() {
                 return;
             }
 
-            const response = await axios.post('/api/change-password', {
+            const response = await axios.post('/api/account/change-password', {
                 currentPassword,
                 newPassword,
                 confirmPassword,
             }, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: token
                 }
             });
 
