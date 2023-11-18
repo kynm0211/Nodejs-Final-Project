@@ -23,7 +23,7 @@ function POS() {
                     {/* Product List */}
                     <Products AddToCart={AddToCart}/>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 position-fixed w-100" style={{right:'0'}}>
                     {/* Card Detail */}
                     <CardDetail AddToCart={cart} UpdateCart={AddToCart}/>
                 </div>
