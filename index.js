@@ -38,13 +38,14 @@ require('./models/OrderDetailModel');
 // Assign the Routers
 app.use('/api/account', require('./Routers/AccountRoute'));
 app.use('/api/users', require('./Routers/UsersRoute'));
+app.use('/api/products', require('./Routers/ProductsRoute'));
 // Routes
-require('./routes/registerRoute')(app);
-require('./routes/productsRoute')(app);
-require('./routes/addProductRoute')(app);
-require('./routes/POSRoute')(app);
-require('./routes/customersRoute')(app);
-require('./routes/ordersRoute')(app);
+//require('./routes/registerRoute')(app);
+// require('./routes/productsRoute')(app);
+//require('./routes/addProductRoute')(app);
+// require('./routes/POSRoute')(app);
+// require('./routes/customersRoute')(app);
+// require('./routes/ordersRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
