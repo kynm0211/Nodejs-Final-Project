@@ -41,10 +41,6 @@ app.use('/api/products', require('./Routers/ProductsRoute'));
 app.use('/api/customers', require('./Routers/CustomersRoute'));
 app.use('/api/orders', require('./Routers/OrdersRoute'));
 app.use('/api/pos', require('./Routers/POSRoute'));
-// Routes
-//require('./routes/registerRoute')(app);
-// require('./routes/POSRoute')(app);
-// require('./routes/customersRoute')(app);
 
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
