@@ -103,7 +103,7 @@ module.exports = {
                 const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
                 sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
 
-                return res.json(package(0, "Resend email success", null));
+                return res.json(package(0, "Resend email successfully", null));
             }else{
                 return res.json(package(20, "Email was not existed", null));
             }
