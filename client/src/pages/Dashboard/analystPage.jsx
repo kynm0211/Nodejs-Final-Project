@@ -1,10 +1,86 @@
-import OrderItem from "./OrderItem";
-import { useState } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
+import OrderItem from "../../components/OrderList/OrderItem";
+import { Chart } from 'chart.js/auto';
+import 'chartjs-adapter-date-fns';
+import { forEach } from 'lodash';
+import Num2VND from "../../components/Num2VND";
 
-function OrderList({orders, fetch}) {
+function BodyAnalyst({ orders, fetch }) {
     const [search, setSearch] = useState("");
+    const chartRef = useRef(null);
+    
+    useEffect(() => {
+        if (!orders) {
+            return; 
+        }
+
+        var orderTotalPrice = 0;
+        forEach(orders, order => {
+            orderTotalPrice += order.total;
+        })
+        console.log(orderTotalPrice);
+
+        const dataForChart = {
+        labels: orders.map(order => order.created_date),
+        datasets: [
+            {
+            label: 'Total: ' + Num2VND(orderTotalPrice),
+            data: orders.map(order => order.total),
+            borderColor: '#8884d8',
+            borderWidth: 2,
+            fill: false,
+            },
+        ],
+        };
+
+        const options = {
+        scales: {
+            x: {
+            type: 'time',
+            time: {
+                unit: 'day',
+                tooltipFormat: 'yyyy-mm-dd',
+            },
+            title: {
+                display: true,
+                text: 'Creation Date',
+            },
+            },
+            y: {
+            title: {
+                display: true,
+                text: 'Total',
+            },
+            },
+        },
+        plugins: {
+            legend: {
+            display: true,
+            position: 'top',
+            },
+        },
+        };
+
+        if (chartRef.current) {
+            chartRef.current.destroy();
+        }
+
+        const ctx = document.getElementById('myChart');
+        if (ctx) {
+            const newChart = new Chart(ctx, {
+                type: 'line',
+                data: dataForChart,
+                options: options,
+            });
+            chartRef.current = newChart;
+        }
+    }, [orders]);
+    
     return (
         <div>
+            <div className="row my-3">
+                <canvas id="myChart" style={{ width: '200px', height: '100px' }}></canvas>
+            </div>
             <div className="row my-3">
                 <div className="col-sm-12 col-md-12 col-lg-8">
                     <div className="form-outline mb-4">
@@ -63,4 +139,4 @@ function OrderList({orders, fetch}) {
     );
 }
 
-export default OrderList;
+export default BodyAnalyst;

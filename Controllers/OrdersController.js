@@ -30,6 +30,17 @@ module.exports = {
                 package(404, err.message, null)
             )
         }
+    },
+    getAll: async (req, res) => {
+        try {
+            const result = await fetchAllOrders(req, res);
+            
+            return res.send(result);
+        } catch (err) {
+            res.send(
+                package(404, err.message, null)
+            );
+        }
     }
 
 }
@@ -85,8 +96,8 @@ const findOrderDetail = async (order_number) => {
 }
 
 const fetchOrderList = async (req, res) =>{
-    try{
-        const pageSize = 10;
+    try{ 
+        const pageSize = 10; 
         const pageNumber = parseInt(req.query.page, 10) || 1;
           const skipAmount = (pageNumber - 1) * pageSize;
 
@@ -107,3 +118,16 @@ const fetchOrderList = async (req, res) =>{
         return package(500, 'Server error', err.message);
     }
 }
+
+const fetchAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({}).lean();
+        if (!orders || orders.length === 0) {
+            return package(404, 'Order list is empty', null);
+        }
+
+        return package(0, 'Success', orders);
+    } catch (err) {
+        return package(500, 'Server error', err.message);
+    }
+};
