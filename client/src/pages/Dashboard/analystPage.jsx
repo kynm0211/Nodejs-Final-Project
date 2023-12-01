@@ -28,7 +28,7 @@ function BodyAnalyst({ orders, fetch }) {
             data: orders.map(order => order.total),
             borderColor: '#8884d8',
             borderWidth: 2,
-            fill: false,
+            fill: true,
             },
         ],
         };
