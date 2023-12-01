@@ -79,7 +79,7 @@ function BodyAnalyst({ orders, fetch }) {
     return (
         <div>
             <div className="row my-3">
-                <canvas id="myChart" style={{ width: '200px', height: '100px' }}></canvas>
+                <canvas id="myChart"></canvas>
             </div>
             <div className="row my-3">
                 <div className="col-sm-12 col-md-12 col-lg-8">

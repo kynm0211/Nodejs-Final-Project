@@ -295,6 +295,11 @@ ul > li {
   background-color: var(--sub-background); 
 }
 
+#myChart{
+  width: 100% !important;
+  height: 100% !important;
+}
+
 @keyframes animate {
   from {
     transform: rotate(0deg);
