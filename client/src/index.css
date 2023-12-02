@@ -300,6 +300,11 @@ ul > li {
   height: 100% !important;
 }
 
+.chart-container {
+  width: 400px;
+  height: 200px;
+}
+
 @keyframes animate {
   from {
     transform: rotate(0deg);
@@ -308,3 +313,4 @@ ul > li {
     transform: rotate(360deg);
   }
 }
+
