@@ -11,11 +11,9 @@ function Dashboard() {
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const page = queryParams.get('page');
 
     
     const [orders, setOrders] = useState(null);
-    const [divider, setDivider] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -23,7 +21,7 @@ function Dashboard() {
     const fetchAllOrders = async () => {
         setLoading(true);
         setError(null);
-        axios.get('/api/orders/allOrders', {
+        axios.get('/api/orders-analyst/allOrders', {
             headers: {
                 
                 'Authorization': localStorage.getItem('token')
@@ -56,9 +54,6 @@ function Dashboard() {
             </div>
             <div className="card-body">
                 <BodyAnalyst orders={orders} fetch={fetchAllOrders}/>
-                {/* <div className="row">
-                    <Pagination root='orders' divider={divider}/>
-                </div> */}
             </div>
             {error && (
                 <div className="card-footer">

@@ -40,6 +40,7 @@ app.use('/api/users', require('./Routers/UsersRoute'));
 app.use('/api/products', require('./Routers/ProductsRoute'));
 app.use('/api/customers', require('./Routers/CustomersRoute'));
 app.use('/api/orders', require('./Routers/OrdersRoute'));
+app.use('/api/orders-analyst', require('./Routers/AnalystRoute'));
 app.use('/api/pos', require('./Routers/POSRoute'));
 
 app.listen(PORT, ()=>{
