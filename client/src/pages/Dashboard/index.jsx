@@ -50,7 +50,7 @@ function Dashboard() {
     return ( 
         <div className="card rounded">
             <div className="card-header bg-main text-main text-center">
-                <h3>ANALYST</h3>
+                <h3>ANALYSIS TOOL</h3>
             </div>
             <div className="card-body">
                 <BodyAnalyst orders={orders} fetch={fetchAllOrders}/>
