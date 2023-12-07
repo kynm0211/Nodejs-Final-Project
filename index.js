@@ -42,6 +42,15 @@ app.use('/api/orders', require('./Routers/OrdersRoute'));
 app.use('/api/orders-analyst', require('./Routers/AnalystRoute'));
 app.use('/api/pos', require('./Routers/POSRoute'));
 
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
+    const path = require('path');
+    app.get('*', (req,res)=>{
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
 app.listen(PORT, ()=>{
     console.log('listening on port' + PORT);
 });
