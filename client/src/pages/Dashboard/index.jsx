@@ -16,8 +16,9 @@ function Dashboard() {
     const [orders, setOrders] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
-
+    const [totalPrice, setTotalPrice] = useState(null);
+    const [totalProducts, setTotalProducts] = useState(null);
+    const [profit, setProfit] = useState(null);
     const fetchAllOrders = async () => {
         setLoading(true);
         setError(null);
@@ -29,9 +30,12 @@ function Dashboard() {
         })
             .then(response => {
                 const res = response.data;
-                
+                console.log(res);
                 if(res.code === 0){
-                    setOrders(res.data);
+                    setOrders(res.data.orders);
+                    setTotalPrice(res.data.totalPrice);
+                    setTotalProducts(res.data.totalProducts);
+                    setProfit(res.data.totalProfit);
                 }else{
                     setError(res.message);
                 }
@@ -53,7 +57,7 @@ function Dashboard() {
                 <h3>ANALYSIS TOOL</h3>
             </div>
             <div className="card-body">
-                <BodyAnalyst orders={orders} fetch={fetchAllOrders}/>
+                <BodyAnalyst  orders={orders} totalPrice={totalPrice} totalProducts={totalProducts} profit={profit} fetch={fetchAllOrders}/>
             </div>
             {error && (
                 <div className="card-footer">

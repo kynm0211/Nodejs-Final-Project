@@ -7,25 +7,19 @@ import Num2VND from '../../components/Num2VND';
 import { format } from 'date-fns';
 import axios from 'axios';
 
-function BodyAnalyst({ orders, fetch }) {
-    /* 
-        0: this month
-        1: today
-        2: yesterday
-        3: with in 7 days
-        4: time
-    */
+function BodyAnalyst({ orders, totalPrice, totalProducts, profit, fetch }) {
     const [option, setOption] = useState(0);
-
+    const [orderTotalPrice, setOrderTotalPrice] = useState(totalPrice);
     const [search, setSearch] = useState('');
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [ordersData, setOrders] = useState(orders);
+    const [numberOfOrders, setNumberOforders] = useState(0);
+    const [numberOfProducts, setNumberOfProducts] = useState(totalProducts);
+    const [totalProfit, setTotalProfit] = useState(profit);
     const [show, setShow] = useState(false);
-    
     const chartRef = useRef(null);
 
-    var orderTotalPrice = 0;
 
     const handleStartDateChange = (e) => {
         setStartDate(e.target.value);
@@ -36,7 +30,12 @@ function BodyAnalyst({ orders, fetch }) {
     };
     
     useEffect(() => {
-
+        setOrderTotalPrice(totalPrice)
+        if (orders != null) {
+            setNumberOforders(orders.length)
+        }
+        setTotalProfit(profit)
+        setNumberOfProducts(totalProducts)
         setOrders(orders);
     }, [orders]);
 
@@ -116,13 +115,10 @@ function BodyAnalyst({ orders, fetch }) {
 
         updateChartWithData(dataForChart);
 
-        console.log("option", option);
-    }, [orders, ordersData, option]);
+    }, [orders, ordersData, option, orderTotalPrice, numberOfOrders, numberOfProducts, totalProfit]);
 
 
-    forEach(ordersData, (order) => {
-        orderTotalPrice += order.total;
-    });
+
 
 
     const updateChart = async () => {
@@ -133,6 +129,78 @@ function BodyAnalyst({ orders, fetch }) {
         }
     };
 
+    const updateChartAllTheTime = async () => {
+        if (orders) {
+            setOrders(orders); 
+            setNumberOforders(orders.length);
+            setNumberOfProducts(totalProducts);
+            updateChartWithData(orders);
+            setOrderTotalPrice(totalPrice);
+            setTotalProfit(profit);
+        }
+    };
+
+    const updateChartLast7Days = async () => {
+        const today = new Date();
+        const sevenDaysAgo = new Date(today);
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+        const data = await fetchData(sevenDaysAgo, today);
+        if (data) {
+            setOrders(data); 
+            updateChartWithData(data);
+        }
+    };
+    
+    const updateChartYesterday = async () => {
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+    
+        const data = await fetchData(yesterday, today);
+        if (data) {
+            setOrders(data); 
+            updateChartWithData(data);
+        }
+    };
+    
+    const updateChartToday = async () => {
+        const today = new Date();
+        const data = await fetchData(today, today);
+        if (data) {
+            setOrders(data); 
+            updateChartWithData(data);
+        }
+    };
+    
+    const updateChartThisMonth = async () => {
+        const today = new Date();
+        const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+        const data = await fetchData(firstDayOfMonth, today);
+        if (data) {
+            setOrders(data); 
+            updateChartWithData(data);
+        }
+    };
+    
+    const optionsFunctions = {
+        0: updateChartAllTheTime,
+        1: updateChartToday,
+        2: updateChartYesterday,
+        3: updateChartLast7Days,
+        4: updateChartToday,
+        5: updateChartThisMonth,
+    };
+
+    const handleOptionClick = async (selectedOption) => {
+        if (optionsFunctions[selectedOption]) {
+            await optionsFunctions[selectedOption]();
+            setOption(selectedOption);
+        }
+    };
+    
+
     const fetchData = async (startDate, endDate) => {
         try {
             const url = `/api/orders-analyst/byDay?startDate=${startDate}&endDate=${endDate}`;
@@ -141,9 +209,12 @@ function BodyAnalyst({ orders, fetch }) {
             };
     
             const response = await axios.get(url, { headers });
-            
             if (response.data.code === 0) {
-                return response.data.data;
+                setOrderTotalPrice( response.data.data.totalPrice);
+                setNumberOforders(response.data.data.orders.length)
+                setNumberOfProducts(response.data.data.totalProducts);
+                setTotalProfit(response.data.data.totalProfit);
+                return response.data.data.orders;
             } else {
                 throw new Error(response.data.message);
             }
@@ -189,18 +260,26 @@ function BodyAnalyst({ orders, fetch }) {
     <div>
         <div className="row">
             <div className="col-12 my-2">
-                <ul className="nav nav-tabs shadow-sm">
-                    <li onClick={() => setOption(3)} >
-                        <a className="btn btn-light" data-toggle="tab" href="#7days">Within the last 7 days</a></li>
-                    <li onClick={() => setOption(2)} >
-                        <a className="btn btn-light" data-toggle="tab" href="#yesterday">Yesterday</a></li>
-                    <li onClick={() => setOption(1)} >
-                        <a className="btn btn-light" data-toggle="tab" href="#today">Today</a></li>
-                    <li onClick={() => setOption(0)} >
-                        <a className="btn btn-light active" data-toggle="tab" href="#month">This month</a></li>
-                    <li onClick={() => setOption(4)}>
-                        <a className="btn btn-light" data-toggle="tab" href="#time">Specific time</a></li>
-                </ul>
+            <ul className="nav nav-tabs shadow-sm">
+            <li onClick={() => handleOptionClick(0)}>
+                <a className={`btn btn-light ${option === 0 ? 'active' : ''}`} data-toggle="tab" href="#alltime">All the time</a>
+            </li>
+            <li onClick={() => handleOptionClick(3)}>
+                <a className={`btn btn-light ${option === 3 ? 'active' : ''}`} data-toggle="tab" href="#7days">Within the last 7 days</a>
+            </li>
+            <li onClick={() => handleOptionClick(2)}>
+                <a className={`btn btn-light ${option === 2 ? 'active' : ''}`} data-toggle="tab" href="#yesterday">Yesterday</a>
+            </li>
+            <li onClick={() => handleOptionClick(1)}>
+                <a className={`btn btn-light ${option === 1 ? 'active' : ''}`} data-toggle="tab" href="#today">Today</a>
+            </li>
+            <li onClick={() => handleOptionClick(5)}>
+                <a className={`btn btn-light ${option === 5 ? 'active' : ''}`} data-toggle="tab" href="#month">This month</a>
+            </li>
+            <li onClick={() => handleOptionClick(4)}>
+                <a className={`btn btn-light ${option === 4 ? 'active' : ''}`} data-toggle="tab" href="#time">Specific time</a>
+            </li>
+        </ul>
 
                 <div class="tab-content">
                     <div className="tab-pane fade" id="yesterday"></div>
@@ -248,15 +327,15 @@ function BodyAnalyst({ orders, fetch }) {
                     </span>
                     <span className="border p-4 m-2 text-bold shadow-sm border-primary rounded">
                         <strong>ORDERS</strong>
-                        <span class="mx-2 p-2 badge badge-primary">{Num2VND(orderTotalPrice)}</span>
+                        <span class="mx-2 p-2 badge badge-primary">{numberOfOrders}</span>
                     </span>
                     <span className="border p-4 m-2 text-bold shadow-sm border-info rounded">
                         <strong>PRODUCTS</strong>
-                        <span class="mx-2 p-2 badge badge-info">{Num2VND(orderTotalPrice)}</span>
+                        <span class="mx-2 p-2 badge badge-info">{numberOfProducts}</span>
                     </span>
                     <span className="border p-4 m-2 text-bold shadow-sm border-info rounded">
                         <strong>PROFIT</strong>
-                        <span class="mx-2 p-2 badge badge-info">{Num2VND(orderTotalPrice)}</span>
+                        <span class="mx-2 p-2 badge badge-info">{Num2VND(totalProfit)}</span>
                     </span>
                 </div>
                 <div className="chart__canvas">
