@@ -2,7 +2,6 @@ const express = require('express');
 const app = express.Router();
 const AccountController = require('../Controllers/AccountController');
 const multer = require('multer');
-const uploadFile = require("../service/uploadFirebase");
 const upload = multer();
 const requiredLogin = require('../middlewares/requiredLogin');
 

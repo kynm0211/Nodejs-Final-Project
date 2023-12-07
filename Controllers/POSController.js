@@ -6,7 +6,6 @@ const Order = mongoose.model('Order');
 const OrderDetail = mongoose.model('OrderDetail');
 const Product = mongoose.model('Product');
 const jwt = require('jsonwebtoken');
-const KEY = require('../config/key');
 module.exports = {
     get_user: async (req, res) => {
         try{
@@ -214,7 +213,7 @@ const pullProducts = async (cart) => {
 
 const verifyStaff = async (token) => {
     try{
-        const isUser = jwt.verify(token, KEY.SECRET_SESSION_KEY, (err, user) => {
+        const isUser = jwt.verify(token, process.env.SESSION_KEY, (err, user) => {
             if (err) {
                 return package(403, err.message , null)
             }

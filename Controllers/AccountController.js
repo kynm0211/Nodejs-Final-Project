@@ -3,7 +3,6 @@ const hashPassword = require('../service/hash256');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const KEY = require('../config/key');
 const uploadFile = require('../service/uploadFirebase');
 const Package = require('../middlewares/package');
 module.exports = {
@@ -19,7 +18,7 @@ module.exports = {
             }
     
             // Check email and password in DB
-            const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
+            const hashedPassword = hashPassword(password, process.env.SECRET_SALT);
             const user = {
                 username: username,
                 password: hashedPassword,
@@ -37,7 +36,7 @@ module.exports = {
                 delete userWithoutPassword._doc.password;
 
                 prepairUser = {...userWithoutPassword};
-                prepairUser._doc.token = jwt.sign(prepairUser._doc, KEY.SECRET_SESSION_KEY , { expiresIn: '24h' });
+                prepairUser._doc.token = jwt.sign(prepairUser._doc, process.env.SESSION_KEY , { expiresIn: '24h' });
                 if(prepairUser._doc.status === 'InActive'){
                     return res.json(package(12, "Your account is not active", null));
                 }else if(prepairUser._doc.status === 'Lock'){
@@ -84,7 +83,7 @@ module.exports = {
                 
             }
 
-            if (hashPassword(currentPassword, KEY.SECRET_SALT) !== userDB.password) {
+            if (hashPassword(currentPassword, process.env.SECRET_SALT) !== userDB.password) {
                 return res.json(package(10, "Current password is incorrect", null));
                 
             }
@@ -94,7 +93,7 @@ module.exports = {
                 
             }
 
-            userDB.password = hashPassword(newPassword, KEY.SECRET_SALT);
+            userDB.password = hashPassword(newPassword, process.env.SECRET_SALT);
             const result = await userDB.save();
 
             return res.json(package(0, "Password changed successfully", result));
@@ -170,7 +169,7 @@ module.exports = {
                 return res.json(package(1, "Missing required fields", null));
             }
 
-            const user_jwt = jwt.verify(token, KEY.SECRET_SESSION_KEY);
+            const user_jwt = jwt.verify(token, process.env.SESSION_KEY);
             if(user_jwt){
                 const user = await User.findOne({ username: user_jwt.preUser.username }).lean();
                 if (!user) {
@@ -178,7 +177,7 @@ module.exports = {
                 }
                 delete user.password;
 
-                user.token = jwt.sign(user, KEY.SECRET_SESSION_KEY , { expiresIn: '1h' });
+                user.token = jwt.sign(user, process.env.SESSION_KEY , { expiresIn: '1h' });
 
                 if(user.status === 'InActive'){
                     return res.json(package(12, "Your account is not active", user));
@@ -199,7 +198,7 @@ module.exports = {
     renewPassword: async (req, res) =>{
         try{
             const token = req.header('Authorization');
-            const userToken = jwt.verify(token, KEY.SECRET_SESSION_KEY);
+            const userToken = jwt.verify(token, process.env.SESSION_KEY);
             const {password} = req.body;
             if(!userToken){
                 return res.json(package(402, "You must be login!", userToken))
@@ -213,7 +212,7 @@ module.exports = {
                 return res.json(405, "The length of password must be less than 36 chars!", null);
             }
         
-            const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
+            const hashedPassword = hashPassword(password, process.env.SECRET_SALT);
             // Find the user by email
             const email = userToken.email;
             const user = await User.findOne({ email }).lean();
@@ -262,7 +261,7 @@ module.exports = {
 
 
         // Hash the password using SHA-256 and the salt
-        const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
+        const hashedPassword = hashPassword(password, process.env.SECRET_SALT);
 
 
         // Information Ok => Register
@@ -271,7 +270,7 @@ module.exports = {
             name: name,
             email: email,
             password: hashedPassword,
-            image: KEY.imageProfileDefault,
+            image: process.env.DEFAULT_AVATAR,
             role: 'Administrator',
             status: 'Active'
         }
@@ -284,7 +283,7 @@ module.exports = {
 // Sub functions
 function extractUsernameFromToken(token) {
     try {
-        const decoded = jwt.verify(token, KEY.SECRET_SESSION_KEY);
+        const decoded = jwt.verify(token, process.env.SESSION_KEY);
         return decoded.username;
     } catch (error) {
         console.error('Error extracting username from token:', error);

@@ -1,6 +1,5 @@
 const package = require('./package');
 const jwt = require('jsonwebtoken');
-const KEY = require('../config/key');
 module.exports = (req, res, next) => {
     const token = req.header('Authorization');
 
@@ -10,7 +9,7 @@ module.exports = (req, res, next) => {
         );
     }
 
-    jwt.verify(token, KEY.SECRET_SESSION_KEY, (err, user) => {
+    jwt.verify(token, process.env.SESSION_KEY, (err, user) => {
         if (err) {
             return res.status(403).json(
                 package(403, 'Access denied', null)

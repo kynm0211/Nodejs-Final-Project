@@ -33,8 +33,8 @@ module.exports = {
     },
     add: async (req, res) =>{
         try{
-            const product = req.body;
             const token = req.header('Authorization');
+            const product = req.body;
     
             if (!product || Object.keys(product).length === 0) {
             return res.json(

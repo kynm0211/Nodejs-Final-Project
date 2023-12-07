@@ -1,7 +1,6 @@
 const User = require('../models/UserModel');
 const package = require('../middlewares/package');
 const jwt = require('jsonwebtoken');
-const KEY = require('../config/key');
 const dateTime = require('../service/getCurrentTime');
 const sendEmail = require('../service/gmailSender');
 const hashPassword = require('../service/hash256');
