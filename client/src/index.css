@@ -181,6 +181,7 @@ ul > li {
   background-color: var(--main-color) !important;
 }
 .product__item{
+  weight: 100%;
   height: 250px;
 }
 .btn-outline-main{

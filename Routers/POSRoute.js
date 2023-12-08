@@ -9,4 +9,8 @@ app.get('/find-customer/:phone', requiredLogin, POSController.get_user);
 
 app.post('/create-a-bill', requiredLogin, POSController.create_bill);
 
+app.get('/search-product', requiredLogin, POSController.search_product)
+
+app.get('/add-product-by-barcode', requiredLogin, POSController.search_product)
+
 module.exports = app;

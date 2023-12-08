@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Pagination from "../../../components/Pagination";
 import LoadingImg from "../../../components/Layout/components/LoadingImg";
-function Products({AddToCart}) {
+function Products({searchResults, AddToCart}) {
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -14,11 +14,21 @@ function Products({AddToCart}) {
     const [divider, setDivider] = useState(1);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    
+    useEffect(() => {
+        if (searchResults && searchResults.length > 0) {
+            setProducts(searchResults);
+            setLoading(false);
+        } else {
+            handleFetchProducts();
+        }
+    }, [searchResults]);
 
     useEffect(() => {
         handleFetchProducts();
 
     }, [page]);
+
 
     const handleFetchProducts = async () => {
         setError(null);

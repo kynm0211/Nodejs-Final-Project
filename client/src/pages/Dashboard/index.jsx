@@ -30,7 +30,6 @@ function Dashboard() {
         })
             .then(response => {
                 const res = response.data;
-                console.log(res);
                 if(res.code === 0){
                     setOrders(res.data.orders);
                     setTotalPrice(res.data.totalPrice);

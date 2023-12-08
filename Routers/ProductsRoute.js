@@ -2,7 +2,7 @@ const express = require('express');
 const app = express.Router();
 const ProductsController = require('../Controllers/ProductsController');
 const multer = require('multer');
-const storage = multer.memoryStorage(); // Store image in memory
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const requiredLogin = require('../middlewares/requiredLogin');
 
