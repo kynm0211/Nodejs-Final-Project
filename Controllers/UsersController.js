@@ -65,7 +65,7 @@ module.exports = {
 
             // Create token for login
             newUser.time = dateTime;
-            const token = jwt.sign({ newUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
+            const token = jwt.sign({ newUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
 
             const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
             sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
