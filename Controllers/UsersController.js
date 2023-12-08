@@ -49,14 +49,14 @@ module.exports = {
                 return res.json(package(9, "Email already exists", null));
             }
 
-            const hashedPassword = hashPassword(password, KEY.SECRET_SALT);
+            const hashedPassword = hashPassword(password, process.env.SECRET_SALT);
 
             const newUser = new User({
                 username: username,
                 name: name,
                 email: email,
                 password: hashedPassword,
-                image: KEY.imageProfileDefault,
+                image: process.env.DEFAULT_AVATAR,
                 role: 'Sale person',
                 status: "InActive",
             });
@@ -97,7 +97,7 @@ module.exports = {
                 delete preUser.password;
 
 
-                const token = jwt.sign({ preUser }, KEY.SECRET_SESSION_KEY, { expiresIn: '1m' });
+                const token = jwt.sign({ preUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
 
                 const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
                 sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
@@ -120,7 +120,7 @@ module.exports = {
                 return res.send(package(12, 'The request was failed', 'Token is not valid'));
             }
 
-            jwt.verify(token, KEY.SECRET_SESSION_KEY, async (err, user) => {
+            jwt.verify(token, process.env.SESSION_KEY, async (err, user) => {
                 if (err) {
                     return res.send(package(12, 'The request was failed', 'Token is not valid'));
                 }
@@ -146,7 +146,7 @@ module.exports = {
               )
             }
         
-            jwt.verify(token, KEY.SECRET_SESSION_KEY, async (err, user) => {
+            jwt.verify(token, process.env.SESSION_KEY, async (err, user) => {
                 if (err) {
                     return res.send(
                         package(12, err.message, null)
