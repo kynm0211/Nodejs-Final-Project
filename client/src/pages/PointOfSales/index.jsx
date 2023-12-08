@@ -2,18 +2,12 @@
 import FindProducts from "./FindProducts";
 import Products from "./Products";
 import CardDetail from "./Cart";
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment } from "react";
 import DeleteModal from "./Modal/DeleteModal";
 import ResetModal from "./Modal/ResetModal";
 import PaymentModal from "./Modal/PaymentModal";
 import InvoiceTab from "./Modal/PaymentComponents/InvoiceTab";
 function POS() {
-
-    const [searchResults, setSearchResults] = useState([]);
-
-    const handleSearchResults = (data) => {
-        setSearchResults(data);
-    };
 
 
 
@@ -23,15 +17,20 @@ function POS() {
         setCart(cart + 1);
     }
 
+    const [products, setProducts] = useState([]);
+    const handleSearchProducts = (products) => {
+        setProducts(products);
+    }
+
 
     return ( 
         <Fragment>
             <div className="row">
                 <div className="col-md-8">
                     {/* Search or type barcode */}
-                    <FindProducts onSearch={handleSearchResults} />
+                    <FindProducts searchProducts={handleSearchProducts} AddToCart={AddToCart}/>
                     {/* Product List */}
-                    <Products searchResults={searchResults} AddToCart={AddToCart}/>
+                    <Products searchProductItem={products} AddToCart={AddToCart}/>
                 </div>
                 <div className="col-md-4 position-fixed w-100" style={{right:'0'}}>
                     {/* Card Detail */}

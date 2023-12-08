@@ -333,10 +333,12 @@ function BodyAnalyst({ orders, totalPrice, totalProducts, profit, fetch }) {
                         <strong>PRODUCTS</strong>
                         <span class="mx-2 p-2 badge badge-info">{numberOfProducts}</span>
                     </span>
-                    <span className="border p-4 m-2 text-bold shadow-sm border-info rounded">
-                        <strong>PROFIT</strong>
-                        <span class="mx-2 p-2 badge badge-info">{Num2VND(totalProfit)}</span>
-                    </span>
+                    {totalProfit && (
+                        <span className="border p-4 m-2 text-bold shadow-sm border-warning rounded">
+                            <strong>PROFIT</strong>
+                            <span class="mx-2 p-2 badge badge-warning">{Num2VND(totalProfit)}</span>
+                        </span>
+                    )}
                 </div>
                 <div className="chart__canvas">
                     <canvas id="myChart" className="chart-container"></canvas>
