@@ -100,7 +100,7 @@ module.exports = {
                 const token = jwt.sign({ preUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
 
                 const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
-                sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
+                await sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
 
                 return res.json(package(0, "Resend email successfully", null));
             }else{
