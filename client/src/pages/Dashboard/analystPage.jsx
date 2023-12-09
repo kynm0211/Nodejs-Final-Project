@@ -350,7 +350,7 @@ function BodyAnalyst({ orders, totalPrice, totalProducts, profit, fetch }) {
         <div className="row my-3">
             <div className="col-12 text-center">
                 <button className='btn btn-outline-success' data-toggle="collapse" data-target="#details" onClick={()=> setShow(!show)}>
-                {show? (
+                {!show? (
                     <span>Show more details <i class="fa-regular fa-square-caret-down"></i></span>
                 ) : (
                     <span>Hide details <i class="fa-regular fa-square-caret-up"></i></span>
