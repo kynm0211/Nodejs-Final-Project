@@ -1,30 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios'; 
-import Products from '../Products/index';
 
-function Search({ onSearch }) {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
 
-    const handleSearch = async () => {
-        try {
+function Search({searchProducts}) {
+    const [terms, setTerms] = useState("");
 
-            const response = await axios.get(`/api/pos/search-product?searchTerm=${searchTerm}`, {
-                headers: {
-                    'Authorization': localStorage.getItem('token')
-                }
-            });
-            
-            setSearchResults(response.data); 
-            onSearch(response.data);
-        } catch (error) {
-            console.error('Error searching for products:', error.message);
+    const handleSearchTerms = async () =>{
+        axios.get(`/api/pos/search-products?terms=`+terms,
+        {headers: { 'Authorization': localStorage.getItem('token')}}
+        ).then(response => {
+            const res = response.data;
+            if(res.code === 0){
+                searchProducts(res.data);
+            }else{
+                alert(res.message);
+            }
+        }).catch(error => {
+            console.log(error.message);
+        })
+        
+    }
+
+
+    const handleEnter = async (e) =>{
+        if(e.key === "Enter"){
+            handleSearchTerms();
         }
-    };
-
-    useEffect(() => {
-        handleSearch();
-    }, [searchTerm]);
+    }
     return ( 
         <div className="input-group">
             <div className="form-outline w-100">
@@ -33,10 +35,10 @@ function Search({ onSearch }) {
                     <input
                         type="search"
                         className="form-control w-100"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => setTerms(e.target.value.trim())}
+                        onKeyDown={(e) => handleEnter(e)}
                     />
-                    <button type="button" className="btn btn-primary" onClick={handleSearch}>
+                    <button type="button" className="btn btn-primary" onClick={handleSearchTerms}>
                         <i className="fas fa-search"></i>
                     </button>
                 </div>

@@ -143,32 +143,32 @@ module.exports = {
             )
         }
     },
-    search_product: async (req, res) => {
+    search_products: async (req, res) => {
         try {
-            const searchTerm = req.query.searchTerm;
-            const result = await searchProduct(searchTerm);
+            const terms = req.query.terms || "";
+            console.log('terms', terms);
 
-            return res.send(result);
+            const result = await Product.find({
+                $or: [
+                    { barcode: terms },
+                    { name: { $regex: terms, $options: 'i' } }
+                ]
+            }).lean();
+            
+            res.send(package(0, 'Success', result));
         } catch (err) {
             res.send(package(500, err.message, null));
         }
     },
     search_product_by_barcode: async (req, res) => {
         try {
-            const barcode = req.query.barcode;
-            const product = await searchByBarcode(barcode);
+            const {barcode} = req.params;
+            const product = await Product.findOne({barcode}).lean();
 
             if (!product) {
                 return res.send(package(404, 'Product not found', null));
             }
-
-            const cart = await pullProducts([product]);
-
-            if (cart.code !== 0) {
-                return res.send(package(403, 'The product is not valid', null));
-            }
-
-            return res.send(package(0, 'Product found and added to cart', product));
+            return res.send(package(0, 'Product found', product));
         } catch (err) {
             res.send(package(500, err.message, null));
         }
@@ -260,36 +260,3 @@ const verifyStaff = async (token) => {
 
     
 }
-const searchByBarcode = async (barcode) => {
-    try {
-        const product = await Product.findOne({ barcode: { $regex: barcode, $options: 'i' } });
-        return product;
-    } catch (error) {
-        console.error('Error searching by barcode:', error.message);
-        return null;
-    }
-};
-
-
-const searchProduct = async (searchTerm) => {
-    try {
-        if (!searchTerm.trim()) {
-            const allProducts = await Product.find({});
-            return allProducts;
-        }
-        const searchKeywords = searchTerm.split(' ').filter(keyword => keyword.trim() !== '');
-        const searchConditions = searchKeywords.map(keyword => ({
-            $or: [
-                { name: { $regex: keyword, $options: 'i' } },
-                { barcode: { $regex: keyword, $options: 'i' } },
-            ],
-        }));
-        const products = await Product.find({ $and: searchConditions });
-
-        return products;
-    } catch (error) {
-        console.error('Error searching for products:', error.message);
-        return null;
-    }
-};
-

@@ -1,16 +1,19 @@
-require('dotenv').config(); // Nạp biến môi trường từ tệp .env
-
+require('dotenv').config();
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-    service: "Gmail",
+    service: "gmail",
+    host:"smtp.gmail.com",
+    port: 587,
+    ignoreTLS: false,
+    secure: false,
     auth: {
-        user: process.env.EMAIL_USER, // Sử dụng biến môi trường
-        pass: process.env.EMAIL_PASSWORD, // Sử dụng biến môi trường
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
     },
 });
 
-sendEmail = (toEmail, subject, text) => {
+sendEmail = async (toEmail, subject, text) => {
     const mailOptions = {
         from: "Service",
         to: toEmail,
