@@ -61,14 +61,14 @@ module.exports = {
                 status: "InActive",
             });
 
-            const result = await newUser.save();
-
+            
             // Create token for login
+            const result = await newUser.save();
             newUser.time = dateTime;
             const token = jwt.sign({ newUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
-
+            
             const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
-            sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
+            await sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
 
             return res.json(package(0, "Registration success", newUser));
         }
