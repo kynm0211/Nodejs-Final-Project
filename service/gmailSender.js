@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-sendEmail = (toEmail, subject, text) => {
+sendEmail = async (toEmail, subject, text) => {
     const mailOptions = {
         from: "Service",
         to: toEmail,
