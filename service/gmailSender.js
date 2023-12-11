@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-sendEmail = async (toEmail, subject, text) => {
+const sendEmail = async (toEmail, subject, text) => {
     const mailOptions = {
         from: "Service",
         to: toEmail,
@@ -21,7 +21,7 @@ sendEmail = async (toEmail, subject, text) => {
         text: text,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    await transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
         } else {
