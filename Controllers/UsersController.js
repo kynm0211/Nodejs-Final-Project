@@ -97,7 +97,7 @@ module.exports = {
                 delete preUser.password;
 
 
-                const token = jwt.sign({ preUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
+                const token = jwt.sign({ ...preUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
 
                 const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
                 await sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
