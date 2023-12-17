@@ -51,7 +51,7 @@ module.exports = {
 
             const hashedPassword = hashPassword(password, process.env.SECRET_SALT);
 
-            const newUser = new User({
+            const preUser = {
                 username: username,
                 name: name,
                 email: email,
@@ -59,13 +59,14 @@ module.exports = {
                 image: process.env.DEFAULT_AVATAR,
                 role: 'Sale person',
                 status: "InActive",
-            });
+            }
+            const newUser = new User(preUser);
 
             
             // Create token for login
             const result = await newUser.save();
             newUser.time = dateTime;
-            const token = jwt.sign({ newUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
+            const token = jwt.sign({ ...preUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
             
             const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
             await sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
@@ -93,7 +94,7 @@ module.exports = {
             const findUser = await User.findOne({ email }).lean();
             if (findUser) {
                 delete findUser.password;
-                
+
                 const token = jwt.sign({ ...findUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
 
                 const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;

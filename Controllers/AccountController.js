@@ -171,7 +171,7 @@ module.exports = {
 
             const user_jwt = jwt.verify(token, process.env.SESSION_KEY);
             if(user_jwt){
-                const user = await User.findOne({ username: user_jwt.newUser.username }).lean();
+                const user = await User.findOne({ username: user_jwt.username }).lean();
                 if (!user) {
                     return res.json(package(10, "Invalid username", null));
                 }
