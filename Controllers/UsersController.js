@@ -90,14 +90,11 @@ module.exports = {
                 return res.json(package(1, "Missing required fields", null));
             }
 
-            const findUser = await User.findOne({ email });
+            const findUser = await User.findOne({ email }).lean();
             if (findUser) {
-
-                const preUser = {...findUser._doc};
-                delete preUser.password;
-
-
-                const token = jwt.sign({ ...preUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
+                delete findUser.password;
+                
+                const token = jwt.sign({ ...findUser }, process.env.SESSION_KEY, { expiresIn: '1m' });
 
                 const loginLink = `${process.env.SERVER_ADDRESS}/direct?token=${token}`;
                 await sendEmail(email, "Login Link", `Click the following link to log in: ${loginLink}`);
